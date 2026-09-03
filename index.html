@@ -1,717 +1,136 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
-    <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>منصة إدارة الموظفين</title>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-    <script src="config.js"></script>
-
-    <style>
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            font-family: Arial, Tahoma, sans-serif;
-            background: linear-gradient(135deg, #eef7f8, #f5f8fb);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #263746;
-            padding: 20px;
-        }
-
-        .login-container {
-            width: 100%;
-            max-width: 460px;
-        }
-
-        .login-card {
-            background: white;
-            border-radius: 22px;
-            padding: 35px;
-            box-shadow: 0 12px 40px rgba(0,0,0,0.10);
-            border: 1px solid #e5edf1;
-        }
-
-        .logo {
-            width: 75px;
-            height: 75px;
-            margin: 0 auto 18px;
-            border-radius: 20px;
-            background: linear-gradient(135deg, #087f8c, #0b607a);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 34px;
-            font-weight: bold;
-        }
-
-        h1 {
-            text-align: center;
-            margin: 0 0 8px;
-            color: #12344d;
-            font-size: 25px;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #71808d;
-            font-size: 14px;
-            margin-bottom: 28px;
-            line-height: 1.7;
-        }
-
-        .login-types {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 22px;
-        }
-
-        .type-btn {
-            border: 1px solid #d8e4e9;
-            background: #f8fafb;
-            color: #526575;
-            padding: 12px;
-            border-radius: 11px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        .type-btn.active {
-            background: #087f8c;
-            color: white;
-            border-color: #087f8c;
-        }
-
-        .form-group {
-            margin-bottom: 17px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 7px;
-            color: #344b5d;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        input {
-            width: 100%;
-            padding: 14px;
-            border: 1px solid #d5e0e6;
-            border-radius: 11px;
-            outline: none;
-            font-size: 15px;
-            background: #fbfdff;
-            direction: ltr;
-            text-align: left;
-        }
-
-        input:focus {
-            border-color: #087f8c;
-            box-shadow: 0 0 0 3px rgba(8,127,140,0.08);
-        }
-
-        .login-btn {
-            width: 100%;
-            border: none;
-            background: linear-gradient(135deg, #087f8c, #0b607a);
-            color: white;
-            padding: 14px;
-            border-radius: 11px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            margin-top: 5px;
-        }
-
-        .login-btn:hover {
-            opacity: 0.92;
-        }
-
-        .login-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .message {
-            display: none;
-            padding: 13px;
-            border-radius: 10px;
-            margin-bottom: 17px;
-            font-size: 13px;
-            line-height: 1.7;
-        }
-
-        .message.error {
-            display: block;
-            background: #fff0f0;
-            color: #a52828;
-            border: 1px solid #f2d1d1;
-        }
-
-        .message.success {
-            display: block;
-            background: #eaf8ef;
-            color: #18733c;
-            border: 1px solid #ccebd6;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 22px;
-            color: #8a98a3;
-            font-size: 12px;
-            line-height: 1.8;
-        }
-
-        @media (max-width: 480px) {
-
-            .login-card {
-                padding: 25px 20px;
-            }
-
-            h1 {
-                font-size: 22px;
-            }
-
-        }
-
-    </style>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>منصة إدارة الموظفين</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Tahoma,sans-serif;background:linear-gradient(135deg,#eef7f8,#f5f8fb);min-height:100vh;display:flex;align-items:center;justify-content:center;color:#263746;padding:20px}
+.login-container{width:100%;max-width:480px}.login-card{background:#fff;border-radius:22px;padding:35px;box-shadow:0 12px 40px rgba(0,0,0,.1);border:1px solid #e5edf1}
+.logo{width:75px;height:75px;margin:0 auto 18px;border-radius:20px;background:linear-gradient(135deg,#087f8c,#0b607a);color:#fff;display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:bold}
+h1{text-align:center;margin:0 0 8px;color:#12344d;font-size:25px}.subtitle{text-align:center;color:#71808d;font-size:14px;margin-bottom:22px;line-height:1.7}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}.tab{border:1px solid #d8e4e9;background:#f8fafb;color:#526575;padding:11px;border-radius:10px;cursor:pointer;font-weight:bold}.tab.active{background:#087f8c;color:#fff;border-color:#087f8c}
+.login-types{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}.type-btn{border:1px solid #d8e4e9;background:#f8fafb;color:#526575;padding:12px;border-radius:11px;cursor:pointer;font-weight:bold;font-size:14px}.type-btn.active{background:#087f8c;color:#fff;border-color:#087f8c}
+.form-group{margin-bottom:16px}label{display:block;margin-bottom:7px;color:#344b5d;font-size:14px;font-weight:bold}input{width:100%;padding:14px;border:1px solid #d5e0e6;border-radius:11px;outline:none;font-size:15px;background:#fbfdff;direction:ltr;text-align:left}input:focus{border-color:#087f8c;box-shadow:0 0 0 3px rgba(8,127,140,.08)}
+.main-btn{width:100%;border:none;background:linear-gradient(135deg,#087f8c,#0b607a);color:#fff;padding:14px;border-radius:11px;cursor:pointer;font-size:16px;font-weight:bold;margin-top:5px}.main-btn:disabled{opacity:.6;cursor:not-allowed}
+.message{display:none;padding:13px;border-radius:10px;margin-bottom:17px;font-size:13px;line-height:1.7}.message.error{display:block;background:#fff0f0;color:#a52828;border:1px solid #f2d1d1}.message.success{display:block;background:#eaf8ef;color:#18733c;border:1px solid #ccebd6}
+.hidden{display:none}.footer{text-align:center;margin-top:22px;color:#8a98a3;font-size:12px;line-height:1.8}
+@media(max-width:480px){.login-card{padding:25px 20px}h1{font-size:22px}}
+</style>
 </head>
-
 <body>
+<div class="login-container"><div class="login-card">
+<div class="logo">م</div>
+<h1>منصة إدارة الموظفين</h1>
+<div class="subtitle">المؤسسة العمومية الإستشفائية بأولف<br>تسجيل وتحديث معلومات الموظفين</div>
 
-<div class="login-container">
-
-    <div class="login-card">
-
-        <div class="logo">
-            م
-        </div>
-
-        <h1>
-            منصة إدارة الموظفين
-        </h1>
-
-        <div class="subtitle">
-            المؤسسة العمومية الإستشفائية بأولف
-            <br>
-            تسجيل الدخول إلى المنصة
-        </div>
-
-        <div class="login-types">
-
-            <button
-                type="button"
-                id="employeeType"
-                class="type-btn active"
-                onclick="selectLoginType('employee')">
-
-                دخول الموظف
-
-            </button>
-
-            <button
-                type="button"
-                id="adminType"
-                class="type-btn"
-                onclick="selectLoginType('admin')">
-
-                دخول المسؤول
-
-            </button>
-
-        </div>
-
-        <div id="message"
-             class="message">
-        </div>
-
-        <form id="loginForm"
-              onsubmit="login(event)">
-
-            <div class="form-group">
-
-                <label for="email">
-                    البريد الإلكتروني
-                </label>
-
-                <input
-                    type="email"
-                    id="email"
-                    placeholder="example@email.com"
-                    autocomplete="email"
-                    required>
-
-            </div>
-
-            <div class="form-group">
-
-                <label for="password">
-                    كلمة المرور
-                </label>
-
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="أدخل كلمة المرور"
-                    autocomplete="current-password"
-                    required>
-
-            </div>
-
-            <button
-                type="submit"
-                id="loginBtn"
-                class="login-btn">
-
-                تسجيل الدخول
-
-            </button>
-
-        </form>
-
-        <div class="footer">
-            منصة رقمية لإدارة ومتابعة بيانات الموظفين
-            <br>
-            © 2026
-        </div>
-
-    </div>
-
+<div class="tabs">
+<button id="loginTab" class="tab active" type="button" onclick="showMode('login')">تسجيل الدخول</button>
+<button id="signupTab" class="tab" type="button" onclick="showMode('signup')">إنشاء حساب موظف</button>
 </div>
 
+<div id="message" class="message"></div>
+
+<div id="loginPanel">
+<div class="login-types">
+<button type="button" id="employeeType" class="type-btn active" onclick="selectLoginType('employee')">دخول الموظف</button>
+<button type="button" id="adminType" class="type-btn" onclick="selectLoginType('admin')">دخول المسؤول</button>
+</div>
+<form onsubmit="login(event)">
+<div class="form-group"><label>البريد الإلكتروني</label><input type="email" id="loginEmail" placeholder="example@email.com" autocomplete="email" required></div>
+<div class="form-group"><label>كلمة المرور</label><input type="password" id="loginPassword" placeholder="أدخل كلمة المرور" autocomplete="current-password" required></div>
+<button id="loginBtn" class="main-btn" type="submit">تسجيل الدخول</button>
+</form>
+</div>
+
+<div id="signupPanel" class="hidden">
+<form onsubmit="signUp(event)">
+<div class="form-group"><label>البريد الإلكتروني</label><input type="email" id="signupEmail" placeholder="example@email.com" autocomplete="email" required></div>
+<div class="form-group"><label>كلمة المرور</label><input type="password" id="signupPassword" placeholder="اختر كلمة مرور لا تقل عن 6 أحرف" minlength="6" autocomplete="new-password" required></div>
+<div class="form-group"><label>تأكيد كلمة المرور</label><input type="password" id="confirmPassword" placeholder="أعد كتابة كلمة المرور" minlength="6" autocomplete="new-password" required></div>
+<button id="signupBtn" class="main-btn" type="submit">إنشاء الحساب والانتقال لإدخال المعلومات</button>
+</form>
+</div>
+
+<div class="footer">بعد إنشاء الحساب، يقوم الموظف بإدخال معلوماته بنفسه، وتبقى المراجعة والمتابعة للمسؤول.</div>
+</div></div>
 
 <script>
-
-    /*
-     * إنشاء اتصال Supabase
-     */
-
-    const supabaseClient =
-        window.supabase.createClient(
-            SUPABASE_URL,
-            SUPABASE_KEY
-        );
-
-
-    let loginType = "employee";
-
-
-    /*
-     * اختيار نوع الدخول
-     */
-
-    function selectLoginType(type) {
-
-        loginType = type;
-
-        const employeeType =
-            document.getElementById("employeeType");
-
-        const adminType =
-            document.getElementById("adminType");
-
-
-        employeeType.classList.remove("active");
-        adminType.classList.remove("active");
-
-
-        if (type === "employee") {
-
-            employeeType.classList.add("active");
-
-        } else {
-
-            adminType.classList.add("active");
-
-        }
-
-
-        clearMessage();
-
-    }
-
-
-    /*
-     * تسجيل الدخول
-     */
-
-    async function login(event) {
-
-        event.preventDefault();
-
-
-        const email =
-            document.getElementById("email")
-                .value
-                .trim();
-
-        const password =
-            document.getElementById("password")
-                .value;
-
-
-        const loginBtn =
-            document.getElementById("loginBtn");
-
-
-        if (!email || !password) {
-
-            showError(
-                "يرجى إدخال البريد الإلكتروني وكلمة المرور."
-            );
-
-            return;
-
-        }
-
-
-        loginBtn.disabled = true;
-
-        loginBtn.textContent =
-            "جاري تسجيل الدخول...";
-
-
-        try {
-
-            const {
-                data,
-                error
-            } =
-                await supabaseClient.auth.signInWithPassword({
-                    email: email,
-                    password: password
-                });
-
-
-            if (error) {
-
-                throw error;
-
-            }
-
-
-            if (!data || !data.user) {
-
-                throw new Error(
-                    "تعذر الحصول على بيانات المستخدم."
-                );
-
-            }
-
-
-            const user =
-                data.user;
-
-
-            /*
-             * البحث عن ملف الموظف
-             */
-
-            const {
-                data: employee,
-                error: employeeError
-            } =
-                await supabaseClient
-                    .from("employees")
-                    .select("*")
-                    .eq("user_id", user.id)
-                    .maybeSingle();
-
-
-            if (employeeError) {
-
-                throw employeeError;
-
-            }
-
-
-            /*
-             * إذا كان الدخول كمسؤول
-             */
-
-            if (loginType === "admin") {
-
-                if (
-                    !employee ||
-                    employee.role !== "admin"
-                ) {
-
-                    await supabaseClient.auth.signOut();
-
-                    showError(
-                        "هذا الحساب ليس لديه صلاحيات المسؤول."
-                    );
-
-                    return;
-
-                }
-
-
-                window.location.href =
-                    "admin.html";
-
-                return;
-
-            }
-
-
-            /*
-             * إذا كان الدخول كموظف
-             */
-
-            if (
-                employee &&
-                employee.role === "admin"
-            ) {
-
-                await supabaseClient.auth.signOut();
-
-                showError(
-                    "هذا حساب مسؤول. اختر «دخول المسؤول»."
-                );
-
-                return;
-
-            }
-
-
-            /*
-             * الموظف لديه ملف بالفعل
-             */
-
-            if (employee) {
-
-                window.location.href =
-                    "employee.html";
-
-                return;
-
-            }
-
-
-            /*
-             * موظف جديد ليس لديه ملف بعد
-             *
-             * نسمح له بالدخول إلى صفحة
-             * الموظف حتى يقوم بإدخال بياناته.
-             */
-
-            window.location.href =
-                "employee.html";
-
-
-        } catch (error) {
-
-            console.error(
-                "Login error:",
-                error
-            );
-
-
-            let message =
-                "حدث خطأ أثناء تسجيل الدخول.";
-
-
-            if (
-                error &&
-                error.message
-            ) {
-
-                if (
-                    error.message.includes(
-                        "Invalid login credentials"
-                    )
-                ) {
-
-                    message =
-                        "البريد الإلكتروني أو كلمة المرور غير صحيحة.";
-
-                } else {
-
-                    message =
-                        error.message;
-
-                }
-
-            }
-
-
-            showError(message);
-
-
-        } finally {
-
-            loginBtn.disabled = false;
-
-            loginBtn.textContent =
-                "تسجيل الدخول";
-
-        }
-
-    }
-
-
-    /*
-     * التحقق من الجلسة الحالية
-     *
-     * مهم:
-     * لا توجد أي إعادة توجيه إلى index.html
-     * من داخل هذه الصفحة.
-     */
-
-    async function checkExistingSession() {
-
-        try {
-
-            const {
-                data,
-                error
-            } =
-                await supabaseClient.auth.getSession();
-
-
-            if (error) {
-
-                console.error(error);
-
-                return;
-
-            }
-
-
-            const session =
-                data?.session;
-
-
-            if (
-                !session ||
-                !session.user
-            ) {
-
-                return;
-
-            }
-
-
-            const user =
-                session.user;
-
-
-            const {
-                data: employee,
-                error: employeeError
-            } =
-                await supabaseClient
-                    .from("employees")
-                    .select("role")
-                    .eq("user_id", user.id)
-                    .maybeSingle();
-
-
-            if (employeeError) {
-
-                console.error(employeeError);
-
-                return;
-
-            }
-
-
-            if (
-                employee &&
-                employee.role === "admin"
-            ) {
-
-                window.location.href =
-                    "admin.html";
-
-                return;
-
-            }
-
-
-            window.location.href =
-                "employee.html";
-
-
-        } catch (error) {
-
-            console.error(
-                "Session check error:",
-                error
-            );
-
-        }
-
-    }
-
-
-    /*
-     * إظهار رسالة خطأ
-     */
-
-    function showError(text) {
-
-        const message =
-            document.getElementById("message");
-
-
-        message.className =
-            "message error";
-
-
-        message.textContent =
-            text;
-
-    }
-
-
-    /*
-     * إزالة الرسالة
-     */
-
-    function clearMessage() {
-
-        const message =
-            document.getElementById("message");
-
-
-        message.className =
-            "message";
-
-
-        message.textContent =
-            "";
-
-    }
-
-
-    /*
-     * بدء الصفحة
-     */
-
-    checkExistingSession();
-
+const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+let loginType="employee";
+
+function showMode(mode){
+ clearMessage();
+ document.getElementById("loginPanel").classList.toggle("hidden",mode!=="login");
+ document.getElementById("signupPanel").classList.toggle("hidden",mode!=="signup");
+ document.getElementById("loginTab").classList.toggle("active",mode==="login");
+ document.getElementById("signupTab").classList.toggle("active",mode==="signup");
+}
+function selectLoginType(type){
+ loginType=type;
+ document.getElementById("employeeType").classList.toggle("active",type==="employee");
+ document.getElementById("adminType").classList.toggle("active",type==="admin");
+ clearMessage();
+}
+function showError(t){const m=document.getElementById("message");m.className="message error";m.textContent=t}
+function showSuccess(t){const m=document.getElementById("message");m.className="message success";m.textContent=t}
+function clearMessage(){const m=document.getElementById("message");m.className="message";m.textContent=""}
+
+async function login(event){
+ event.preventDefault();clearMessage();
+ const email=document.getElementById("loginEmail").value.trim();
+ const password=document.getElementById("loginPassword").value;
+ const btn=document.getElementById("loginBtn");btn.disabled=true;btn.textContent="جاري تسجيل الدخول...";
+ try{
+  const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});
+  if(error)throw error;
+  const {data:profile,error:profileError}=await supabaseClient.from("employees").select("*").eq("user_id",data.user.id).maybeSingle();
+  if(profileError)throw profileError;
+  if(loginType==="admin"){
+   if(!profile||profile.role!=="admin"){await supabaseClient.auth.signOut();showError("هذا الحساب ليس لديه صلاحيات المسؤول.");return}
+   location.href="admin.html";return;
+  }
+  if(profile?.role==="admin"){await supabaseClient.auth.signOut();showError("هذا حساب مسؤول. اختر دخول المسؤول.");return}
+  location.href="employee.html";
+ }catch(e){
+  console.error(e);
+  showError(e.message?.includes("Invalid login credentials")?"البريد الإلكتروني أو كلمة المرور غير صحيحة.":(e.message||"حدث خطأ أثناء تسجيل الدخول."));
+ }finally{btn.disabled=false;btn.textContent="تسجيل الدخول"}
+}
+
+async function signUp(event){
+ event.preventDefault();clearMessage();
+ const email=document.getElementById("signupEmail").value.trim();
+ const password=document.getElementById("signupPassword").value;
+ const confirmPassword=document.getElementById("confirmPassword").value;
+ if(password!==confirmPassword){showError("كلمتا المرور غير متطابقتين.");return}
+ const btn=document.getElementById("signupBtn");btn.disabled=true;btn.textContent="جاري إنشاء الحساب...";
+ try{
+  const {data,error}=await supabaseClient.auth.signUp({email,password});
+  if(error)throw error;
+  if(data.session){location.href="employee.html";return}
+  showSuccess("تم إنشاء الحساب. إذا طُلب منك تأكيد البريد الإلكتروني، افتح رسالة التأكيد ثم سجّل الدخول.");
+  showMode("login");
+  document.getElementById("loginEmail").value=email;
+ }catch(e){
+  console.error(e);
+  showError(e.message||"تعذر إنشاء الحساب.");
+ }finally{btn.disabled=false;btn.textContent="إنشاء الحساب والانتقال لإدخال المعلومات"}
+}
+
+async function checkExistingSession(){
+ try{
+  const {data}=await supabaseClient.auth.getSession();
+  const session=data?.session;if(!session?.user)return;
+  const {data:profile,error}=await supabaseClient.from("employees").select("role").eq("user_id",session.user.id).maybeSingle();
+  if(error){console.error(error);return}
+  location.href=profile?.role==="admin"?"admin.html":"employee.html";
+ }catch(e){console.error(e)}
+}
+checkExistingSession();
 </script>
-
 </body>
-
 </html>
