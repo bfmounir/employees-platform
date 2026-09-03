@@ -8,7 +8,7 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>منصة إدارة الموظفين</title>
+    <title>لوحة تحكم المسؤول - إدارة الموظفين</title>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
@@ -22,198 +22,417 @@
 
         body {
             margin: 0;
-            min-height: 100vh;
             font-family: Arial, Tahoma, sans-serif;
-            background:
-                linear-gradient(135deg, #eef6ff, #f7fbff);
+            background: #f4f7fa;
+            color: #263746;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #087f8c, #0b607a);
+            color: white;
+            padding: 22px 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: auto;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            padding: 20px;
+            gap: 20px;
+        }
+
+        .header h1 {
+            margin: 0 0 7px;
+            font-size: 25px;
+        }
+
+        .header p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .logout-btn {
+            border: none;
+            background: rgba(255,255,255,0.15);
+            color: white;
+            padding: 11px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .logout-btn:hover {
+            background: rgba(255,255,255,0.25);
         }
 
         .container {
-            width: 100%;
-            max-width: 480px;
+            max-width: 1400px;
+            margin: 25px auto;
+            padding: 0 20px;
         }
 
-        .card {
-            background: #ffffff;
-            border-radius: 22px;
-            padding: 35px 30px;
-            box-shadow:
-                0 15px 45px rgba(0, 60, 120, 0.12);
-            border: 1px solid #e6eef7;
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
         }
 
-        .logo {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 18px;
-            border-radius: 20px;
-            background: linear-gradient(135deg, #087f8c, #0b5f78);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 38px;
-            font-weight: bold;
-            box-shadow: 0 8px 20px rgba(8, 127, 140, 0.25);
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid #e7edf2;
         }
 
-        h1 {
-            text-align: center;
-            margin: 0;
-            color: #12344d;
-            font-size: 26px;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #6b7c8f;
-            margin: 10px 0 28px;
-            line-height: 1.7;
+        .stat-title {
+            color: #71808d;
             font-size: 14px;
+            margin-bottom: 10px;
         }
 
-        .mode-buttons {
+        .stat-number {
+            font-size: 29px;
+            font-weight: bold;
+            color: #087f8c;
+        }
+
+        .toolbar {
+            background: white;
+            padding: 18px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             display: flex;
-            gap: 10px;
-            margin-bottom: 24px;
+            gap: 12px;
+            flex-wrap: wrap;
         }
 
-        .mode-btn {
-            flex: 1;
-            border: none;
-            padding: 13px 8px;
-            border-radius: 12px;
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: bold;
-            background: #edf3f7;
-            color: #526575;
-            transition: 0.2s;
-        }
-
-        .mode-btn.active {
-            background: #087f8c;
-            color: white;
-            box-shadow: 0 5px 15px rgba(8, 127, 140, 0.2);
-        }
-
-        .form-group {
-            margin-bottom: 18px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #29475c;
-            font-weight: bold;
+        .toolbar input,
+        .toolbar select {
+            padding: 12px 14px;
+            border: 1px solid #d7e1e8;
+            border-radius: 10px;
             font-size: 14px;
-        }
-
-        input {
-            width: 100%;
-            padding: 14px 15px;
-            border: 1px solid #d5e0e8;
-            border-radius: 12px;
-            font-size: 15px;
             outline: none;
-            transition: 0.2s;
             background: #fbfdff;
         }
 
-        input:focus {
+        .toolbar input {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .toolbar select {
+            min-width: 180px;
+        }
+
+        .toolbar input:focus,
+        .toolbar select:focus {
             border-color: #087f8c;
-            box-shadow: 0 0 0 3px rgba(8, 127, 140, 0.08);
+        }
+
+        .table-card {
             background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            overflow: hidden;
         }
 
-        .login-btn {
+        .table-header {
+            padding: 20px;
+            border-bottom: 1px solid #edf1f4;
+        }
+
+        .table-header h2 {
+            margin: 0;
+            color: #12344d;
+            font-size: 19px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
             width: 100%;
-            border: none;
-            padding: 15px;
-            border-radius: 13px;
-            background: linear-gradient(135deg, #087f8c, #0b607a);
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 5px;
-            transition: 0.2s;
+            border-collapse: collapse;
+            min-width: 1050px;
         }
 
-        .login-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 8px 18px rgba(8, 127, 140, 0.2);
+        th {
+            background: #f5f8fa;
+            color: #526575;
+            padding: 14px 12px;
+            text-align: right;
+            font-size: 13px;
+            white-space: nowrap;
         }
 
-        .login-btn:disabled {
-            opacity: 0.65;
-            cursor: not-allowed;
-            transform: none;
+        td {
+            padding: 14px 12px;
+            border-top: 1px solid #edf1f4;
+            font-size: 13px;
+            vertical-align: middle;
         }
 
-        .message {
-            display: none;
-            padding: 13px 15px;
-            border-radius: 11px;
-            margin-bottom: 18px;
-            font-size: 14px;
-            line-height: 1.6;
+        tr:hover td {
+            background: #fbfdff;
         }
 
-        .message.error {
-            display: block;
-            background: #fff1f1;
-            color: #a52828;
-            border: 1px solid #ffd0d0;
-        }
-
-        .message.success {
-            display: block;
-            background: #effbf4;
-            color: #18753c;
-            border: 1px solid #c8efd5;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 22px;
-            color: #8493a0;
+        .badge {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 20px;
             font-size: 12px;
-            line-height: 1.7;
+            font-weight: bold;
+            white-space: nowrap;
         }
 
-        .institution {
-            color: #087f8c;
+        .badge-active {
+            background: #e9f8ef;
+            color: #18733c;
+        }
+
+        .badge-seconded {
+            background: #fff4df;
+            color: #a86c00;
+        }
+
+        .badge-pending {
+            background: #fff5df;
+            color: #a66b00;
+        }
+
+        .badge-approved {
+            background: #e9f8ef;
+            color: #18733c;
+        }
+
+        .badge-correction {
+            background: #fff0f0;
+            color: #b32e2e;
+        }
+
+        .badge-expired {
+            background: #ffe9e9;
+            color: #b22222;
+        }
+
+        .badge-warning {
+            background: #fff4df;
+            color: #a86c00;
+        }
+
+        .badge-normal {
+            background: #edf6ff;
+            color: #17659b;
+        }
+
+        .actions {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: none;
+            padding: 8px 11px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
             font-weight: bold;
         }
 
-        .hidden {
-            display: none;
+        .btn-view {
+            background: #e9f4ff;
+            color: #17659b;
         }
 
-        @media (max-width: 500px) {
+        .btn-approve {
+            background: #e9f8ef;
+            color: #18733c;
+        }
 
-            body {
-                padding: 12px;
+        .btn-correction {
+            background: #fff0f0;
+            color: #b32e2e;
+        }
+
+        .btn:hover {
+            opacity: 0.8;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #71808d;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 50px;
+            color: #71808d;
+        }
+
+        .error {
+            background: #fff0f0;
+            color: #a52828;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Modal */
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.45);
+            z-index: 1000;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            width: 100%;
+            max-width: 850px;
+            border-radius: 18px;
+            padding: 25px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #edf1f4;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: #12344d;
+        }
+
+        .close {
+            border: none;
+            background: #f0f3f5;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .detail {
+            background: #f8fafb;
+            padding: 13px;
+            border-radius: 10px;
+        }
+
+        .detail.full {
+            grid-column: 1 / -1;
+        }
+
+        .detail-label {
+            color: #71808d;
+            font-size: 12px;
+            margin-bottom: 6px;
+        }
+
+        .detail-value {
+            color: #253c4d;
+            font-weight: bold;
+            word-break: break-word;
+        }
+
+        .modal-actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .modal-actions button {
+            border: none;
+            padding: 12px 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .approve-modal {
+            background: #087f8c;
+            color: white;
+        }
+
+        .correction-modal {
+            background: #fff0f0;
+            color: #a52828;
+        }
+
+        @media (max-width: 1000px) {
+
+            .stats {
+                grid-template-columns: repeat(3, 1fr);
             }
 
-            .card {
-                padding: 28px 20px;
-                border-radius: 18px;
+        }
+
+        @media (max-width: 700px) {
+
+            .header-content {
+                flex-direction: column;
+                align-items: stretch;
             }
 
-            h1 {
-                font-size: 22px;
+            .logout-btn {
+                width: 100%;
             }
 
-            .logo {
-                width: 70px;
-                height: 70px;
-                font-size: 32px;
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .detail.full {
+                grid-column: auto;
+            }
+
+        }
+
+        @media (max-width: 450px) {
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 0 12px;
             }
 
         }
@@ -225,111 +444,304 @@
 
 <body>
 
-<div class="container">
 
-    <div class="card">
+<header class="header">
 
-        <div class="logo">
-            👤
-        </div>
+    <div class="header-content">
 
-        <h1>
-            منصة إدارة الموظفين
-        </h1>
+        <div>
 
-        <div class="subtitle">
+            <h1>
+                لوحة تحكم المسؤول
+            </h1>
 
-            المؤسسة العمومية الإستشفائية بأولف
-            <br>
-            ولاية أدرار
+            <p>
+                إدارة ومتابعة بيانات الموظفين
+            </p>
 
         </div>
 
 
-        <div class="mode-buttons">
+        <button
+            class="logout-btn"
+            onclick="logout()">
+
+            تسجيل الخروج
+
+        </button>
+
+    </div>
+
+</header>
+
+
+<main class="container">
+
+
+    <div id="errorBox"></div>
+
+
+    <!-- الإحصائيات -->
+
+    <div class="stats">
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+                إجمالي الموظفين
+            </div>
+
+            <div
+                class="stat-number"
+                id="totalEmployees">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+                الموظفون النشطون
+            </div>
+
+            <div
+                class="stat-number"
+                id="activeEmployees">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+                موضوعون تحت التصرف
+            </div>
+
+            <div
+                class="stat-number"
+                id="secondedEmployees">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+                قيد المراجعة
+            </div>
+
+            <div
+                class="stat-number"
+                id="pendingEmployees">
+
+                0
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <div class="stat-title">
+                يحتاج إلى تصحيح
+            </div>
+
+            <div
+                class="stat-number"
+                id="correctionEmployees">
+
+                0
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- البحث والتصفية -->
+
+    <div class="toolbar">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="ابحث بالاسم أو الاسم بالفرنسية أو NIN أو الرتبة..."
+            oninput="renderEmployees()">
+
+
+        <select
+            id="statusFilter"
+            onchange="renderEmployees()">
+
+            <option value="all">
+                جميع الوضعيات
+            </option>
+
+            <option value="active">
+                نشط
+            </option>
+
+            <option value="seconded">
+                موضوع تحت التصرف
+            </option>
+
+        </select>
+
+
+        <select
+            id="profileFilter"
+            onchange="renderEmployees()">
+
+            <option value="all">
+                جميع حالات الملف
+            </option>
+
+            <option value="pending">
+                قيد المراجعة
+            </option>
+
+            <option value="approved">
+                معتمد
+            </option>
+
+            <option value="needs_correction">
+                يحتاج تصحيح
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- جدول الموظفين -->
+
+    <div class="table-card">
+
+        <div class="table-header">
+
+            <h2>
+                قائمة الموظفين
+            </h2>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            الاسم واللقب
+                        </th>
+
+                        <th>
+                            الرتبة
+                        </th>
+
+                        <th>
+                            المصلحة / المكتب
+                        </th>
+
+                        <th>
+                            الوضعية
+                        </th>
+
+                        <th>
+                            حالة الملف
+                        </th>
+
+                        <th>
+                            نهاية الوضع تحت التصرف
+                        </th>
+
+                        <th>
+                            الإجراءات
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="employeesBody">
+
+                    <tr>
+
+                        <td
+                            colspan="7"
+                            class="loading">
+
+                            جاري تحميل البيانات...
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+</main>
+
+
+<!-- نافذة تفاصيل الموظف -->
+
+<div
+    id="employeeModal"
+    class="modal">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h2>
+                تفاصيل الموظف
+            </h2>
 
             <button
-                type="button"
-                id="employeeModeBtn"
-                class="mode-btn active"
-                onclick="setMode('employee')">
+                class="close"
+                onclick="closeModal()">
 
-                دخول الموظفين
-
-            </button>
-
-
-            <button
-                type="button"
-                id="adminModeBtn"
-                class="mode-btn"
-                onclick="setMode('admin')">
-
-                دخول المسؤول
+                ×
 
             </button>
 
         </div>
 
 
-        <div id="message" class="message"></div>
+        <div
+            id="employeeDetails"
+            class="details-grid">
+
+        </div>
 
 
-        <form id="loginForm">
-
-            <div class="form-group">
-
-                <label for="email">
-                    البريد الإلكتروني
-                </label>
-
-                <input
-                    type="email"
-                    id="email"
-                    placeholder="أدخل البريد الإلكتروني"
-                    autocomplete="email"
-                    required>
-
-            </div>
-
-
-            <div class="form-group">
-
-                <label for="password">
-                    كلمة المرور
-                </label>
-
-                <input
-                    type="password"
-                    id="password"
-                    placeholder="أدخل كلمة المرور"
-                    autocomplete="current-password"
-                    required>
-
-            </div>
-
-
-            <button
-                type="submit"
-                id="loginBtn"
-                class="login-btn">
-
-                دخول الموظف
-
-            </button>
-
-        </form>
-
-
-        <div class="footer">
-
-            <div class="institution">
-                منصة رقمية لمتابعة وتحديث بيانات الموظفين
-            </div>
-
-            <div>
-                جميع الحقوق محفوظة
-            </div>
+        <div
+            id="modalActions"
+            class="modal-actions">
 
         </div>
 
@@ -347,339 +759,34 @@
         );
 
 
-    let currentMode = "employee";
+    let allEmployees = [];
 
-
-    function setMode(mode) {
-
-        currentMode = mode;
-
-        const employeeBtn =
-            document.getElementById("employeeModeBtn");
-
-        const adminBtn =
-            document.getElementById("adminModeBtn");
-
-        const loginBtn =
-            document.getElementById("loginBtn");
-
-        clearMessage();
-
-
-        if (mode === "employee") {
-
-            employeeBtn.classList.add("active");
-            adminBtn.classList.remove("active");
-
-            loginBtn.textContent =
-                "دخول الموظف";
-
-        } else {
-
-            adminBtn.classList.add("active");
-            employeeBtn.classList.remove("active");
-
-            loginBtn.textContent =
-                "دخول المسؤول";
-
-        }
-
-    }
-
-
-    function showMessage(text, type = "error") {
-
-        const message =
-            document.getElementById("message");
-
-        message.textContent = text;
-
-        message.className =
-            "message " + type;
-
-    }
-
-
-    function clearMessage() {
-
-        const message =
-            document.getElementById("message");
-
-        message.textContent = "";
-
-        message.className = "message";
-
-    }
-
-
-    document
-        .getElementById("loginForm")
-        .addEventListener("submit", async function(event) {
-
-            event.preventDefault();
-
-            clearMessage();
-
-
-            const email =
-                document
-                    .getElementById("email")
-                    .value
-                    .trim();
-
-
-            const password =
-                document
-                    .getElementById("password")
-                    .value;
-
-
-            const loginBtn =
-                document.getElementById("loginBtn");
-
-
-            if (!email || !password) {
-
-                showMessage(
-                    "يرجى إدخال البريد الإلكتروني وكلمة المرور."
-                );
-
-                return;
-
-            }
-
-
-            loginBtn.disabled = true;
-
-            loginBtn.textContent =
-                "جاري التحقق...";
-
-
-            try {
-
-                /*
-                 * تسجيل الدخول بواسطة Supabase Auth
-                 */
-
-                const {
-                    data: authData,
-                    error: authError
-                } =
-                    await supabaseClient.auth
-                        .signInWithPassword({
-                            email: email,
-                            password: password
-                        });
-
-
-                if (authError) {
-
-                    throw authError;
-
-                }
-
-
-                if (!authData || !authData.user) {
-
-                    throw new Error(
-                        "تعذر الحصول على بيانات الحساب."
-                    );
-
-                }
-
-
-                const user =
-                    authData.user;
-
-
-                /*
-                 * نحاول معرفة هل للمستخدم
-                 * سجل سابق في employees
-                 *
-                 * إذا لم يوجد سجل:
-                 * يسمح له بالدخول إلى employee.html
-                 * ليقوم بإنشاء ملفه بنفسه.
-                 */
-
-                const {
-                    data: employee,
-                    error: employeeError
-                } =
-                    await supabaseClient
-                        .from("employees")
-                        .select(`
-                            id,
-                            role,
-                            profile_status
-                        `)
-                        .eq("user_id", user.id)
-                        .maybeSingle();
-
-
-                if (employeeError) {
-
-                    console.error(
-                        "Employee query error:",
-                        employeeError
-                    );
-
-                    throw new Error(
-                        "حدث خطأ أثناء التحقق من ملف الموظف."
-                    );
-
-                }
-
-
-                /*
-                 * دخول المسؤول
-                 */
-
-                if (currentMode === "admin") {
-
-                    if (!employee) {
-
-                        await supabaseClient.auth.signOut();
-
-                        throw new Error(
-                            "هذا الحساب غير مرتبط بملف مسؤول في المنصة."
-                        );
-
-                    }
-
-
-                    if (employee.role !== "admin") {
-
-                        await supabaseClient.auth.signOut();
-
-                        throw new Error(
-                            "هذا الحساب ليس لديه صلاحيات المسؤول."
-                        );
-
-                    }
-
-
-                    showMessage(
-                        "تم تسجيل الدخول بنجاح، جاري فتح لوحة المسؤول...",
-                        "success"
-                    );
-
-
-                    setTimeout(function() {
-
-                        window.location.href =
-                            "admin.html";
-
-                    }, 500);
-
-
-                    return;
-
-                }
-
-
-                /*
-                 * دخول الموظف
-                 */
-
-                if (employee && employee.role === "admin") {
-
-                    await supabaseClient.auth.signOut();
-
-                    throw new Error(
-                        "هذا الحساب مخصص للمسؤول. يرجى اختيار دخول المسؤول."
-                    );
-
-                }
-
-
-                /*
-                 * هنا النقطة المهمة:
-                 *
-                 * إذا كان الموظف لديه ملف سابق:
-                 * يدخل إلى ملفه.
-                 *
-                 * إذا لم يكن لديه ملف:
-                 * يدخل أيضا إلى employee.html
-                 * وهناك سيتم إنشاء الملف عند الحفظ.
-                 */
-
-                showMessage(
-                    "تم تسجيل الدخول بنجاح، جاري فتح ملف الموظف...",
-                    "success"
-                );
-
-
-                setTimeout(function() {
-
-                    window.location.href =
-                        "employee.html";
-
-                }, 500);
-
-
-            } catch (error) {
-
-                console.error(error);
-
-                showMessage(
-                    error.message ||
-                    "حدث خطأ أثناء تسجيل الدخول."
-                );
-
-
-                try {
-
-                    await supabaseClient.auth.signOut();
-
-                } catch (logoutError) {
-
-                    console.error(logoutError);
-
-                }
-
-            } finally {
-
-                loginBtn.disabled = false;
-
-                if (currentMode === "employee") {
-
-                    loginBtn.textContent =
-                        "دخول الموظف";
-
-                } else {
-
-                    loginBtn.textContent =
-                        "دخول المسؤول";
-
-                }
-
-            }
-
-        });
+    let selectedEmployee = null;
 
 
     /*
-     * إذا كان المستخدم مسجلا بالفعل،
-     * نحاول توجيهه مباشرة إلى الصفحة المناسبة.
+     * التحقق من المسؤول
      */
 
-    async function checkExistingSession() {
+    async function checkAdmin() {
 
         try {
 
             const {
-                data
+                data: sessionData
             } =
                 await supabaseClient.auth.getSession();
 
 
             const session =
-                data?.session;
+                sessionData?.session;
 
 
             if (!session || !session.user) {
 
-                return;
+                window.location.href = "index.html";
+
+                return false;
 
             }
 
@@ -701,36 +808,85 @@
 
             if (error) {
 
-                console.error(error);
-
-                return;
+                throw error;
 
             }
 
 
-            if (employee && employee.role === "admin") {
+            if (!employee || employee.role !== "admin") {
 
-                window.location.href =
-                    "admin.html";
+                await supabaseClient.auth.signOut();
 
-                return;
+                window.location.href = "index.html";
+
+                return false;
 
             }
 
 
-            /*
-             * حتى إذا لم يكن له سجل employees
-             * نسمح له بالانتقال إلى صفحة الموظف.
-             */
-
-            window.location.href =
-                "employee.html";
+            return true;
 
         } catch (error) {
 
-            console.error(
-                "Session check error:",
+            console.error(error);
+
+            showError(
+                "تعذر التحقق من صلاحيات المسؤول."
+            );
+
+            return false;
+
+        }
+
+    }
+
+
+    /*
+     * تحميل الموظفين
+     *
+     * مهم:
+     * نستبعد role = admin
+     * حتى لا يدخل حساب المسؤول
+     * ضمن إحصائيات الموظفين.
+     */
+
+    async function loadEmployees() {
+
+        try {
+
+            const {
+                data,
                 error
+            } =
+                await supabaseClient
+                    .from("employees")
+                    .select("*")
+                    .eq("role", "employee")
+                    .order("created_at", {
+                        ascending: false
+                    });
+
+
+            if (error) {
+
+                throw error;
+
+            }
+
+
+            allEmployees = data || [];
+
+
+            updateStats();
+
+            renderEmployees();
+
+        } catch (error) {
+
+            console.error(error);
+
+            showError(
+                "حدث خطأ أثناء تحميل بيانات الموظفين."
             );
 
         }
@@ -738,7 +894,933 @@
     }
 
 
-    checkExistingSession();
+    /*
+     * تحديث الإحصائيات
+     */
+
+    function updateStats() {
+
+        /*
+         * allEmployees يحتوي أصلا على الموظفين فقط
+         * لأن الاستعلام السابق يستبعد admin.
+         */
+
+        const total =
+            allEmployees.length;
+
+
+        const active =
+            allEmployees.filter(
+                employee =>
+                    employee.work_status === "active"
+            ).length;
+
+
+        const seconded =
+            allEmployees.filter(
+                employee =>
+                    employee.work_status === "seconded"
+            ).length;
+
+
+        const pending =
+            allEmployees.filter(
+                employee =>
+                    employee.profile_status === "pending"
+            ).length;
+
+
+        const correction =
+            allEmployees.filter(
+                employee =>
+                    employee.profile_status === "needs_correction"
+            ).length;
+
+
+        document.getElementById(
+            "totalEmployees"
+        ).textContent = total;
+
+
+        document.getElementById(
+            "activeEmployees"
+        ).textContent = active;
+
+
+        document.getElementById(
+            "secondedEmployees"
+        ).textContent = seconded;
+
+
+        document.getElementById(
+            "pendingEmployees"
+        ).textContent = pending;
+
+
+        document.getElementById(
+            "correctionEmployees"
+        ).textContent = correction;
+
+    }
+
+
+    /*
+     * عرض الموظفين
+     */
+
+    function renderEmployees() {
+
+        const body =
+            document.getElementById(
+                "employeesBody"
+            );
+
+
+        const search =
+            document
+                .getElementById("searchInput")
+                .value
+                .trim()
+                .toLowerCase();
+
+
+        const statusFilter =
+            document.getElementById(
+                "statusFilter"
+            ).value;
+
+
+        const profileFilter =
+            document.getElementById(
+                "profileFilter"
+            ).value;
+
+
+        const filtered =
+            allEmployees.filter(employee => {
+
+                const searchText = [
+
+                    employee.nom_ar,
+
+                    employee.nom_fr,
+
+                    employee.nin,
+
+                    employee.grade,
+
+                    employee.service_ar,
+
+                    employee.service_fr,
+
+                    employee.poste_ar,
+
+                    employee.poste_fr,
+
+                    employee.lieu_travail_ar,
+
+                    employee.lieu_travail_fr
+
+                ]
+                .filter(Boolean)
+                .join(" ")
+                .toLowerCase();
+
+
+                const matchesSearch =
+                    !search ||
+                    searchText.includes(search);
+
+
+                const matchesStatus =
+                    statusFilter === "all" ||
+                    employee.work_status === statusFilter;
+
+
+                const matchesProfile =
+                    profileFilter === "all" ||
+                    employee.profile_status === profileFilter;
+
+
+                return (
+                    matchesSearch &&
+                    matchesStatus &&
+                    matchesProfile
+                );
+
+            });
+
+
+        if (filtered.length === 0) {
+
+            body.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="7"
+                        class="empty">
+
+                        لا توجد بيانات مطابقة.
+
+                    </td>
+
+                </tr>
+
+            `;
+
+            return;
+
+        }
+
+
+        body.innerHTML =
+            filtered.map(employee => {
+
+                return `
+
+                    <tr>
+
+                        <td>
+                            <strong>
+                                ${escapeHtml(
+                                    employee.nom_ar || "-"
+                                )}
+                            </strong>
+                            <br>
+                            <small>
+                                ${escapeHtml(
+                                    employee.nom_fr || ""
+                                )}
+                            </small>
+                        </td>
+
+
+                        <td>
+                            ${escapeHtml(
+                                employee.grade || "-"
+                            )}
+                        </td>
+
+
+                        <td>
+                            ${escapeHtml(
+                                employee.service_ar || "-"
+                            )}
+                        </td>
+
+
+                        <td>
+
+                            ${
+                                employee.work_status === "seconded"
+
+                                ?
+
+                                '<span class="badge badge-seconded">موضوع تحت التصرف</span>'
+
+                                :
+
+                                '<span class="badge badge-active">نشط</span>'
+                            }
+
+                        </td>
+
+
+                        <td>
+
+                            ${getProfileBadge(
+                                employee.profile_status
+                            )}
+
+                        </td>
+
+
+                        <td>
+
+                            ${
+                                employee.work_status === "seconded"
+
+                                ?
+
+                                getDeadlineBadge(
+                                    employee.disposition_end
+                                )
+
+                                :
+
+                                "-"
+                            }
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="actions">
+
+                                <button
+                                    class="btn btn-view"
+                                    onclick="viewEmployee('${employee.id}')">
+
+                                    عرض
+
+                                </button>
+
+
+                                ${
+                                    employee.profile_status !== "approved"
+
+                                    ?
+
+                                    `
+                                    <button
+                                        class="btn btn-approve"
+                                        onclick="approveEmployee('${employee.id}')">
+
+                                        اعتماد
+
+                                    </button>
+                                    `
+
+                                    :
+
+                                    ""
+                                }
+
+
+                                <button
+                                    class="btn btn-correction"
+                                    onclick="requestCorrection('${employee.id}')">
+
+                                    طلب تصحيح
+
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                `;
+
+            }).join("");
+
+    }
+
+
+    /*
+     * حالة الملف
+     */
+
+    function getProfileBadge(status) {
+
+        if (status === "approved") {
+
+            return `
+                <span class="badge badge-approved">
+                    معتمد
+                </span>
+            `;
+
+        }
+
+
+        if (status === "needs_correction") {
+
+            return `
+                <span class="badge badge-correction">
+                    يحتاج تصحيح
+                </span>
+            `;
+
+        }
+
+
+        return `
+            <span class="badge badge-pending">
+                قيد المراجعة
+            </span>
+        `;
+
+    }
+
+
+    /*
+     * نهاية الوضع تحت التصرف
+     */
+
+    function getDeadlineBadge(dateString) {
+
+        if (!dateString) {
+
+            return "-";
+
+        }
+
+
+        const today =
+            new Date();
+
+
+        today.setHours(
+            0, 0, 0, 0
+        );
+
+
+        const endDate =
+            new Date(
+                dateString + "T00:00:00"
+            );
+
+
+        const difference =
+            Math.ceil(
+                (
+                    endDate - today
+                ) /
+                (
+                    1000 *
+                    60 *
+                    60 *
+                    24
+                )
+            );
+
+
+        const formattedDate =
+            formatDate(dateString);
+
+
+        if (difference < 0) {
+
+            return `
+                <span class="badge badge-expired">
+                    منتهٍ: ${formattedDate}
+                </span>
+            `;
+
+        }
+
+
+        if (difference <= 30) {
+
+            return `
+                <span class="badge badge-warning">
+                    ${formattedDate}
+                    <br>
+                    متبقي ${difference} يوم
+                </span>
+            `;
+
+        }
+
+
+        return `
+            <span class="badge badge-normal">
+                ${formattedDate}
+            </span>
+        `;
+
+    }
+
+
+    function formatDate(dateString) {
+
+        if (!dateString) {
+
+            return "-";
+
+        }
+
+        const date =
+            new Date(
+                dateString + "T00:00:00"
+            );
+
+        return date.toLocaleDateString(
+            "ar-DZ"
+        );
+
+    }
+
+
+    /*
+     * عرض تفاصيل الموظف
+     */
+
+    function viewEmployee(id) {
+
+        selectedEmployee =
+            allEmployees.find(
+                employee =>
+                    employee.id === id
+            );
+
+
+        if (!selectedEmployee) {
+
+            return;
+
+        }
+
+
+        const e =
+            selectedEmployee;
+
+
+        document.getElementById(
+            "employeeDetails"
+        ).innerHTML = `
+
+            ${detail(
+                "الاسم واللقب بالعربية",
+                e.nom_ar
+            )}
+
+            ${detail(
+                "Nom et prénom",
+                e.nom_fr
+            )}
+
+            ${detail(
+                "منصب العمل",
+                e.poste_ar
+            )}
+
+            ${detail(
+                "Poste de travail",
+                e.poste_fr
+            )}
+
+            ${detail(
+                "مكان العمل",
+                e.lieu_travail_ar
+            )}
+
+            ${detail(
+                "Lieu de travail",
+                e.lieu_travail_fr
+            )}
+
+            ${detail(
+                "الرتبة",
+                e.grade
+            )}
+
+            ${detail(
+                "NIN",
+                e.nin
+            )}
+
+            ${detail(
+                "البريد الإلكتروني",
+                e.email
+            )}
+
+            ${detail(
+                "الهاتف الشخصي",
+                e.phone
+            )}
+
+            ${detail(
+                "المصلحة / المكتب",
+                e.service_ar
+            )}
+
+            ${detail(
+                "Service / Bureau",
+                e.service_fr
+            )}
+
+            ${detail(
+                "الوضعية",
+                e.work_status === "seconded"
+                    ? "موضوع تحت التصرف"
+                    : "نشط"
+            )}
+
+
+            ${
+                e.work_status === "seconded"
+
+                ?
+
+                `
+
+                ${detail(
+                    "المؤسسة المستقبلة",
+                    e.host_institution
+                )}
+
+                ${detail(
+                    "المصلحة / المكتب لدى المؤسسة المستقبلة",
+                    e.host_service
+                )}
+
+                ${detail(
+                    "تاريخ بداية الوضع تحت التصرف",
+                    formatDate(
+                        e.disposition_start
+                    )
+                )}
+
+                ${detail(
+                    "تاريخ نهاية الوضع تحت التصرف",
+                    formatDate(
+                        e.disposition_end
+                    )
+                )}
+
+                `
+
+                :
+
+                ""
+            }
+
+
+            ${detail(
+                "حالة الملف",
+                getProfileText(
+                    e.profile_status
+                )
+            )}
+
+
+            ${detail(
+                "ملاحظة المسؤول",
+                e.admin_note || "لا توجد ملاحظات"
+            )}
+
+        `;
+
+
+        document.getElementById(
+            "modalActions"
+        ).innerHTML = `
+
+            ${
+                e.profile_status !== "approved"
+
+                ?
+
+                `
+                <button
+                    class="approve-modal"
+                    onclick="approveEmployee('${e.id}'); closeModal();">
+
+                    اعتماد الملف
+
+                </button>
+                `
+
+                :
+
+                ""
+            }
+
+
+            <button
+                class="correction-modal"
+                onclick="requestCorrection('${e.id}'); closeModal();">
+
+                طلب تصحيح البيانات
+
+            </button>
+
+        `;
+
+
+        document
+            .getElementById("employeeModal")
+            .classList.add("show");
+
+    }
+
+
+    function detail(label, value) {
+
+        return `
+
+            <div class="detail">
+
+                <div class="detail-label">
+                    ${escapeHtml(label)}
+                </div>
+
+                <div class="detail-value">
+                    ${escapeHtml(
+                        value || "-"
+                    )}
+                </div>
+
+            </div>
+
+        `;
+
+    }
+
+
+    function getProfileText(status) {
+
+        if (status === "approved") {
+
+            return "معتمد";
+
+        }
+
+        if (status === "needs_correction") {
+
+            return "يحتاج إلى تصحيح";
+
+        }
+
+        return "قيد المراجعة";
+
+    }
+
+
+    /*
+     * اعتماد الموظف
+     */
+
+    async function approveEmployee(id) {
+
+        if (!confirm(
+            "هل تريد اعتماد ملف هذا الموظف؟"
+        )) {
+
+            return;
+
+        }
+
+
+        try {
+
+            const {
+                error
+            } =
+                await supabaseClient
+                    .from("employees")
+                    .update({
+                        profile_status: "approved",
+                        admin_note: null
+                    })
+                    .eq("id", id);
+
+
+            if (error) {
+
+                throw error;
+
+            }
+
+
+            await loadEmployees();
+
+
+            alert(
+                "تم اعتماد ملف الموظف بنجاح."
+            );
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                "حدث خطأ أثناء اعتماد الملف."
+            );
+
+        }
+
+    }
+
+
+    /*
+     * طلب تصحيح
+     */
+
+    async function requestCorrection(id) {
+
+        const note =
+            prompt(
+                "اكتب ملاحظة التصحيح المطلوبة من الموظف:"
+            );
+
+
+        if (note === null) {
+
+            return;
+
+        }
+
+
+        if (!note.trim()) {
+
+            alert(
+                "يجب كتابة ملاحظة توضح المطلوب تصحيحه."
+            );
+
+            return;
+
+        }
+
+
+        try {
+
+            const {
+                error
+            } =
+                await supabaseClient
+                    .from("employees")
+                    .update({
+                        profile_status:
+                            "needs_correction",
+
+                        admin_note:
+                            note.trim()
+                    })
+                    .eq("id", id);
+
+
+            if (error) {
+
+                throw error;
+
+            }
+
+
+            await loadEmployees();
+
+
+            alert(
+                "تم إرسال طلب التصحيح للموظف."
+            );
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                "حدث خطأ أثناء إرسال طلب التصحيح."
+            );
+
+        }
+
+    }
+
+
+    /*
+     * إغلاق النافذة
+     */
+
+    function closeModal() {
+
+        document
+            .getElementById("employeeModal")
+            .classList.remove("show");
+
+    }
+
+
+    document
+        .getElementById("employeeModal")
+        .addEventListener(
+            "click",
+            function(event) {
+
+                if (event.target === this) {
+
+                    closeModal();
+
+                }
+
+            }
+        );
+
+
+    /*
+     * تسجيل الخروج
+     */
+
+    async function logout() {
+
+        await supabaseClient.auth.signOut();
+
+        window.location.href =
+            "index.html";
+
+    }
+
+
+    /*
+     * حماية HTML
+     */
+
+    function escapeHtml(value) {
+
+        if (value === null ||
+            value === undefined) {
+
+            return "";
+
+        }
+
+
+        return String(value)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+
+    }
+
+
+    /*
+     * إظهار الخطأ
+     */
+
+    function showError(text) {
+
+        document.getElementById(
+            "errorBox"
+        ).innerHTML = `
+
+            <div class="error">
+                ${escapeHtml(text)}
+            </div>
+
+        `;
+
+    }
+
+
+    /*
+     * بدء الصفحة
+     */
+
+    async function init() {
+
+        const isAdmin =
+            await checkAdmin();
+
+
+        if (!isAdmin) {
+
+            return;
+
+        }
+
+
+        await loadEmployees();
+
+    }
+
+
+    init();
 
 </script>
 
