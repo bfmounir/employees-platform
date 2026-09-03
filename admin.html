@@ -1,1878 +1,278 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>لوحة تحكم المسؤول - إدارة الموظفين</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
 <style>
-
-* {
-    box-sizing: border-box;
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Tahoma,sans-serif;background:#f4f7fa;color:#263746}
+.header{background:linear-gradient(135deg,#087f8c,#0b607a);color:#fff;padding:22px 30px;box-shadow:0 4px 15px rgba(0,0,0,.08)}
+.header-content{max-width:1400px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.header h1{margin:0 0 7px;font-size:25px}.header p{margin:0;opacity:.9;font-size:14px}
+.logout-btn{border:none;background:rgba(255,255,255,.15);color:#fff;padding:11px 18px;border-radius:10px;cursor:pointer;font-weight:bold}
+.container{max-width:1400px;margin:25px auto;padding:0 20px}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:15px;margin-bottom:25px}
+.stat-card,.toolbar,.table-card{background:#fff;border-radius:15px;box-shadow:0 4px 15px rgba(0,0,0,.05);border:1px solid #e7edf2}
+.stat-card{padding:20px}.stat-title{color:#71808d;font-size:14px;margin-bottom:10px}.stat-number{font-size:29px;font-weight:bold;color:#087f8c}
+.toolbar{padding:18px;margin-bottom:20px;display:flex;gap:12px;flex-wrap:wrap}
+.toolbar input,.toolbar select{padding:12px 14px;border:1px solid #d7e1e8;border-radius:10px;font-size:14px;outline:none;background:#fbfdff}
+.toolbar input{flex:1;min-width:250px}.toolbar select{min-width:180px}
+.export-btn,.print-btn{border:none;padding:12px 17px;border-radius:10px;cursor:pointer;font-weight:bold}
+.export-btn{background:#087f8c;color:#fff}.print-btn{background:#e9f4ff;color:#17659b}
+.table-card{overflow:hidden}.table-header{padding:20px;border-bottom:1px solid #edf1f4;display:flex;justify-content:space-between;align-items:center;gap:10px}.table-header h2{margin:0;color:#12344d;font-size:19px}
+.table-wrapper{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:1100px}
+th{background:#f5f8fa;color:#526575;padding:14px 12px;text-align:right;font-size:13px;white-space:nowrap}
+td{padding:14px 12px;border-top:1px solid #edf1f4;font-size:13px;vertical-align:middle}tr:hover td{background:#fbfdff}
+.badge{display:inline-block;padding:6px 10px;border-radius:20px;font-size:12px;font-weight:bold;white-space:nowrap}
+.badge-active,.badge-approved{background:#e9f8ef;color:#18733c}.badge-seconded,.badge-pending,.badge-warning{background:#fff4df;color:#a86c00}.badge-correction,.badge-expired{background:#fff0f0;color:#b32e2e}.badge-normal{background:#edf6ff;color:#17659b}
+.actions{display:flex;gap:7px;flex-wrap:wrap}.btn{border:none;padding:8px 11px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:bold}
+.btn-view{background:#e9f4ff;color:#17659b}.btn-approve{background:#e9f8ef;color:#18733c}.btn-correction{background:#fff0f0;color:#b32e2e}.btn-delete{background:#ffe9e9;color:#a52828}.btn:hover{opacity:.8}
+.loading,.empty{text-align:center;padding:50px;color:#71808d}.error{background:#fff0f0;color:#a52828;padding:15px;border-radius:10px;margin-bottom:20px}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1000;padding:20px;overflow-y:auto}.modal.show{display:flex;align-items:center;justify-content:center}
+.modal-content{background:#fff;width:100%;max-width:850px;border-radius:18px;padding:25px;max-height:90vh;overflow-y:auto}.modal-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #edf1f4;padding-bottom:15px;margin-bottom:20px}.modal-header h2{margin:0;color:#12344d}
+.close{border:none;background:#f0f3f5;width:35px;height:35px;border-radius:50%;cursor:pointer;font-size:20px}
+.details-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.detail{background:#f8fafb;padding:13px;border-radius:10px}.detail-label{color:#71808d;font-size:12px;margin-bottom:6px}.detail-value{color:#253c4d;font-weight:bold;word-break:break-word}
+.modal-actions{margin-top:20px;display:flex;gap:10px;flex-wrap:wrap}.modal-actions button{border:none;padding:12px 18px;border-radius:10px;cursor:pointer;font-weight:bold}
+.approve-modal{background:#087f8c;color:#fff}.correction-modal{background:#fff0f0;color:#a52828}.delete-modal{background:#ffe9e9;color:#a52828}
+@media(max-width:1000px){.stats{grid-template-columns:repeat(3,1fr)}}@media(max-width:700px){.header-content{flex-direction:column;align-items:stretch}.logout-btn{width:100%}.stats{grid-template-columns:repeat(2,1fr)}.details-grid{grid-template-columns:1fr}.table-header{align-items:stretch;flex-direction:column}}@media(max-width:450px){.stats{grid-template-columns:1fr}.container{padding:0 12px}}
+@media print{
+ body{background:#fff}.header,.toolbar,.stats,.modal,.no-print{display:none!important}.container{max-width:none;margin:0;padding:0}.table-card{box-shadow:none;border:none}.table-header{padding:0 0 10px}.table-header h2{font-size:18px}.table-wrapper{overflow:visible}table{min-width:0;font-size:10px}th,td{padding:6px 4px;font-size:10px}.actions{display:none}
 }
-
-body {
-    margin: 0;
-    font-family: Arial, Tahoma, sans-serif;
-    background: #f4f7fa;
-    color: #263746;
-}
-
-.header {
-    background: linear-gradient(135deg, #087f8c, #0b607a);
-    color: white;
-    padding: 22px 30px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-}
-
-.header-content {
-    max-width: 1400px;
-    margin: auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-}
-
-.header h1 {
-    margin: 0 0 7px;
-    font-size: 25px;
-}
-
-.header p {
-    margin: 0;
-    opacity: .9;
-    font-size: 14px;
-}
-
-.logout-btn {
-    border: none;
-    background: rgba(255,255,255,.15);
-    color: white;
-    padding: 11px 18px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.container {
-    max-width: 1400px;
-    margin: 25px auto;
-    padding: 0 20px;
-}
-
-.stats {
-    display: grid;
-    grid-template-columns: repeat(5,1fr);
-    gap: 15px;
-    margin-bottom: 25px;
-}
-
-.stat-card {
-    background: white;
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,.05);
-    border: 1px solid #e7edf2;
-}
-
-.stat-title {
-    color: #71808d;
-    font-size: 14px;
-    margin-bottom: 10px;
-}
-
-.stat-number {
-    font-size: 29px;
-    font-weight: bold;
-    color: #087f8c;
-}
-
-.toolbar {
-    background: white;
-    padding: 18px;
-    border-radius: 15px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 15px rgba(0,0,0,.05);
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-}
-
-.toolbar input,
-.toolbar select {
-    padding: 12px 14px;
-    border: 1px solid #d7e1e8;
-    border-radius: 10px;
-    font-size: 14px;
-    outline: none;
-    background: #fbfdff;
-}
-
-.toolbar input {
-    flex: 1;
-    min-width: 250px;
-}
-
-.toolbar select {
-    min-width: 180px;
-}
-
-.table-card {
-    background: white;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,.05);
-    overflow: hidden;
-}
-
-.table-header {
-    padding: 20px;
-    border-bottom: 1px solid #edf1f4;
-}
-
-.table-header h2 {
-    margin: 0;
-    color: #12344d;
-    font-size: 19px;
-}
-
-.table-wrapper {
-    overflow-x: auto;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 1150px;
-}
-
-th {
-    background: #f5f8fa;
-    color: #526575;
-    padding: 14px 12px;
-    text-align: right;
-    font-size: 13px;
-    white-space: nowrap;
-}
-
-td {
-    padding: 14px 12px;
-    border-top: 1px solid #edf1f4;
-    font-size: 13px;
-    vertical-align: middle;
-}
-
-tr:hover td {
-    background: #fbfdff;
-}
-
-.badge {
-    display: inline-block;
-    padding: 6px 10px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: bold;
-    white-space: nowrap;
-}
-
-.badge-active {
-    background: #e9f8ef;
-    color: #18733c;
-}
-
-.badge-seconded {
-    background: #fff4df;
-    color: #a86c00;
-}
-
-.badge-pending {
-    background: #fff5df;
-    color: #a66b00;
-}
-
-.badge-approved {
-    background: #e9f8ef;
-    color: #18733c;
-}
-
-.badge-correction {
-    background: #fff0f0;
-    color: #b32e2e;
-}
-
-.badge-expired {
-    background: #ffe9e9;
-    color: #b22222;
-}
-
-.badge-warning {
-    background: #fff4df;
-    color: #a86c00;
-}
-
-.badge-normal {
-    background: #edf6ff;
-    color: #17659b;
-}
-
-.actions {
-    display: flex;
-    gap: 7px;
-    flex-wrap: wrap;
-}
-
-.btn {
-    border: none;
-    padding: 8px 11px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 12px;
-    font-weight: bold;
-}
-
-.btn-view {
-    background: #e9f4ff;
-    color: #17659b;
-}
-
-.btn-approve {
-    background: #e9f8ef;
-    color: #18733c;
-}
-
-.btn-correction {
-    background: #fff0f0;
-    color: #b32e2e;
-}
-
-.btn-delete {
-    background: #ffe5e5;
-    color: #b42323;
-}
-
-.btn-delete:hover {
-    background: #ffd0d0;
-}
-
-.loading,
-.empty {
-    text-align: center;
-    padding: 50px;
-    color: #71808d;
-}
-
-.error {
-    background: #fff0f0;
-    color: #a52828;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-}
-
-/* Modal */
-
-.modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,.45);
-    z-index: 1000;
-    padding: 20px;
-    overflow-y: auto;
-}
-
-.modal.show {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.modal-content {
-    background: white;
-    width: 100%;
-    max-width: 850px;
-    border-radius: 18px;
-    padding: 25px;
-    max-height: 90vh;
-    overflow-y: auto;
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #edf1f4;
-    padding-bottom: 15px;
-    margin-bottom: 20px;
-}
-
-.modal-header h2 {
-    margin: 0;
-    color: #12344d;
-}
-
-.close {
-    border: none;
-    background: #f0f3f5;
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 20px;
-}
-
-.details-grid {
-    display: grid;
-    grid-template-columns: repeat(2,1fr);
-    gap: 12px;
-}
-
-.detail {
-    background: #f8fafb;
-    padding: 13px;
-    border-radius: 10px;
-}
-
-.detail-label {
-    color: #71808d;
-    font-size: 12px;
-    margin-bottom: 6px;
-}
-
-.detail-value {
-    color: #253c4d;
-    font-weight: bold;
-    word-break: break-word;
-}
-
-.modal-actions {
-    margin-top: 20px;
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-}
-
-.modal-actions button {
-    border: none;
-    padding: 12px 18px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.approve-modal {
-    background: #087f8c;
-    color: white;
-}
-
-.correction-modal {
-    background: #fff0f0;
-    color: #a52828;
-}
-
-.delete-modal {
-    background: #b42323;
-    color: white;
-}
-
-@media (max-width:1000px) {
-    .stats {
-        grid-template-columns: repeat(3,1fr);
-    }
-}
-
-@media (max-width:700px) {
-
-    .header-content {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .logout-btn {
-        width: 100%;
-    }
-
-    .stats {
-        grid-template-columns: repeat(2,1fr);
-    }
-
-    .details-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width:450px) {
-
-    .stats {
-        grid-template-columns: 1fr;
-    }
-
-    .container {
-        padding: 0 12px;
-    }
-}
-
 </style>
-
 </head>
-
-
 <body>
-
-
 <header class="header">
-
 <div class="header-content">
-
-<div>
-
-<h1>لوحة تحكم المسؤول</h1>
-
-<p>إدارة ومتابعة بيانات الموظفين</p>
-
+<div><h1>لوحة تحكم المسؤول</h1><p>إدارة ومتابعة بيانات الموظفين</p></div>
+<button class="logout-btn" onclick="logout()">تسجيل الخروج</button>
 </div>
-
-<button
-class="logout-btn"
-onclick="logout()">
-
-تسجيل الخروج
-
-</button>
-
-</div>
-
 </header>
 
-
 <main class="container">
-
-
 <div id="errorBox"></div>
 
-
 <div class="stats">
-
-<div class="stat-card">
-
-<div class="stat-title">
-إجمالي الموظفين
+<div class="stat-card"><div class="stat-title">إجمالي الموظفين</div><div class="stat-number" id="totalEmployees">0</div></div>
+<div class="stat-card"><div class="stat-title">الموظفون النشطون</div><div class="stat-number" id="activeEmployees">0</div></div>
+<div class="stat-card"><div class="stat-title">موضوعون تحت التصرف</div><div class="stat-number" id="secondedEmployees">0</div></div>
+<div class="stat-card"><div class="stat-title">قيد المراجعة</div><div class="stat-number" id="pendingEmployees">0</div></div>
+<div class="stat-card"><div class="stat-title">يحتاج إلى تصحيح</div><div class="stat-number" id="correctionEmployees">0</div></div>
 </div>
 
-<div
-class="stat-number"
-id="totalEmployees">
-
-0
-
-</div>
-
-</div>
-
-
-<div class="stat-card">
-
-<div class="stat-title">
-الموظفون النشطون
-</div>
-
-<div
-class="stat-number"
-id="activeEmployees">
-
-0
-
-</div>
-
-</div>
-
-
-<div class="stat-card">
-
-<div class="stat-title">
-موضوعون تحت التصرف
-</div>
-
-<div
-class="stat-number"
-id="secondedEmployees">
-
-0
-
-</div>
-
-</div>
-
-
-<div class="stat-card">
-
-<div class="stat-title">
-قيد المراجعة
-</div>
-
-<div
-class="stat-number"
-id="pendingEmployees">
-
-0
-
-</div>
-
-</div>
-
-
-<div class="stat-card">
-
-<div class="stat-title">
-يحتاج إلى تصحيح
-</div>
-
-<div
-class="stat-number"
-id="correctionEmployees">
-
-0
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="toolbar">
-
-<input
-type="text"
-id="searchInput"
-placeholder="ابحث بالاسم أو الاسم بالفرنسية أو NIN أو الرتبة..."
-oninput="renderEmployees()">
-
-
-<select
-id="statusFilter"
-onchange="renderEmployees()">
-
-<option value="all">
-جميع الوضعيات
-</option>
-
-<option value="active">
-نشط
-</option>
-
-<option value="seconded">
-موضوع تحت التصرف
-</option>
-
+<div class="toolbar no-print">
+<input id="searchInput" type="text" placeholder="ابحث بالاسم أو الفرنسية أو NIN أو الرتبة..." oninput="renderEmployees()">
+<select id="statusFilter" onchange="renderEmployees()">
+<option value="all">جميع الوضعيات</option><option value="active">نشط</option><option value="seconded">موضوع تحت التصرف</option>
 </select>
-
-
-<select
-id="profileFilter"
-onchange="renderEmployees()">
-
-<option value="all">
-جميع حالات الملف
-</option>
-
-<option value="pending">
-قيد المراجعة
-</option>
-
-<option value="approved">
-معتمد
-</option>
-
-<option value="needs_correction">
-يحتاج تصحيح
-</option>
-
+<select id="profileFilter" onchange="renderEmployees()">
+<option value="all">جميع حالات الملف</option><option value="pending">قيد المراجعة</option><option value="approved">معتمد</option><option value="needs_correction">يحتاج تصحيح</option>
 </select>
-
+<button class="export-btn" onclick="exportExcel()">📊 تصدير إلى Excel</button>
+<button class="print-btn" onclick="printEmployees()">🖨️ طباعة القائمة</button>
 </div>
-
 
 <div class="table-card">
-
 <div class="table-header">
-
-<h2>
-قائمة الموظفين
-</h2>
-
+<h2>قائمة الموظفين</h2>
 </div>
-
-
 <div class="table-wrapper">
-
 <table>
-
-<thead>
-
-<tr>
-
-<th>الاسم واللقب</th>
-
-<th>الرتبة</th>
-
-<th>المصلحة / المكتب</th>
-
-<th>الوضعية</th>
-
-<th>حالة الملف</th>
-
-<th>نهاية الوضع تحت التصرف</th>
-
-<th>الإجراءات</th>
-
-</tr>
-
-</thead>
-
-
-<tbody id="employeesBody">
-
-<tr>
-
-<td
-colspan="7"
-class="loading">
-
-جاري تحميل البيانات...
-
-</td>
-
-</tr>
-
-</tbody>
-
+<thead><tr>
+<th>الاسم واللقب</th><th>الرتبة</th><th>المصلحة / المكتب</th><th>الوضعية</th><th>حالة الملف</th><th>نهاية الوضع تحت التصرف</th><th class="no-print">الإجراءات</th>
+</tr></thead>
+<tbody id="employeesBody"><tr><td colspan="7" class="loading">جاري تحميل البيانات...</td></tr></tbody>
 </table>
-
 </div>
-
 </div>
-
-
 </main>
 
-
-<div
-id="employeeModal"
-class="modal">
-
+<div id="employeeModal" class="modal">
 <div class="modal-content">
-
-<div class="modal-header">
-
-<h2>
-تفاصيل الموظف
-</h2>
-
-<button
-class="close"
-onclick="closeModal()">
-
-×
-
-</button>
-
+<div class="modal-header"><h2>تفاصيل الموظف</h2><button class="close" onclick="closeModal()">×</button></div>
+<div id="employeeDetails" class="details-grid"></div>
+<div id="modalActions" class="modal-actions"></div>
 </div>
-
-
-<div
-id="employeeDetails"
-class="details-grid">
-
 </div>
-
-
-<div
-id="modalActions"
-class="modal-actions">
-
-</div>
-
-</div>
-
-</div>
-
 
 <script>
+const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+let allEmployees=[],selectedEmployee=null;
 
-const supabaseClient =
-window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
-
-
-let allEmployees = [];
-
-let selectedEmployee = null;
-
-
-/* التحقق من المسؤول */
-
-async function checkAdmin() {
-
-    try {
-
-        const {
-            data: sessionData
-        } =
-        await supabaseClient.auth.getSession();
-
-
-        const session =
-            sessionData?.session;
-
-
-        if (!session || !session.user) {
-
-            window.location.href =
-                "index.html";
-
-            return false;
-
-        }
-
-
-        const user =
-            session.user;
-
-
-        const {
-            data: employee,
-            error
-        } =
-        await supabaseClient
-        .from("employees")
-        .select("role")
-        .eq("user_id", user.id)
-        .maybeSingle();
-
-
-        if (error) {
-
-            throw error;
-
-        }
-
-
-        if (!employee ||
-            employee.role !== "admin") {
-
-            await supabaseClient.auth.signOut();
-
-            window.location.href =
-                "index.html";
-
-            return false;
-
-        }
-
-
-        return true;
-
-    }
-
-    catch(error) {
-
-        console.error(error);
-
-        showError(
-            "تعذر التحقق من صلاحيات المسؤول."
-        );
-
-        return false;
-
-    }
-
+async function checkAdmin(){
+ try{
+  const {data:sessionData}=await supabaseClient.auth.getSession();
+  const session=sessionData?.session;
+  if(!session?.user){location.href="index.html";return false}
+  const {data:employee,error}=await supabaseClient.from("employees").select("role").eq("user_id",session.user.id).maybeSingle();
+  if(error)throw error;
+  if(!employee||employee.role!=="admin"){await supabaseClient.auth.signOut();location.href="index.html";return false}
+  return true;
+ }catch(e){console.error(e);showError("تعذر التحقق من صلاحيات المسؤول.");return false}
 }
 
-
-/* تحميل الموظفين فقط */
-
-async function loadEmployees() {
-
-    try {
-
-        const {
-            data,
-            error
-        } =
-        await supabaseClient
-        .from("employees")
-        .select("*")
-        .eq("role", "employee")
-        .order("created_at", {
-            ascending: false
-        });
-
-
-        if (error) {
-
-            throw error;
-
-        }
-
-
-        allEmployees =
-            data || [];
-
-
-        updateStats();
-
-        renderEmployees();
-
-    }
-
-    catch(error) {
-
-        console.error(error);
-
-        showError(
-            "حدث خطأ أثناء تحميل بيانات الموظفين."
-        );
-
-    }
-
+async function loadEmployees(){
+ try{
+  const {data,error}=await supabaseClient.from("employees").select("*").eq("role","employee").order("created_at",{ascending:false});
+  if(error)throw error;
+  allEmployees=data||[];updateStats();renderEmployees();
+ }catch(e){console.error(e);showError("حدث خطأ أثناء تحميل بيانات الموظفين.");}
 }
 
-
-/* الإحصائيات */
-
-function updateStats() {
-
-    const total =
-        allEmployees.length;
-
-
-    const active =
-        allEmployees.filter(
-            e => e.work_status === "active"
-        ).length;
-
-
-    const seconded =
-        allEmployees.filter(
-            e => e.work_status === "seconded"
-        ).length;
-
-
-    const pending =
-        allEmployees.filter(
-            e => e.profile_status === "pending"
-        ).length;
-
-
-    const correction =
-        allEmployees.filter(
-            e => e.profile_status === "needs_correction"
-        ).length;
-
-
-    document.getElementById(
-        "totalEmployees"
-    ).textContent = total;
-
-
-    document.getElementById(
-        "activeEmployees"
-    ).textContent = active;
-
-
-    document.getElementById(
-        "secondedEmployees"
-    ).textContent = seconded;
-
-
-    document.getElementById(
-        "pendingEmployees"
-    ).textContent = pending;
-
-
-    document.getElementById(
-        "correctionEmployees"
-    ).textContent = correction;
-
+function updateStats(){
+ const count=x=>allEmployees.filter(x).length;
+ document.getElementById("totalEmployees").textContent=allEmployees.length;
+ document.getElementById("activeEmployees").textContent=count(e=>e.work_status==="active");
+ document.getElementById("secondedEmployees").textContent=count(e=>e.work_status==="seconded");
+ document.getElementById("pendingEmployees").textContent=count(e=>e.profile_status==="pending");
+ document.getElementById("correctionEmployees").textContent=count(e=>e.profile_status==="needs_correction");
 }
 
-
-/* عرض القائمة */
-
-function renderEmployees() {
-
-    const body =
-        document.getElementById(
-            "employeesBody"
-        );
-
-
-    const search =
-        document
-        .getElementById("searchInput")
-        .value
-        .trim()
-        .toLowerCase();
-
-
-    const statusFilter =
-        document.getElementById(
-            "statusFilter"
-        ).value;
-
-
-    const profileFilter =
-        document.getElementById(
-            "profileFilter"
-        ).value;
-
-
-    const filtered =
-        allEmployees.filter(employee => {
-
-
-            const searchText = [
-
-                employee.nom_ar,
-                employee.nom_fr,
-                employee.nin,
-                employee.grade,
-                employee.service_ar,
-                employee.service_fr,
-                employee.poste_ar,
-                employee.poste_fr,
-                employee.lieu_travail_ar,
-                employee.lieu_travail_fr
-
-            ]
-            .filter(Boolean)
-            .join(" ")
-            .toLowerCase();
-
-
-            const matchesSearch =
-                !search ||
-                searchText.includes(search);
-
-
-            const matchesStatus =
-                statusFilter === "all" ||
-                employee.work_status === statusFilter;
-
-
-            const matchesProfile =
-                profileFilter === "all" ||
-                employee.profile_status === profileFilter;
-
-
-            return (
-                matchesSearch &&
-                matchesStatus &&
-                matchesProfile
-            );
-
-        });
-
-
-    if (filtered.length === 0) {
-
-        body.innerHTML = `
-
-        <tr>
-
-        <td
-        colspan="7"
-        class="empty">
-
-        لا توجد بيانات مطابقة.
-
-        </td>
-
-        </tr>
-
-        `;
-
-        return;
-
-    }
-
-
-    body.innerHTML =
-        filtered.map(employee => `
-
-        <tr>
-
-        <td>
-
-        <strong>
-        ${escapeHtml(
-            employee.nom_ar || "-"
-        )}
-        </strong>
-
-        <br>
-
-        <small>
-        ${escapeHtml(
-            employee.nom_fr || ""
-        )}
-        </small>
-
-        </td>
-
-
-        <td>
-        ${escapeHtml(
-            employee.grade || "-"
-        )}
-        </td>
-
-
-        <td>
-        ${escapeHtml(
-            employee.service_ar || "-"
-        )}
-        </td>
-
-
-        <td>
-
-        ${
-            employee.work_status === "seconded"
-
-            ?
-
-            `<span class="badge badge-seconded">
-            موضوع تحت التصرف
-            </span>`
-
-            :
-
-            `<span class="badge badge-active">
-            نشط
-            </span>`
-        }
-
-        </td>
-
-
-        <td>
-
-        ${getProfileBadge(
-            employee.profile_status
-        )}
-
-        </td>
-
-
-        <td>
-
-        ${
-            employee.work_status === "seconded"
-
-            ?
-
-            getDeadlineBadge(
-                employee.disposition_end
-            )
-
-            :
-
-            "-"
-        }
-
-        </td>
-
-
-        <td>
-
-        <div class="actions">
-
-        <button
-        class="btn btn-view"
-        onclick="viewEmployee('${employee.id}')">
-
-        عرض
-
-        </button>
-
-
-        ${
-            employee.profile_status !== "approved"
-
-            ?
-
-            `<button
-            class="btn btn-approve"
-            onclick="approveEmployee('${employee.id}')">
-
-            اعتماد
-
-            </button>`
-
-            :
-
-            ""
-        }
-
-
-        <button
-        class="btn btn-correction"
-        onclick="requestCorrection('${employee.id}')">
-
-        طلب تصحيح
-
-        </button>
-
-
-        <button
-        class="btn btn-delete"
-        onclick="deleteEmployee('${employee.id}')">
-
-        حذف
-
-        </button>
-
-        </div>
-
-        </td>
-
-        </tr>
-
-        `).join("");
-
+function renderEmployees(){
+ const body=document.getElementById("employeesBody");
+ const search=document.getElementById("searchInput").value.trim().toLowerCase();
+ const sf=document.getElementById("statusFilter").value,pf=document.getElementById("profileFilter").value;
+ const filtered=allEmployees.filter(e=>{
+  const text=[e.nom_ar,e.nom_fr,e.nin,e.grade,e.service_ar,e.service_fr,e.poste_ar,e.poste_fr,e.lieu_travail_ar,e.lieu_travail_fr].filter(Boolean).join(" ").toLowerCase();
+  return (!search||text.includes(search))&&(sf==="all"||e.work_status===sf)&&(pf==="all"||e.profile_status===pf);
+ });
+ if(!filtered.length){body.innerHTML='<tr><td colspan="7" class="empty">لا توجد بيانات مطابقة.</td></tr>';return}
+ body.innerHTML=filtered.map(e=>`<tr>
+ <td><strong>${escapeHtml(e.nom_ar||"-")}</strong><br><small>${escapeHtml(e.nom_fr||"")}</small></td>
+ <td>${escapeHtml(e.grade||"-")}</td><td>${escapeHtml(e.service_ar||"-")}</td>
+ <td>${e.work_status==="seconded"?'<span class="badge badge-seconded">موضوع تحت التصرف</span>':'<span class="badge badge-active">نشط</span>'}</td>
+ <td>${getProfileBadge(e.profile_status)}</td>
+ <td>${e.work_status==="seconded"?getDeadlineBadge(e.disposition_end):"-"}</td>
+ <td class="no-print"><div class="actions">
+ <button class="btn btn-view" onclick="viewEmployee('${e.id}')">عرض</button>
+ ${e.profile_status!=="approved"?`<button class="btn btn-approve" onclick="approveEmployee('${e.id}')">اعتماد</button>`:""}
+ <button class="btn btn-correction" onclick="requestCorrection('${e.id}')">طلب تصحيح</button>
+ <button class="btn btn-delete" onclick="deleteEmployee('${e.id}')">حذف</button>
+ </div></td>
+ </tr>`).join("");
 }
 
+function getProfileBadge(s){
+ if(s==="approved")return '<span class="badge badge-approved">معتمد</span>';
+ if(s==="needs_correction")return '<span class="badge badge-correction">يحتاج تصحيح</span>';
+ return '<span class="badge badge-pending">قيد المراجعة</span>';
+}
+function getProfileText(s){return s==="approved"?"معتمد":s==="needs_correction"?"يحتاج إلى تصحيح":"قيد المراجعة"}
+function formatDate(s){if(!s)return "-";return new Date(s+"T00:00:00").toLocaleDateString("ar-DZ")}
+function getDeadlineBadge(s){
+ if(!s)return "-";const today=new Date();today.setHours(0,0,0,0);const d=new Date(s+"T00:00:00");
+ const days=Math.ceil((d-today)/86400000),f=formatDate(s);
+ if(days<0)return `<span class="badge badge-expired">منتهٍ: ${f}</span>`;
+ if(days<=30)return `<span class="badge badge-warning">${f}<br>متبقي ${days} يوم</span>`;
+ return `<span class="badge badge-normal">${f}</span>`;
+}
+function detail(label,value){return `<div class="detail"><div class="detail-label">${escapeHtml(label)}</div><div class="detail-value">${escapeHtml(value||"-")}</div></div>`}
 
-/* حالة الملف */
+function viewEmployee(id){
+ selectedEmployee=allEmployees.find(e=>e.id===id);if(!selectedEmployee)return;const e=selectedEmployee;
+ document.getElementById("employeeDetails").innerHTML=
+ detail("الاسم واللقب بالعربية",e.nom_ar)+detail("Nom et prénom",e.nom_fr)+
+ detail("منصب العمل",e.poste_ar)+detail("Poste de travail",e.poste_fr)+
+ detail("مكان العمل",e.lieu_travail_ar)+detail("Lieu de travail",e.lieu_travail_fr)+
+ detail("الرتبة",e.grade)+detail("NIN",e.nin)+detail("البريد الإلكتروني",e.email)+detail("الهاتف الشخصي",e.phone)+
+ detail("المصلحة / المكتب",e.service_ar)+detail("Service / Bureau",e.service_fr)+
+ detail("الوضعية",e.work_status==="seconded"?"موضوع تحت التصرف":"نشط")+
+ (e.work_status==="seconded"?detail("المؤسسة المستقبلة",e.host_institution)+detail("المصلحة / المكتب لدى المؤسسة المستقبلة",e.host_service)+detail("تاريخ البداية",formatDate(e.disposition_start))+detail("تاريخ النهاية",formatDate(e.disposition_end)):"")+
+ detail("حالة الملف",getProfileText(e.profile_status))+detail("ملاحظة المسؤول",e.admin_note||"لا توجد ملاحظات");
+ document.getElementById("modalActions").innerHTML=
+ (e.profile_status!=="approved"?`<button class="approve-modal" onclick="approveEmployee('${e.id}');closeModal()">اعتماد الملف</button>`:"")+
+ `<button class="correction-modal" onclick="requestCorrection('${e.id}');closeModal()">طلب تصحيح البيانات</button>
+ <button class="delete-modal" onclick="deleteEmployee('${e.id}');closeModal()">حذف الموظف</button>`;
+ document.getElementById("employeeModal").classList.add("show");
+}
+function closeModal(){document.getElementById("employeeModal").classList.remove("show")}
 
-function getProfileBadge(status) {
-
-    if (status === "approved") {
-
-        return `
-        <span class="badge badge-approved">
-        معتمد
-        </span>
-        `;
-
-    }
-
-
-    if (status === "needs_correction") {
-
-        return `
-        <span class="badge badge-correction">
-        يحتاج تصحيح
-        </span>
-        `;
-
-    }
-
-
-    return `
-    <span class="badge badge-pending">
-    قيد المراجعة
-    </span>
-    `;
-
+async function approveEmployee(id){
+ if(!confirm("هل تريد اعتماد ملف هذا الموظف؟"))return;
+ try{
+  const {error}=await supabaseClient.from("employees").update({profile_status:"approved",admin_note:null}).eq("id",id);
+  if(error)throw error;await loadEmployees();alert("تم اعتماد ملف الموظف بنجاح.");
+ }catch(e){console.error(e);alert("حدث خطأ أثناء اعتماد الملف.")}
+}
+async function requestCorrection(id){
+ const note=prompt("اكتب ملاحظة التصحيح المطلوبة من الموظف:");
+ if(note===null)return;if(!note.trim()){alert("يجب كتابة ملاحظة توضح المطلوب تصحيحه.");return}
+ try{
+  const {error}=await supabaseClient.from("employees").update({profile_status:"needs_correction",admin_note:note.trim()}).eq("id",id);
+  if(error)throw error;await loadEmployees();alert("تم إرسال طلب التصحيح للموظف.");
+ }catch(e){console.error(e);alert("حدث خطأ أثناء إرسال طلب التصحيح.")}
+}
+async function deleteEmployee(id){
+ const e=allEmployees.find(x=>x.id===id);if(!e)return;
+ if(!confirm("هل أنت متأكد من حذف ملف الموظف:\n"+(e.nom_ar||e.nom_fr||"هذا الموظف")+"؟\n\nلا يمكن التراجع عن هذه العملية."))return;
+ try{
+  const {error}=await supabaseClient.from("employees").delete().eq("id",id).eq("role","employee");
+  if(error)throw error;allEmployees=allEmployees.filter(x=>x.id!==id);updateStats();renderEmployees();alert("تم حذف ملف الموظف بنجاح.");
+ }catch(err){console.error(err);alert("تعذر حذف الموظف. تأكد من صلاحيات الحذف في قاعدة البيانات.")}
 }
 
-
-/* تاريخ نهاية الوضع تحت التصرف */
-
-function getDeadlineBadge(dateString) {
-
-    if (!dateString) {
-
-        return "-";
-
-    }
-
-
-    const today =
-        new Date();
-
-    today.setHours(
-        0,0,0,0
-    );
-
-
-    const endDate =
-        new Date(
-            dateString + "T00:00:00"
-        );
-
-
-    const difference =
-        Math.ceil(
-            (endDate - today) /
-            (1000*60*60*24)
-        );
-
-
-    const formattedDate =
-        formatDate(dateString);
-
-
-    if (difference < 0) {
-
-        return `
-        <span class="badge badge-expired">
-        منتهٍ: ${formattedDate}
-        </span>
-        `;
-
-    }
-
-
-    if (difference <= 30) {
-
-        return `
-        <span class="badge badge-warning">
-
-        ${formattedDate}
-
-        <br>
-
-        متبقي ${difference} يوم
-
-        </span>
-        `;
-
-    }
-
-
-    return `
-    <span class="badge badge-normal">
-    ${formattedDate}
-    </span>
-    `;
-
+function getExportRows(list){
+ return list.map((e,i)=>({
+  "رقم":i+1,
+  "Nom":e.nom_fr||"",
+  "Prénom":e.nom_fr||"",
+  "الاسم واللقب بالعربية":e.nom_ar||"",
+  "منصب العمل":e.poste_ar||"",
+  "Grade":e.grade||"",
+  "الوظيفة / Rôle":e.poste_ar||"",
+  "NIN":e.nin||"",
+  "Email":e.email||"",
+  "Téléphone personnel":e.phone||"",
+  "نوع التكليف / Affectation":e.work_status==="seconded"?"موضوع تحت التصرف":"نشط",
+  "المصلحة أو المصالح - مكان التكليف":e.service_ar||"",
+  "الوحدة أو الوحدات":e.lieu_travail_ar||"",
+  "المكتب أو المكاتب":e.service_fr||"",
+  "المؤسسة المستقبلة":e.host_institution||"",
+  "مصلحة المؤسسة المستقبلة":e.host_service||"",
+  "تاريخ بداية الوضع تحت التصرف":e.disposition_start||"",
+  "تاريخ نهاية الوضع تحت التصرف":e.disposition_end||"",
+  "حالة الملف":getProfileText(e.profile_status)
+ }));
 }
 
-
-function formatDate(dateString) {
-
-    if (!dateString) {
-
-        return "-";
-
-    }
-
-
-    const date =
-        new Date(
-            dateString + "T00:00:00"
-        );
-
-
-    return date.toLocaleDateString(
-        "ar-DZ"
-    );
-
+function exportExcel(){
+ if(typeof XLSX==="undefined"){alert("تعذر تحميل أداة Excel. تحقق من اتصال الإنترنت ثم أعد المحاولة.");return}
+ const approved=allEmployees.filter(e=>e.profile_status==="approved");
+ if(!approved.length){alert("لا توجد ملفات موظفين معتمدة للتصدير.");return}
+ const wb=XLSX.utils.book_new();
+ const allWs=XLSX.utils.json_to_sheet(getExportRows(approved));
+ const activeWs=XLSX.utils.json_to_sheet(getExportRows(approved.filter(e=>e.work_status==="active")));
+ const secondedWs=XLSX.utils.json_to_sheet(getExportRows(approved.filter(e=>e.work_status==="seconded")));
+ [allWs,activeWs,secondedWs].forEach(ws=>{
+  ws["!cols"]=Object.keys(getExportRows(approved)[0]||{}).map(()=>({wch:20}));
+  ws["!cols"][3]={wch:28};ws["!cols"][14]={wch:25};
+ });
+ XLSX.utils.book_append_sheet(wb,allWs,"الموظفون المعتمدون");
+ XLSX.utils.book_append_sheet(wb,activeWs,"الموظفون النشطون");
+ XLSX.utils.book_append_sheet(wb,secondedWs,"تحت التصرف");
+ XLSX.writeFile(wb,"DRH_الموظفون_"+new Date().toISOString().slice(0,10)+".xlsx");
 }
-
-
-/* عرض التفاصيل */
-
-function viewEmployee(id) {
-
-    selectedEmployee =
-        allEmployees.find(
-            e => e.id === id
-        );
-
-
-    if (!selectedEmployee) {
-
-        return;
-
-    }
-
-
-    const e =
-        selectedEmployee;
-
-
-    document.getElementById(
-        "employeeDetails"
-    ).innerHTML = `
-
-    ${detail(
-        "الاسم واللقب بالعربية",
-        e.nom_ar
-    )}
-
-    ${detail(
-        "Nom et prénom",
-        e.nom_fr
-    )}
-
-    ${detail(
-        "منصب العمل",
-        e.poste_ar
-    )}
-
-    ${detail(
-        "Poste de travail",
-        e.poste_fr
-    )}
-
-    ${detail(
-        "مكان العمل",
-        e.lieu_travail_ar
-    )}
-
-    ${detail(
-        "Lieu de travail",
-        e.lieu_travail_fr
-    )}
-
-    ${detail(
-        "الرتبة",
-        e.grade
-    )}
-
-    ${detail(
-        "NIN",
-        e.nin
-    )}
-
-    ${detail(
-        "البريد الإلكتروني",
-        e.email
-    )}
-
-    ${detail(
-        "الهاتف الشخصي",
-        e.phone
-    )}
-
-    ${detail(
-        "المصلحة / المكتب",
-        e.service_ar
-    )}
-
-    ${detail(
-        "Service / Bureau",
-        e.service_fr
-    )}
-
-    ${detail(
-        "الوضعية",
-        e.work_status === "seconded"
-        ? "موضوع تحت التصرف"
-        : "نشط"
-    )}
-
-    ${
-        e.work_status === "seconded"
-
-        ?
-
-        `
-
-        ${detail(
-            "المؤسسة المستقبلة",
-            e.host_institution
-        )}
-
-        ${detail(
-            "المصلحة / المكتب لدى المؤسسة المستقبلة",
-            e.host_service
-        )}
-
-        ${detail(
-            "تاريخ بداية الوضع تحت التصرف",
-            formatDate(
-                e.disposition_start
-            )
-        )}
-
-        ${detail(
-            "تاريخ نهاية الوضع تحت التصرف",
-            formatDate(
-                e.disposition_end
-            )
-        )}
-
-        `
-
-        :
-
-        ""
-    }
-
-
-    ${detail(
-        "حالة الملف",
-        getProfileText(
-            e.profile_status
-        )
-    )}
-
-
-    ${detail(
-        "ملاحظة المسؤول",
-        e.admin_note ||
-        "لا توجد ملاحظات"
-    )}
-
-    `;
-
-
-    document.getElementById(
-        "modalActions"
-    ).innerHTML = `
-
-    ${
-        e.profile_status !== "approved"
-
-        ?
-
-        `<button
-        class="approve-modal"
-        onclick="approveEmployee('${e.id}'); closeModal();">
-
-        اعتماد الملف
-
-        </button>`
-
-        :
-
-        ""
-    }
-
-
-    <button
-    class="correction-modal"
-    onclick="requestCorrection('${e.id}'); closeModal();">
-
-    طلب تصحيح البيانات
-
-    </button>
-
-
-    <button
-    class="delete-modal"
-    onclick="deleteEmployee('${e.id}'); closeModal();">
-
-    حذف الموظف
-
-    </button>
-
-    `;
-
-
-    document
-    .getElementById("employeeModal")
-    .classList.add("show");
-
+function printEmployees(){
+ const filtered=allEmployees.filter(e=>{
+  const s=document.getElementById("searchInput").value.trim().toLowerCase();
+  const sf=document.getElementById("statusFilter").value,pf=document.getElementById("profileFilter").value;
+  const t=[e.nom_ar,e.nom_fr,e.nin,e.grade,e.service_ar,e.service_fr,e.poste_ar,e.poste_fr,e.lieu_travail_ar,e.lieu_travail_fr].filter(Boolean).join(" ").toLowerCase();
+  return (!s||t.includes(s))&&(sf==="all"||e.work_status===sf)&&(pf==="all"||e.profile_status===pf);
+ });
+ if(!filtered.length){alert("لا توجد بيانات للطباعة.");return}
+ window.print();
 }
-
-
-function detail(label,value) {
-
-    return `
-
-    <div class="detail">
-
-    <div class="detail-label">
-    ${escapeHtml(label)}
-    </div>
-
-    <div class="detail-value">
-    ${escapeHtml(value || "-")}
-    </div>
-
-    </div>
-
-    `;
-
-}
-
-
-function getProfileText(status) {
-
-    if (status === "approved") {
-
-        return "معتمد";
-
-    }
-
-
-    if (status === "needs_correction") {
-
-        return "يحتاج إلى تصحيح";
-
-    }
-
-
-    return "قيد المراجعة";
-
-}
-
-
-/* اعتماد الملف */
-
-async function approveEmployee(id) {
-
-    if (!confirm(
-        "هل تريد اعتماد ملف هذا الموظف؟"
-    )) {
-
-        return;
-
-    }
-
-
-    try {
-
-        const {
-            error
-        } =
-        await supabaseClient
-        .from("employees")
-        .update({
-
-            profile_status:
-                "approved",
-
-            admin_note:
-                null
-
-        })
-        .eq("id",id);
-
-
-        if (error) {
-
-            throw error;
-
-        }
-
-
-        await loadEmployees();
-
-
-        alert(
-            "تم اعتماد ملف الموظف بنجاح."
-        );
-
-    }
-
-    catch(error) {
-
-        console.error(error);
-
-        alert(
-            "حدث خطأ أثناء اعتماد الملف."
-        );
-
-    }
-
-}
-
-
-/* طلب التصحيح */
-
-async function requestCorrection(id) {
-
-    const note =
-        prompt(
-            "اكتب ملاحظة التصحيح المطلوبة من الموظف:"
-        );
-
-
-    if (note === null) {
-
-        return;
-
-    }
-
-
-    if (!note.trim()) {
-
-        alert(
-            "يجب كتابة ملاحظة توضح المطلوب تصحيحه."
-        );
-
-        return;
-
-    }
-
-
-    try {
-
-        const {
-            error
-        } =
-        await supabaseClient
-        .from("employees")
-        .update({
-
-            profile_status:
-                "needs_correction",
-
-            admin_note:
-                note.trim()
-
-        })
-        .eq("id",id);
-
-
-        if (error) {
-
-            throw error;
-
-        }
-
-
-        await loadEmployees();
-
-
-        alert(
-            "تم إرسال طلب التصحيح للموظف."
-        );
-
-    }
-
-    catch(error) {
-
-        console.error(error);
-
-        alert(
-            "حدث خطأ أثناء إرسال طلب التصحيح."
-        );
-
-    }
-
-}
-
-
-/*
- * حذف الموظف
- */
-
-async function deleteEmployee(id) {
-
-    const employee =
-        allEmployees.find(
-            e => e.id === id
-        );
-
-
-    if (!employee) {
-
-        return;
-
-    }
-
-
-    const employeeName =
-        employee.nom_ar ||
-        employee.nom_fr ||
-        "هذا الموظف";
-
-
-    const confirmed =
-        confirm(
-
-            "⚠️ تحذير\n\n" +
-
-            "هل أنت متأكد من حذف ملف:\n\n" +
-
-            employeeName +
-
-            "\n\n" +
-
-            "سيتم حذف سجل الموظف من قاعدة البيانات، " +
-            "ولا يمكن التراجع عن هذا الإجراء.\n\n" +
-
-            "اضغط موافق للحذف أو إلغاء للرجوع."
-
-        );
-
-
-    if (!confirmed) {
-
-        return;
-
-    }
-
-
-    try {
-
-        const {
-            error
-        } =
-        await supabaseClient
-        .from("employees")
-        .delete()
-        .eq("id",id)
-        .eq("role","employee");
-
-
-        if (error) {
-
-            throw error;
-
-        }
-
-
-        allEmployees =
-            allEmployees.filter(
-                e => e.id !== id
-            );
-
-
-        updateStats();
-
-        renderEmployees();
-
-
-        alert(
-            "تم حذف ملف الموظف بنجاح."
-        );
-
-    }
-
-    catch(error) {
-
-        console.error(
-            "Delete error:",
-            error
-        );
-
-
-        alert(
-            "تعذر حذف الموظف. تأكد من صلاحيات الحذف في قاعدة البيانات."
-        );
-
-    }
-
-}
-
-
-/* إغلاق النافذة */
-
-function closeModal() {
-
-    document
-    .getElementById("employeeModal")
-    .classList.remove("show");
-
-}
-
-
-document
-.getElementById("employeeModal")
-.addEventListener(
-    "click",
-    function(event) {
-
-        if (event.target === this) {
-
-            closeModal();
-
-        }
-
-    }
-);
-
-
-/* تسجيل الخروج */
-
-async function logout() {
-
-    await supabaseClient.auth.signOut();
-
-    window.location.href =
-        "index.html";
-
-}
-
-
-/* حماية النصوص */
-
-function escapeHtml(value) {
-
-    if (
-        value === null ||
-        value === undefined
-    ) {
-
-        return "";
-
-    }
-
-
-    return String(value)
-
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
-
-}
-
-
-/* إظهار الخطأ */
-
-function showError(text) {
-
-    document.getElementById(
-        "errorBox"
-    ).innerHTML = `
-
-    <div class="error">
-
-    ${escapeHtml(text)}
-
-    </div>
-
-    `;
-
-}
-
-
-/* تشغيل الصفحة */
-
-async function init() {
-
-    const isAdmin =
-        await checkAdmin();
-
-
-    if (!isAdmin) {
-
-        return;
-
-    }
-
-
-    await loadEmployees();
-
-}
-
-
-init();
-
+function escapeHtml(v){return v==null?"":String(v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
+function showError(t){document.getElementById("errorBox").innerHTML=`<div class="error">${escapeHtml(t)}</div>`}
+async function logout(){await supabaseClient.auth.signOut();location.href="index.html"}
+document.getElementById("employeeModal").addEventListener("click",function(e){if(e.target===this)closeModal()});
+
+(async function init(){if(await checkAdmin())await loadEmployees()})();
 </script>
-
 </body>
-
 </html>
