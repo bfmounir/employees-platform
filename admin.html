@@ -36,6 +36,9 @@ button,input,select{font-family:inherit}
 .empty,.loading{text-align:center!important;color:#8a989f;padding:38px!important;font-size:12px}.loading:before{content:'◌';display:inline-block;margin-left:6px;animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
 .error{background:#fff0f0;color:#a52828;border:1px solid #f3d1d1;padding:12px 15px;border-radius:12px;margin-bottom:15px;font-size:12px;font-weight:700}
 .modal{display:none;position:fixed;inset:0;background:rgba(12,30,42,.55);backdrop-filter:blur(4px);z-index:50;padding:25px;overflow:auto}.modal.show{display:block}.modal-content{max-width:900px;margin:5vh auto;background:#fff;border-radius:22px;box-shadow:0 25px 70px rgba(0,0,0,.2);overflow:hidden}.modal-header{padding:18px 20px;background:linear-gradient(135deg,#f7fbfc,#eef7f8);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.modal-header h2{margin:0;color:var(--navy);font-size:18px}.close{width:36px;height:36px;border:0;border-radius:11px;background:#fff;color:#61747e;font-size:23px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.05)}.details-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;padding:20px}.detail{background:#f8fafb;border:1px solid #edf2f4;padding:12px 13px;border-radius:12px}.detail-label{color:#7d8c95;font-size:10px;margin-bottom:5px;font-weight:600}.detail-value{color:#263f4e;font-size:12px;font-weight:800;word-break:break-word}.modal-actions{padding:0 20px 20px;display:flex;gap:9px;flex-wrap:wrap}.modal-actions button{border:none;padding:10px 15px;border-radius:11px;cursor:pointer;font-weight:700;font-family:inherit}.approve-modal{background:#087f8c;color:#fff}.correction-modal{background:#fff0f0;color:#a52828}.delete-modal{background:#ffe9e9;color:#a52828}
+
+.notify-btn{height:44px;padding:0 15px;border:none;border-radius:12px;cursor:pointer;font-family:inherit;font-size:12px;font-weight:800;background:linear-gradient(135deg,#123047,#0b8f91);color:#fff;display:inline-flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 5px 14px rgba(11,143,145,.16);transition:.2s}.notify-btn:hover{transform:translateY(-1px);filter:brightness(.98)}
+.notify-form{padding:20px}.notify-form .field{margin-bottom:14px}.notify-form label{display:block;color:#526874;font-size:12px;font-weight:800;margin-bottom:7px}.notify-form input,.notify-form textarea,.notify-form select{width:100%;border:1px solid #dce6eb;border-radius:12px;padding:11px 13px;font-family:inherit;font-size:12px;outline:none;background:#fbfdfe}.notify-form textarea{min-height:120px;resize:vertical}.notify-form input:focus,.notify-form textarea:focus,.notify-form select:focus{border-color:#68babc;box-shadow:0 0 0 3px rgba(11,143,145,.09);background:#fff}.notify-actions{display:flex;gap:9px;justify-content:flex-start;margin-top:18px}.notify-send{border:0;background:#087f8c;color:#fff;padding:11px 18px;border-radius:11px;font-family:inherit;font-weight:800;cursor:pointer}.notify-cancel{border:0;background:#eef3f5;color:#536873;padding:11px 18px;border-radius:11px;font-family:inherit;font-weight:800;cursor:pointer}.notify-help{font-size:10px;color:#8b9aa2;margin-top:5px}
 @media(max-width:1100px){.stats{grid-template-columns:repeat(3,1fr)}}@media(max-width:760px){.header{padding:21px 17px}.header-content{align-items:stretch;flex-direction:column}.logout-btn{width:100%;justify-content:center}.brand-icon{width:46px;height:46px}.header h1{font-size:21px}.container{margin:19px auto;padding:0 12px}.stats{grid-template-columns:repeat(2,1fr);gap:10px}.stat-card{padding:14px}.stat-number{font-size:25px}.toolbar{padding:11px}.toolbar input,.toolbar select,.export-btn,.print-btn,.refresh-btn{width:100%}.toolbar input{min-width:0}.refresh-box{width:100%;margin-right:0;justify-content:space-between}.refresh-box .refresh-btn{width:auto;flex:0 0 auto}.table-header{padding:15px}.details-grid{grid-template-columns:1fr}.modal{padding:12px}.modal-content{margin:2vh auto}}
 @media(max-width:450px){.stats{grid-template-columns:1fr}.stat-top{align-items:flex-start}.table-counter{display:none}}
 @media print{body{background:#fff}.header,.toolbar,.stats,.notice,.modal,.no-print{display:none!important}.container{max-width:none;margin:0;padding:0}.table-card{box-shadow:none;border:none}.table-header{padding:0 0 10px}.table-header h2{font-size:18px}.table-wrapper{overflow:visible}table{min-width:0;font-size:10px}th,td{padding:6px 4px;font-size:10px}.actions{display:none}}
@@ -73,6 +76,7 @@ button,input,select{font-family:inherit}
 <select id="profileFilter" onchange="renderEmployees()">
 <option value="all">جميع حالات الملف</option><option value="pending">قيد المراجعة</option><option value="approved">معتمد</option><option value="needs_correction">يحتاج تصحيح</option>
 </select>
+<button class="notify-btn" onclick="openNotificationModal()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg> إرسال تنبيه</button>
 <button class="export-btn" onclick="exportExcel()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h11v16H4z"/><path d="M8 8h3M8 12h3M8 16h3M15 8h5v12h-5"/></svg> تصدير Excel</button>
 <button class="print-btn" onclick="resetFilters()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l16 16M20 4L4 20"/></svg> مسح الفلاتر</button>
 <button class="print-btn" onclick="printEmployees()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v7H6z"/></svg> طباعة القائمة</button>
@@ -91,6 +95,16 @@ button,input,select{font-family:inherit}
 <div class="modal-header"><h2>تفاصيل الموظف</h2><button class="close" onclick="closeModal()">×</button></div>
 <div id="employeeDetails" class="details-grid"></div><div id="modalActions" class="modal-actions"></div>
 </div></div>
+
+<div id="notificationModal" class="modal"><div class="modal-content" style="max-width:620px">
+<div class="modal-header"><h2>إرسال تنبيه</h2><button class="close" onclick="closeNotificationModal()">×</button></div>
+<form id="notificationForm" class="notify-form">
+<div class="field"><label for="notificationTarget">المستلم</label><select id="notificationTarget" required><option value="all">جميع الموظفين</option></select><div class="notify-help">يمكنك إرسال التنبيه إلى موظف محدد أو إلى جميع الموظفين.</div></div>
+<div class="field"><label for="notificationType">نوع التنبيه</label><select id="notificationType"><option value="general">تنبيه عام</option><option value="information">معلومة إدارية</option><option value="announcement">إعلان</option><option value="approval">اعتماد الملف</option><option value="correction">تصحيح البيانات</option></select></div>
+<div class="field"><label for="notificationTitle">عنوان التنبيه</label><input id="notificationTitle" type="text" maxlength="120" placeholder="مثال: تنبيه إداري" required></div>
+<div class="field"><label for="notificationMessage">محتوى التنبيه</label><textarea id="notificationMessage" maxlength="2000" placeholder="اكتب نص التنبيه هنا..." required></textarea></div>
+<div class="notify-actions"><button type="submit" class="notify-send" id="notificationSendBtn">إرسال التنبيه</button><button type="button" class="notify-cancel" onclick="closeNotificationModal()">إلغاء</button></div>
+</form></div></div>
 
 <script>
 const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
@@ -207,13 +221,29 @@ function viewEmployee(id){
 function closeModal(){document.getElementById("employeeModal").classList.remove("show")}
 async function approveEmployee(id){
  if(!confirm("هل تريد اعتماد ملف هذا الموظف؟"))return;
- try{const {error}=await supabaseClient.from("employees").update({profile_status:"approved",admin_note:null}).eq("id",id);if(error)throw error;await loadEmployees();alert("تم اعتماد ملف الموظف بنجاح.")}
- catch(e){console.error(e);alert("حدث خطأ أثناء اعتماد الملف.")}
+ try{
+  const employee=allEmployees.find(x=>x.id===id);
+  const {error}=await supabaseClient.from("employees").update({profile_status:"approved",admin_note:null}).eq("id",id);
+  if(error)throw error;
+  if(employee?.user_id){
+   const {error:notificationError}=await supabaseClient.from("notifications").insert({user_id:employee.user_id,title:"تم اعتماد ملفك الوظيفي",message:"تمت مراجعة بياناتك الوظيفية واعتماد ملفك من طرف المسؤول.",type:"approval",created_by:(await supabaseClient.auth.getUser()).data.user?.id||null});
+   if(notificationError)console.warn("Notification error:",notificationError);
+  }
+  await loadEmployees();alert("تم اعتماد ملف الموظف بنجاح وتم إرسال تنبيه له.");
+ }catch(e){console.error(e);alert("حدث خطأ أثناء اعتماد الملف.")}
 }
 async function requestCorrection(id){
  const note=prompt("اكتب ملاحظة التصحيح المطلوبة من الموظف:");if(note===null)return;if(!note.trim()){alert("يجب كتابة ملاحظة توضح المطلوب تصحيحه.");return}
- try{const {error}=await supabaseClient.from("employees").update({profile_status:"needs_correction",admin_note:note.trim()}).eq("id",id);if(error)throw error;await loadEmployees();alert("تم إرسال طلب التصحيح للموظف.")}
- catch(e){console.error(e);alert("حدث خطأ أثناء إرسال طلب التصحيح.")}
+ try{
+  const employee=allEmployees.find(x=>x.id===id);
+  const {error}=await supabaseClient.from("employees").update({profile_status:"needs_correction",admin_note:note.trim()}).eq("id",id);
+  if(error)throw error;
+  if(employee?.user_id){
+   const {error:notificationError}=await supabaseClient.from("notifications").insert({user_id:employee.user_id,title:"يرجى تصحيح بيانات ملفك",message:note.trim(),type:"correction",created_by:(await supabaseClient.auth.getUser()).data.user?.id||null});
+   if(notificationError)console.warn("Notification error:",notificationError);
+  }
+  await loadEmployees();alert("تم إرسال طلب التصحيح والتنبيه للموظف.");
+ }catch(e){console.error(e);alert("حدث خطأ أثناء إرسال طلب التصحيح.")}
 }
 async function deleteEmployee(id){
  const e=allEmployees.find(x=>x.id===id);if(!e)return;
@@ -221,6 +251,36 @@ async function deleteEmployee(id){
  try{const {error}=await supabaseClient.from("employees").delete().eq("id",id).eq("role","employee");if(error)throw error;allEmployees=allEmployees.filter(x=>x.id!==id);updateStats();renderEmployees();alert("تم حذف ملف الموظف بنجاح.")}
  catch(err){console.error(err);alert("تعذر حذف الموظف. تأكد من صلاحيات الحذف في قاعدة البيانات.")}
 }
+function openNotificationModal(){
+ const select=document.getElementById("notificationTarget");
+ select.innerHTML='<option value="all">جميع الموظفين</option>'+allEmployees.map(e=>`<option value="${escapeHtml(e.user_id||"")}">${escapeHtml(e.nom_ar||e.nom_fr||"موظف بدون اسم")} — ${escapeHtml(e.nin||"")}</option>`).join("");
+ document.getElementById("notificationModal").classList.add("show");
+}
+function closeNotificationModal(){document.getElementById("notificationModal").classList.remove("show")}
+async function sendNotification(event){
+ event.preventDefault();
+ const target=document.getElementById("notificationTarget").value;
+ const type=document.getElementById("notificationType").value;
+ const title=document.getElementById("notificationTitle").value.trim();
+ const msg=document.getElementById("notificationMessage").value.trim();
+ const btn=document.getElementById("notificationSendBtn");
+ if(!title||!msg){alert("يرجى إدخال عنوان ومحتوى التنبيه.");return}
+ btn.disabled=true;btn.textContent="جاري الإرسال...";
+ try{
+  const userId=(await supabaseClient.auth.getUser()).data.user?.id||null;
+  let rows=[];
+  if(target==="all") rows=allEmployees.filter(e=>e.user_id).map(e=>({user_id:e.user_id,title,message:msg,type,created_by:userId}));
+  else rows=[{user_id:target,title,message:msg,type,created_by:userId}];
+  if(!rows.length)throw new Error("لا يوجد موظفون صالحون لاستقبال التنبيه.");
+  const {error}=await supabaseClient.from("notifications").insert(rows);
+  if(error)throw error;
+  document.getElementById("notificationForm").reset();
+  closeNotificationModal();
+  alert(target==="all"?`تم إرسال التنبيه إلى ${rows.length} موظفًا بنجاح.`:"تم إرسال التنبيه للموظف بنجاح.");
+ }catch(e){console.error(e);alert("تعذر إرسال التنبيه: "+(e.message||"خطأ غير معروف"));}
+ finally{btn.disabled=false;btn.textContent="إرسال التنبيه"}
+}
+
 function getExportRows(list){
  return list.map((e,i)=>({
   "رقم":i+1,"Nom et prénom":e.nom_fr||"","الاسم واللقب بالعربية":e.nom_ar||"","منصب العمل":e.poste_ar||"","Poste de travail":e.poste_fr||"",
@@ -255,6 +315,8 @@ function escapeHtml(v){return v==null?"":String(v).replace(/&/g,"&amp;").replace
 function showError(t){document.getElementById("errorBox").innerHTML=`<div class="error">${escapeHtml(t)}</div>`}
 async function logout(){await supabaseClient.auth.signOut();location.href="index.html"}
 document.getElementById("employeeModal").addEventListener("click",function(e){if(e.target===this)closeModal()});
+document.getElementById("notificationModal").addEventListener("click",function(e){if(e.target===this)closeNotificationModal()});
+document.getElementById("notificationForm").addEventListener("submit",sendNotification);
 (async function init(){if(await checkAdmin())await loadEmployees()})();
 </script>
 </body>
