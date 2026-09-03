@@ -8,63 +8,59 @@
 <script src="config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap');
+:root{
+ --navy:#123047;--navy2:#0c2639;--teal:#0b8f91;--teal2:#087477;
+ --bg:#f4f7f9;--card:#ffffff;--line:#e6edf1;--muted:#71818d;--text:#263b49;
+ --shadow:0 10px 30px rgba(24,55,72,.07);--shadow2:0 16px 40px rgba(24,55,72,.12);
+}
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,Tahoma,sans-serif;background:#f4f7fa;color:#263746}
-.header{background:linear-gradient(135deg,#087f8c,#0b607a);color:#fff;padding:22px 30px;box-shadow:0 4px 15px rgba(0,0,0,.08)}
-.header-content{max-width:1450px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:20px}
-.header h1{margin:0 0 7px;font-size:25px}.header p{margin:0;opacity:.9;font-size:14px}
-.logout-btn{border:none;background:rgba(255,255,255,.15);color:#fff;padding:11px 18px;border-radius:10px;cursor:pointer;font-weight:bold}
-.container{max-width:1450px;margin:25px auto;padding:0 20px}
-.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:15px;margin-bottom:25px}
-.stat-card,.toolbar,.table-card,.import-card{background:#fff;border-radius:15px;box-shadow:0 4px 15px rgba(0,0,0,.05);border:1px solid #e7edf2}
-.stat-card{padding:20px}.stat-title{color:#71808d;font-size:14px;margin-bottom:10px}.stat-number{font-size:29px;font-weight:bold;color:#087f8c}
-.toolbar{padding:18px;margin-bottom:20px;display:flex;gap:12px;flex-wrap:wrap}
-.toolbar input,.toolbar select{padding:12px 14px;border:1px solid #d7e1e8;border-radius:10px;font-size:14px;outline:none;background:#fbfdff}
-.toolbar input{flex:1;min-width:250px}.toolbar select{min-width:180px}
-.export-btn,.print-btn,.import-btn{border:none;padding:12px 17px;border-radius:10px;cursor:pointer;font-weight:bold}
-.export-btn{background:#087f8c;color:#fff}.print-btn{background:#e9f4ff;color:#17659b}.import-btn{background:#eef8ee;color:#28723d}
-.import-card{padding:16px;margin-bottom:20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.import-title{font-weight:bold;color:#12344d}
-.refresh-box{display:flex;align-items:center;gap:10px;margin-right:auto}.refresh-btn{border:none;background:#f1f7fa;color:#17659b;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:bold}.refresh-info{font-size:12px;color:#71808d}
-.stat-card{cursor:pointer;transition:transform .15s,box-shadow .15s}.stat-card:hover{transform:translateY(-2px);box-shadow:0 7px 18px rgba(0,0,0,.08)}.stat-card.active-card{outline:2px solid #087f8c;outline-offset:1px}
-.notice{background:#eef8ff;color:#17659b;border:1px solid #d8ebf8;padding:12px 15px;border-radius:10px;margin-bottom:20px;font-size:13px}.warning-note{background:#fff8e8;color:#8a6200;border-color:#f3dfaa}.import-note{font-size:12px;color:#71808d;flex:1;min-width:260px}
-#importFile{display:none}
-.file-label{background:#f4f7fa;border:1px solid #d7e1e8;padding:11px 14px;border-radius:10px;cursor:pointer;font-weight:bold}
-.table-card{overflow:hidden}.table-header{padding:20px;border-bottom:1px solid #edf1f4;display:flex;justify-content:space-between;align-items:center;gap:10px}.table-header h2{margin:0;color:#12344d;font-size:19px}
-.table-wrapper{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:1100px}
-th{background:#f5f8fa;color:#526575;padding:14px 12px;text-align:right;font-size:13px;white-space:nowrap}
-td{padding:14px 12px;border-top:1px solid #edf1f4;font-size:13px;vertical-align:middle}tr:hover td{background:#fbfdff}
-.badge{display:inline-block;padding:6px 10px;border-radius:20px;font-size:12px;font-weight:bold;white-space:nowrap}
-.badge-active,.badge-approved{background:#e9f8ef;color:#18733c}.badge-seconded,.badge-pending,.badge-warning{background:#fff4df;color:#a86c00}.badge-correction,.badge-expired{background:#fff0f0;color:#b32e2e}.badge-normal{background:#edf6ff;color:#17659b}
-.actions{display:flex;gap:7px;flex-wrap:wrap}.btn{border:none;padding:8px 11px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:bold}
-.btn-view{background:#e9f4ff;color:#17659b}.btn-approve{background:#e9f8ef;color:#18733c}.btn-correction{background:#fff0f0;color:#b32e2e}.btn-delete{background:#ffe9e9;color:#a52828}.btn:hover{opacity:.8}
-.loading,.empty{text-align:center;padding:50px;color:#71808d}.error{background:#fff0f0;color:#a52828;padding:15px;border-radius:10px;margin-bottom:20px}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1000;padding:20px;overflow-y:auto}.modal.show{display:flex;align-items:center;justify-content:center}
-.modal-content{background:#fff;width:100%;max-width:850px;border-radius:18px;padding:25px;max-height:90vh;overflow-y:auto}.modal-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #edf1f4;padding-bottom:15px;margin-bottom:20px}.modal-header h2{margin:0;color:#12344d}
-.close{border:none;background:#f0f3f5;width:35px;height:35px;border-radius:50%;cursor:pointer;font-size:20px}
-.details-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.detail{background:#f8fafb;padding:13px;border-radius:10px}.detail-label{color:#71808d;font-size:12px;margin-bottom:6px}.detail-value{color:#253c4d;font-weight:bold;word-break:break-word}
-.modal-actions{margin-top:20px;display:flex;gap:10px;flex-wrap:wrap}.modal-actions button{border:none;padding:12px 18px;border-radius:10px;cursor:pointer;font-weight:bold}
-.approve-modal{background:#087f8c;color:#fff}.correction-modal{background:#fff0f0;color:#a52828}.delete-modal{background:#ffe9e9;color:#a52828}
-@media(max-width:1000px){.stats{grid-template-columns:repeat(3,1fr)}}@media(max-width:700px){.header-content{flex-direction:column;align-items:stretch}.logout-btn{width:100%}.stats{grid-template-columns:repeat(2,1fr)}.details-grid{grid-template-columns:1fr}.table-header{align-items:stretch;flex-direction:column}}@media(max-width:450px){.stats{grid-template-columns:1fr}.container{padding:0 12px}}
-@media print{body{background:#fff}.header,.toolbar,.stats,.import-card,.modal,.no-print{display:none!important}.container{max-width:none;margin:0;padding:0}.table-card{box-shadow:none;border:none}.table-header{padding:0 0 10px}.table-header h2{font-size:18px}.table-wrapper{overflow:visible}table{min-width:0;font-size:10px}th,td{padding:6px 4px;font-size:10px}.actions{display:none}}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:'Cairo',Tahoma,Arial,sans-serif;background:radial-gradient(circle at 90% 0%,#e9f7f7 0,transparent 28%),var(--bg);color:var(--text)}
+button,input,select{font-family:inherit}
+.header{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--navy2) 0%,#0d4b61 52%,var(--teal2) 100%);color:#fff;padding:27px 30px;box-shadow:0 8px 25px rgba(7,47,65,.16)}
+.header:before,.header:after{content:'';position:absolute;border-radius:50%;background:rgba(255,255,255,.055);pointer-events:none}.header:before{width:250px;height:250px;left:-80px;top:-150px}.header:after{width:330px;height:330px;right:-130px;bottom:-260px}
+.header-content{max-width:1450px;margin:auto;display:flex;justify-content:space-between;align-items:center;gap:20px;position:relative;z-index:1}
+.brand{display:flex;align-items:center;gap:15px}.brand-icon{width:52px;height:52px;border-radius:16px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.18);display:grid;place-items:center;box-shadow:inset 0 1px rgba(255,255,255,.12)}
+.brand-icon svg{width:28px;height:28px}.header h1{margin:0 0 4px;font-size:25px;font-weight:800;letter-spacing:-.3px}.header p{margin:0;opacity:.82;font-size:13px}.header-meta{font-size:11px;opacity:.68;margin-top:4px}
+.logout-btn{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.1);color:#fff;padding:11px 17px;border-radius:12px;cursor:pointer;font-weight:700;display:flex;align-items:center;gap:8px;transition:.2s}.logout-btn:hover{background:rgba(255,255,255,.18);transform:translateY(-1px)}
+.container{max-width:1450px;margin:27px auto;padding:0 20px}.section-kicker{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px;font-weight:700;margin:0 0 10px}.section-kicker:before{content:'';width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 5px rgba(11,143,145,.10)}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:15px;margin-bottom:21px}.stat-card{position:relative;overflow:hidden;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:var(--shadow);cursor:pointer;transition:transform .2s,box-shadow .2s,border-color .2s}.stat-card:after{content:'';position:absolute;width:90px;height:90px;border-radius:50%;left:-38px;bottom:-45px;background:rgba(11,143,145,.045)}.stat-card:hover{transform:translateY(-3px);box-shadow:var(--shadow2);border-color:#d5e5e9}.stat-card.active-card{border-color:#58b8ba;box-shadow:0 0 0 3px rgba(11,143,145,.10),var(--shadow)}
+.stat-top{display:flex;align-items:center;justify-content:space-between;gap:10px}.stat-icon{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;background:#edf8f8;color:var(--teal)}.stat-icon svg{width:21px;height:21px}.stat-title{color:var(--muted);font-size:12px;font-weight:700;margin:0}.stat-number{font-size:30px;line-height:1.15;font-weight:800;color:var(--navy);margin-top:11px}.stat-hint{font-size:10px;color:#9aa8b0;margin-top:4px}
+.notice{background:#eef8f8;color:#126c6e;border:1px solid #d4eeee;padding:12px 15px;border-radius:13px;margin-bottom:18px;font-size:12px;font-weight:600;box-shadow:0 4px 14px rgba(12,80,90,.03)}.warning-note{background:#fff8e8;color:#896100;border-color:#f1dfae}
+.toolbar{background:rgba(255,255,255,.92);border:1px solid var(--line);border-radius:18px;padding:15px;box-shadow:var(--shadow);display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:18px}.toolbar input,.toolbar select{height:44px;padding:0 13px;border:1px solid #dce6eb;border-radius:12px;font-size:12px;outline:none;background:#fbfdfe;color:var(--text);transition:.2s}.toolbar input{flex:1;min-width:245px}.toolbar input:focus,.toolbar select:focus{border-color:#68babc;box-shadow:0 0 0 3px rgba(11,143,145,.09);background:#fff}.toolbar select{min-width:165px}
+.btn,.export-btn,.print-btn,.refresh-btn{border:none;cursor:pointer;font-weight:700;transition:.2s;display:inline-flex;align-items:center;justify-content:center;gap:7px}.export-btn,.print-btn,.refresh-btn{height:44px;padding:0 14px;border-radius:12px;font-size:12px}.export-btn{background:linear-gradient(135deg,#0b8f91,#087477);color:#fff;box-shadow:0 5px 12px rgba(8,116,119,.16)}.print-btn{background:#eef5f8;color:#31576b}.refresh-btn{background:#f0f7f8;color:#087477}.export-btn:hover,.print-btn:hover,.refresh-btn:hover{transform:translateY(-1px);filter:brightness(.98)}.refresh-btn:disabled{opacity:.65;cursor:wait;transform:none}.refresh-box{display:flex;align-items:center;gap:9px;margin-right:auto}.refresh-info{font-size:10px;color:#8998a1;white-space:nowrap}
+.table-card{background:#fff;border:1px solid var(--line);border-radius:19px;box-shadow:var(--shadow);overflow:hidden}.table-header{padding:18px 20px;border-bottom:1px solid #edf1f4;display:flex;justify-content:space-between;align-items:center;gap:10px}.table-title-wrap{display:flex;align-items:center;gap:12px}.table-title-icon{width:39px;height:39px;border-radius:12px;background:#edf8f8;color:var(--teal);display:grid;place-items:center}.table-title-icon svg{width:20px}.table-header h2{margin:0;color:var(--navy);font-size:17px;font-weight:800}.table-header p{margin:2px 0 0;color:#8a98a0;font-size:10px}.table-counter{font-size:11px;color:#5e747f;background:#f4f8fa;padding:7px 11px;border-radius:10px;font-weight:700}
+.table-wrapper{overflow-x:auto}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1100px}th{background:#f8fafb;color:#637580;padding:13px 12px;text-align:right;font-size:11px;font-weight:800;white-space:nowrap;border-bottom:1px solid #e9eef1}td{padding:13px 12px;border-bottom:1px solid #eef2f4;font-size:12px;vertical-align:middle}tbody tr:last-child td{border-bottom:none}tbody tr{transition:.15s}tbody tr:hover td{background:#fbfdfd}td strong{color:#203b4a;font-weight:800}td small{color:#99a6ad;font-size:10px}.badge{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:20px;font-size:10px;font-weight:800;white-space:nowrap}.badge:before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.75}.badge-active,.badge-approved{background:#e9f8ef;color:#18733c}.badge-seconded,.badge-pending,.badge-warning{background:#fff4df;color:#a86c00}.badge-correction,.badge-expired{background:#fff0f0;color:#b32e2e}.badge-normal{background:#edf6ff;color:#17659b}
+.actions{display:flex;gap:6px;flex-wrap:wrap}.btn{padding:7px 10px;border-radius:9px;font-size:10px}.btn svg{width:13px;height:13px}.btn-view{background:#eaf4fb;color:#17659b}.btn-approve{background:#e9f8ef;color:#18733c}.btn-correction{background:#fff3f3;color:#b32e2e}.btn-delete{background:#ffeaea;color:#a52828}.btn:hover{transform:translateY(-1px);filter:brightness(.97)}
+.empty,.loading{text-align:center!important;color:#8a989f;padding:38px!important;font-size:12px}.loading:before{content:'◌';display:inline-block;margin-left:6px;animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+.error{background:#fff0f0;color:#a52828;border:1px solid #f3d1d1;padding:12px 15px;border-radius:12px;margin-bottom:15px;font-size:12px;font-weight:700}
+.modal{display:none;position:fixed;inset:0;background:rgba(12,30,42,.55);backdrop-filter:blur(4px);z-index:50;padding:25px;overflow:auto}.modal.show{display:block}.modal-content{max-width:900px;margin:5vh auto;background:#fff;border-radius:22px;box-shadow:0 25px 70px rgba(0,0,0,.2);overflow:hidden}.modal-header{padding:18px 20px;background:linear-gradient(135deg,#f7fbfc,#eef7f8);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.modal-header h2{margin:0;color:var(--navy);font-size:18px}.close{width:36px;height:36px;border:0;border-radius:11px;background:#fff;color:#61747e;font-size:23px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.05)}.details-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;padding:20px}.detail{background:#f8fafb;border:1px solid #edf2f4;padding:12px 13px;border-radius:12px}.detail-label{color:#7d8c95;font-size:10px;margin-bottom:5px;font-weight:600}.detail-value{color:#263f4e;font-size:12px;font-weight:800;word-break:break-word}.modal-actions{padding:0 20px 20px;display:flex;gap:9px;flex-wrap:wrap}.modal-actions button{border:none;padding:10px 15px;border-radius:11px;cursor:pointer;font-weight:700;font-family:inherit}.approve-modal{background:#087f8c;color:#fff}.correction-modal{background:#fff0f0;color:#a52828}.delete-modal{background:#ffe9e9;color:#a52828}
+@media(max-width:1100px){.stats{grid-template-columns:repeat(3,1fr)}}@media(max-width:760px){.header{padding:21px 17px}.header-content{align-items:stretch;flex-direction:column}.logout-btn{width:100%;justify-content:center}.brand-icon{width:46px;height:46px}.header h1{font-size:21px}.container{margin:19px auto;padding:0 12px}.stats{grid-template-columns:repeat(2,1fr);gap:10px}.stat-card{padding:14px}.stat-number{font-size:25px}.toolbar{padding:11px}.toolbar input,.toolbar select,.export-btn,.print-btn,.refresh-btn{width:100%}.toolbar input{min-width:0}.refresh-box{width:100%;margin-right:0;justify-content:space-between}.refresh-box .refresh-btn{width:auto;flex:0 0 auto}.table-header{padding:15px}.details-grid{grid-template-columns:1fr}.modal{padding:12px}.modal-content{margin:2vh auto}}
+@media(max-width:450px){.stats{grid-template-columns:1fr}.stat-top{align-items:flex-start}.table-counter{display:none}}
+@media print{body{background:#fff}.header,.toolbar,.stats,.notice,.modal,.no-print{display:none!important}.container{max-width:none;margin:0;padding:0}.table-card{box-shadow:none;border:none}.table-header{padding:0 0 10px}.table-header h2{font-size:18px}.table-wrapper{overflow:visible}table{min-width:0;font-size:10px}th,td{padding:6px 4px;font-size:10px}.actions{display:none}}
 </style>
 </head>
 <body>
 <header class="header"><div class="header-content">
-<div><h1>لوحة تحكم المسؤول</h1><p>إدارة ومتابعة بيانات الموظفين</p></div>
-<button class="logout-btn" onclick="logout()">تسجيل الخروج</button>
+<div class="brand">
+<div class="brand-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 19V9l8-5 8 5v10"/><path d="M8 19v-6h8v6M10 9h4M12 7v4M10 9h4"/></svg></div>
+<div><h1>لوحة تحكم المسؤول</h1><p>إدارة ومتابعة بيانات الموظفين</p><div class="header-meta">المؤسسة العمومية الإستشفائية بأولف — إدارة الموارد البشرية</div></div>
+</div>
+<button class="logout-btn" onclick="logout()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/><path d="M21 19V5a2 2 0 0 0-2-2h-6"/></svg> تسجيل الخروج</button>
 </div></header>
 
 <main class="container">
 <div id="errorBox"></div>
 <div id="statusNotice" class="notice">سيتم عرض جميع ملفات الموظفين هنا، مع إبراز الملفات التي تحتاج إلى مراجعة أو تصحيح.</div>
 
+<div class="section-kicker">نظرة عامة على ملفات الموظفين</div>
 <div class="stats">
-<div class="stat-card" data-filter="all" onclick="quickFilter('all')"><div class="stat-title">إجمالي الموظفين</div><div class="stat-number" id="totalEmployees">0</div></div>
-<div class="stat-card" data-filter="active" onclick="quickFilter('active')"><div class="stat-title">الموظفون النشطون</div><div class="stat-number" id="activeEmployees">0</div></div>
-<div class="stat-card" data-filter="seconded" onclick="quickFilter('seconded')"><div class="stat-title">موضوعون تحت التصرف</div><div class="stat-number" id="secondedEmployees">0</div></div>
-<div class="stat-card" data-profile-filter="pending" onclick="quickProfileFilter('pending')"><div class="stat-title">قيد المراجعة</div><div class="stat-number" id="pendingEmployees">0</div></div>
-<div class="stat-card" data-profile-filter="needs_correction" onclick="quickProfileFilter('needs_correction')"><div class="stat-title">يحتاج إلى تصحيح</div><div class="stat-number" id="correctionEmployees">0</div></div>
+<div class="stat-card" data-filter="all" onclick="quickFilter('all')"><div class="stat-top"><div class="stat-title">إجمالي الموظفين</div><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 20v-1.5a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4V20"/><circle cx="9.5" cy="7" r="3.5"/><path d="M17 11a3 3 0 1 0 0-6M17 14.5h1a4 4 0 0 1 4 4V20"/></svg></div></div><div class="stat-number" id="totalEmployees">0</div><div class="stat-hint">جميع الموظفين المسجلين</div></div>
+<div class="stat-card" data-filter="active" onclick="quickFilter('active')"><div class="stat-top"><div class="stat-title">الموظفون النشطون</div><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg></div></div><div class="stat-number" id="activeEmployees">0</div><div class="stat-hint">في وضعية عمل نشطة</div></div>
+<div class="stat-card" data-filter="seconded" onclick="quickFilter('seconded')"><div class="stat-top"><div class="stat-title">موضوعون تحت التصرف</div><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M8 6V4h8v2M3 11h18M10 14h4"/></svg></div></div><div class="stat-number" id="secondedEmployees">0</div><div class="stat-hint">مع متابعة مدة الوضعية</div></div>
+<div class="stat-card" data-profile-filter="pending" onclick="quickProfileFilter('pending')"><div class="stat-top"><div class="stat-title">قيد المراجعة</div><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 7v5l3 2"/><path d="M19 3v5h-5"/></svg></div></div><div class="stat-number" id="pendingEmployees">0</div><div class="stat-hint">ملفات بانتظار اعتماد المسؤول</div></div>
+<div class="stat-card" data-profile-filter="needs_correction" onclick="quickProfileFilter('needs_correction')"><div class="stat-top"><div class="stat-title">يحتاج إلى تصحيح</div><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></svg></div></div><div class="stat-number" id="correctionEmployees">0</div><div class="stat-hint">ملفات تحتاج تدخل الموظف</div></div>
 </div>
 
 
@@ -77,13 +73,14 @@ td{padding:14px 12px;border-top:1px solid #edf1f4;font-size:13px;vertical-align:
 <select id="profileFilter" onchange="renderEmployees()">
 <option value="all">جميع حالات الملف</option><option value="pending">قيد المراجعة</option><option value="approved">معتمد</option><option value="needs_correction">يحتاج تصحيح</option>
 </select>
-<button class="export-btn" onclick="exportExcel()">📊 تصدير إلى Excel</button><button class="print-btn" onclick="resetFilters()">↺ مسح الفلاتر</button>
-<button class="print-btn" onclick="printEmployees()">🖨️ طباعة القائمة</button>
-<div class="refresh-box"><button class="refresh-btn" onclick="refreshEmployees()">🔄 تحديث</button><span id="lastRefresh" class="refresh-info">آخر تحديث: --</span></div>
+<button class="export-btn" onclick="exportExcel()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h11v16H4z"/><path d="M8 8h3M8 12h3M8 16h3M15 8h5v12h-5"/></svg> تصدير Excel</button>
+<button class="print-btn" onclick="resetFilters()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l16 16M20 4L4 20"/></svg> مسح الفلاتر</button>
+<button class="print-btn" onclick="printEmployees()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v7H6z"/></svg> طباعة القائمة</button>
+<div class="refresh-box"><button class="refresh-btn" onclick="refreshEmployees()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 11a8 8 0 0 0-14.9-4M4 5v5h5M4 13a8 8 0 0 0 14.9 4M20 19v-5h-5"/></svg> تحديث</button><span id="lastRefresh" class="refresh-info">آخر تحديث: --</span></div>
 </div>
 
 <div class="table-card">
-<div class="table-header"><h2>قائمة الموظفين</h2></div>
+<div class="table-header"><div class="table-title-wrap"><div class="table-title-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 5h16v14H4z"/><path d="M4 9h16M9 5v14"/><path d="M12 12h5M12 15h5"/></svg></div><div><h2>قائمة الموظفين</h2><p>عرض ومراجعة ومتابعة الملفات المسجلة</p></div></div><div id="tableCounter" class="table-counter">0 موظف</div></div>
 <div class="table-wrapper"><table>
 <thead><tr><th>الاسم واللقب</th><th>الرتبة</th><th>المصلحة / المكتب</th><th>الوضعية</th><th>حالة الملف</th><th>نهاية الوضع تحت التصرف</th><th class="no-print">الإجراءات</th></tr></thead>
 <tbody id="employeesBody"><tr><td colspan="7" class="loading">جاري تحميل البيانات...</td></tr></tbody>
@@ -169,7 +166,8 @@ function renderEmployees(){
   notice.className=(pending||correction)?"notice warning-note":"notice";
   notice.textContent=(pending||correction)?`تنبيه إداري: يوجد ${pending} ملف${pending===1?"":"ات"} قيد المراجعة و${correction} ملف${correction===1?"":"ات"} يحتاج إلى تصحيح.`:"لا توجد حاليًا ملفات معلقة للمراجعة أو التصحيح.";
  }
- if(!filtered.length){body.innerHTML='<tr><td colspan="7" class="empty">لا توجد بيانات مطابقة للفلاتر الحالية.</td></tr>';return}
+ if(!filtered.length){const counter=document.getElementById('tableCounter');if(counter)counter.textContent='0 موظف';body.innerHTML='<tr><td colspan="7" class="empty">لا توجد بيانات مطابقة للفلاتر الحالية.</td></tr>';return}
+ const counter=document.getElementById('tableCounter');if(counter)counter.textContent=filtered.length+' موظف';
  body.innerHTML=filtered.map(e=>`<tr>
   <td><strong>${escapeHtml(e.nom_ar||"-")}</strong><br><small>${escapeHtml(e.nom_fr||"")}</small></td>
   <td>${escapeHtml(e.grade||"-")}</td><td>${escapeHtml(e.service_ar||"-")}</td>
