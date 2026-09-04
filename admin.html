@@ -32,9 +32,7 @@ html{scroll-behavior:smooth}
 body{
  margin:0;
  font-family:'Cairo',Tahoma,Arial,sans-serif;
- background:
- radial-gradient(circle at 90% 0%,#e9f7f7 0,transparent 28%),
- var(--bg);
+ background:radial-gradient(circle at 90% 0%,#e9f7f7 0,transparent 28%),var(--bg);
  color:var(--text)
 }
 
@@ -49,8 +47,7 @@ button,input,select,textarea{font-family:inherit}
  box-shadow:0 8px 25px rgba(7,47,65,.16)
 }
 
-.header:before,
-.header:after{
+.header:before,.header:after{
  content:'';
  position:absolute;
  border-radius:50%;
@@ -223,10 +220,7 @@ button,input,select,textarea{font-family:inherit}
  color:var(--teal)
 }
 
-.stat-icon svg{
- width:21px;
- height:21px
-}
+.stat-icon svg{width:21px;height:21px}
 
 .stat-title{
  color:var(--muted);
@@ -457,7 +451,9 @@ td{
 }
 
 tbody tr:last-child td{border-bottom:none}
+
 tbody tr{transition:.15s}
+
 tbody tr:hover td{background:#fbfdfd}
 
 td strong{
@@ -546,8 +542,9 @@ td small{
  color:#b32e2e
 }
 
+/* زر التصحيح المباشر */
 .btn-edit{
- background:#eaf8f8;
+ background:#edf8f8;
  color:#087477
 }
 
@@ -695,7 +692,7 @@ td small{
 }
 
 .edit-modal{
- background:#e7f7f7;
+ background:#edf8f8;
  color:#087477
 }
 
@@ -805,24 +802,31 @@ td small{
  margin-top:5px
 }
 
-/* =========================
-   EDIT FORM
-========================= */
-
+/* نموذج تصحيح معلومات الموظف */
 .edit-form{
  padding:20px
+}
+
+.edit-notice{
+ background:#eef8f8;
+ border:1px solid #d4eeee;
+ color:#126c6e;
+ padding:11px 13px;
+ border-radius:12px;
+ font-size:11px;
+ font-weight:700;
+ margin-bottom:18px
 }
 
 .edit-grid{
  display:grid;
  grid-template-columns:repeat(2,1fr);
- gap:14px
+ gap:13px
 }
 
 .edit-field{
  display:flex;
- flex-direction:column;
- gap:6px
+ flex-direction:column
 }
 
 .edit-field.full{
@@ -832,7 +836,8 @@ td small{
 .edit-field label{
  color:#526874;
  font-size:11px;
- font-weight:800
+ font-weight:800;
+ margin-bottom:6px
 }
 
 .edit-field input,
@@ -844,9 +849,9 @@ td small{
  padding:0 12px;
  font-family:inherit;
  font-size:12px;
- color:var(--text);
+ outline:none;
  background:#fbfdfe;
- outline:none
+ color:var(--text)
 }
 
 .edit-field input:focus,
@@ -856,114 +861,71 @@ td small{
  background:#fff
 }
 
-.edit-section{
- grid-column:1/-1;
- background:#f3f8f9;
- border:1px solid #e0edef;
- color:#087477;
- padding:10px 13px;
- border-radius:11px;
- font-size:12px;
- font-weight:800;
- margin-top:4px
-}
-
 .edit-actions{
- padding-top:18px;
  display:flex;
- gap:10px;
- flex-wrap:wrap
+ gap:9px;
+ margin-top:20px;
+ padding-top:17px;
+ border-top:1px solid #edf1f4
 }
 
-.save-edit-btn{
+.edit-save{
  border:0;
- background:linear-gradient(135deg,#087f8c,#0b8f91);
+ background:#087f8c;
  color:#fff;
- padding:11px 20px;
+ padding:11px 19px;
  border-radius:11px;
  font-family:inherit;
  font-weight:800;
  cursor:pointer
 }
 
-.cancel-edit-btn{
+.edit-cancel{
  border:0;
  background:#eef3f5;
  color:#536873;
- padding:11px 20px;
+ padding:11px 19px;
  border-radius:11px;
  font-family:inherit;
  font-weight:800;
  cursor:pointer
 }
 
-.save-edit-btn:disabled{
+.edit-save:disabled{
  opacity:.65;
  cursor:wait
 }
 
-.edit-help{
- grid-column:1/-1;
- font-size:10px;
- color:#8998a1;
- background:#fafcfd;
- border:1px solid #edf1f3;
- padding:10px;
- border-radius:10px
-}
-
 @media(max-width:1100px){
- .stats{
-  grid-template-columns:repeat(3,1fr)
- }
+ .stats{grid-template-columns:repeat(3,1fr)}
 }
 
 @media(max-width:760px){
- .header{
-  padding:21px 17px
- }
-
+ .header{padding:21px 17px}
  .header-content{
   align-items:stretch;
   flex-direction:column
  }
-
  .logout-btn{
   width:100%;
   justify-content:center
  }
-
  .brand-icon{
   width:46px;
   height:46px
  }
-
- .header h1{
-  font-size:21px
- }
-
+ .header h1{font-size:21px}
  .container{
   margin:19px auto;
   padding:0 12px
  }
-
  .stats{
   grid-template-columns:repeat(2,1fr);
   gap:10px
  }
-
- .stat-card{
-  padding:14px
- }
-
- .stat-number{
-  font-size:25px
- }
-
- .toolbar{
-  padding:11px
- }
-
+ .stat-card{padding:14px}
+ .stat-number{font-size:25px}
+ .toolbar{padding:11px}
  .toolbar input,
  .toolbar select,
  .export-btn,
@@ -971,68 +933,38 @@ td small{
  .refresh-btn{
   width:100%
  }
-
- .toolbar input{
-  min-width:0
- }
-
+ .toolbar input{min-width:0}
  .refresh-box{
   width:100%;
   margin-right:0;
   justify-content:space-between
  }
-
  .refresh-box .refresh-btn{
   width:auto;
   flex:0 0 auto
  }
-
- .table-header{
-  padding:15px
- }
-
+ .table-header{padding:15px}
  .details-grid{
   grid-template-columns:1fr
  }
-
  .edit-grid{
   grid-template-columns:1fr
  }
-
- .edit-field.full,
- .edit-section,
- .edit-help{
+ .edit-field.full{
   grid-column:auto
  }
-
- .modal{
-  padding:12px
- }
-
- .modal-content{
-  margin:2vh auto
- }
+ .modal{padding:12px}
+ .modal-content{margin:2vh auto}
 }
 
 @media(max-width:450px){
- .stats{
-  grid-template-columns:1fr
- }
-
- .stat-top{
-  align-items:flex-start
- }
-
- .table-counter{
-  display:none
- }
+ .stats{grid-template-columns:1fr}
+ .stat-top{align-items:flex-start}
+ .table-counter{display:none}
 }
 
 @media print{
- body{
-  background:#fff
- }
-
+ body{background:#fff}
  .header,
  .toolbar,
  .stats,
@@ -1041,43 +973,29 @@ td small{
  .no-print{
   display:none!important
  }
-
  .container{
   max-width:none;
   margin:0;
   padding:0
  }
-
  .table-card{
   box-shadow:none;
   border:none
  }
-
  .table-header{
   padding:0 0 10px
  }
-
- .table-header h2{
-  font-size:18px
- }
-
- .table-wrapper{
-  overflow:visible
- }
-
+ .table-header h2{font-size:18px}
+ .table-wrapper{overflow:visible}
  table{
   min-width:0;
   font-size:10px
  }
-
  th,td{
   padding:6px 4px;
   font-size:10px
  }
-
- .actions{
-  display:none
- }
+ .actions{display:none}
 }
 </style>
 </head>
@@ -1088,7 +1006,6 @@ td small{
 <div class="header-content">
 
 <div class="brand">
-
 <div class="brand-icon">
 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
 <path d="M4 19V9l8-5 8 5v10"/>
@@ -1103,7 +1020,6 @@ td small{
 المؤسسة العمومية الإستشفائية بأولف — إدارة الموارد البشرية
 </div>
 </div>
-
 </div>
 
 <button class="logout-btn" onclick="logout()">
@@ -1126,9 +1042,7 @@ td small{
 سيتم عرض جميع ملفات الموظفين هنا، مع إبراز الملفات التي تحتاج إلى مراجعة أو تصحيح.
 </div>
 
-<div class="section-kicker">
-نظرة عامة على ملفات الموظفين
-</div>
+<div class="section-kicker">نظرة عامة على ملفات الموظفين</div>
 
 <div class="stats">
 
@@ -1261,11 +1175,12 @@ oninput="renderEmployees()"
 
 <div class="refresh-box">
 <button class="refresh-btn" onclick="refreshEmployees()">
-🔄 تحديث
+<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+<path d="M20 11a8 8 0 0 0-14.9-4M4 5v5h5M4 13a8 8 0 0 0 14.9 4M20 19v-5h-5"/>
+</svg>
+تحديث
 </button>
-<span id="lastRefresh" class="refresh-info">
-آخر تحديث: --
-</span>
+<span id="lastRefresh" class="refresh-info">آخر تحديث: --</span>
 </div>
 
 </div>
@@ -1273,7 +1188,6 @@ oninput="renderEmployees()"
 <div class="table-card">
 
 <div class="table-header">
-
 <div class="table-title-wrap">
 
 <div class="table-title-icon">
@@ -1291,9 +1205,7 @@ oninput="renderEmployees()"
 
 </div>
 
-<div id="tableCounter" class="table-counter">
-0 موظف
-</div>
+<div id="tableCounter" class="table-counter">0 موظف</div>
 
 </div>
 
@@ -1315,9 +1227,7 @@ oninput="renderEmployees()"
 
 <tbody id="employeesBody">
 <tr>
-<td colspan="7" class="loading">
-جاري تحميل البيانات...
-</td>
+<td colspan="7" class="loading">جاري تحميل البيانات...</td>
 </tr>
 </tbody>
 
@@ -1329,9 +1239,7 @@ oninput="renderEmployees()"
 </main>
 
 
-<!-- =========================
-     DETAILS MODAL
-========================= -->
+<!-- نافذة تفاصيل الموظف -->
 
 <div id="employeeModal" class="modal">
 
@@ -1347,29 +1255,33 @@ oninput="renderEmployees()"
 <div id="modalActions" class="modal-actions"></div>
 
 </div>
+
 </div>
 
 
-<!-- =========================
-     EDIT MODAL
-========================= -->
+<!-- نافذة تصحيح معلومات الموظف -->
 
-<div id="editModal" class="modal">
+<div id="editEmployeeModal" class="modal">
 
-<div class="modal-content">
+<div class="modal-content" style="max-width:1000px">
 
 <div class="modal-header">
+
 <h2>✏️ تصحيح معلومات الموظف</h2>
-<button class="close" onclick="closeEditModal()">×</button>
+
+<button class="close" onclick="closeEditEmployeeModal()">×</button>
+
 </div>
 
 <form id="editEmployeeForm" class="edit-form">
 
-<div class="edit-grid">
-
-<div class="edit-section">
-البيانات الشخصية
+<div class="edit-notice">
+يمكن للمسؤول تعديل المعلومات المطلوبة فقط. المعلومات الأخرى الموجودة في ملف الموظف ستبقى محفوظة كما هي، ولن يتم تغيير صلاحيات الحساب أو رقم المستخدم.
 </div>
+
+<input type="hidden" id="editEmployeeId">
+
+<div class="edit-grid">
 
 <div class="edit-field">
 <label for="edit_nom_ar">الاسم واللقب بالعربية</label>
@@ -1387,18 +1299,13 @@ oninput="renderEmployees()"
 </div>
 
 <div class="edit-field">
-<label for="edit_email">البريد الإلكتروني</label>
-<input id="edit_email" type="email">
-</div>
-
-<div class="edit-field">
 <label for="edit_phone">الهاتف الشخصي</label>
 <input id="edit_phone" type="text">
 </div>
 
-
-<div class="edit-section">
-البيانات المهنية
+<div class="edit-field">
+<label for="edit_email">البريد الإلكتروني</label>
+<input id="edit_email" type="email">
 </div>
 
 <div class="edit-field">
@@ -1427,26 +1334,23 @@ oninput="renderEmployees()"
 </div>
 
 <div class="edit-field">
-<label for="edit_lieu_travail_ar">مكان العمل</label>
-<input id="edit_lieu_travail_ar" type="text">
+<label for="edit_lieu_ar">مكان العمل</label>
+<input id="edit_lieu_ar" type="text">
 </div>
 
 <div class="edit-field">
-<label for="edit_lieu_travail_fr">Lieu de travail</label>
-<input id="edit_lieu_travail_fr" type="text">
+<label for="edit_lieu_fr">Lieu de travail</label>
+<input id="edit_lieu_fr" type="text">
 </div>
 
 <div class="edit-field">
 <label for="edit_work_status">الوضعية</label>
+
 <select id="edit_work_status">
 <option value="active">نشط</option>
 <option value="seconded">موضوع تحت التصرف</option>
 </select>
-</div>
 
-
-<div class="edit-section">
-بيانات الوضع تحت التصرف
 </div>
 
 <div class="edit-field">
@@ -1460,36 +1364,24 @@ oninput="renderEmployees()"
 </div>
 
 <div class="edit-field">
-<label for="edit_disposition_start">تاريخ البداية</label>
+<label for="edit_disposition_start">تاريخ بداية الوضع تحت التصرف</label>
 <input id="edit_disposition_start" type="date">
 </div>
 
 <div class="edit-field">
-<label for="edit_disposition_end">تاريخ النهاية</label>
+<label for="edit_disposition_end">تاريخ نهاية الوضع تحت التصرف</label>
 <input id="edit_disposition_end" type="date">
-</div>
-
-<div class="edit-help">
-عند حفظ التصحيح، سيتم تحديث معلومات الموظف مباشرة في قاعدة البيانات، وسيتم إرسال تنبيه للموظف لإعلامه بأن معلومات ملفه تم تعديلها من طرف المسؤول.
 </div>
 
 </div>
 
 <div class="edit-actions">
 
-<button
-type="submit"
-class="save-edit-btn"
-id="saveEditBtn"
->
+<button type="submit" class="edit-save" id="editSaveBtn">
 💾 حفظ التصحيح
 </button>
 
-<button
-type="button"
-class="cancel-edit-btn"
-onclick="closeEditModal()"
->
+<button type="button" class="edit-cancel" onclick="closeEditEmployeeModal()">
 إلغاء
 </button>
 
@@ -1498,12 +1390,11 @@ onclick="closeEditModal()"
 </form>
 
 </div>
+
 </div>
 
 
-<!-- =========================
-     NOTIFICATION MODAL
-========================= -->
+<!-- نافذة إرسال التنبيه -->
 
 <div id="notificationModal" class="modal">
 
@@ -1518,14 +1409,10 @@ onclick="closeEditModal()"
 
 <div class="field">
 
-<label for="notificationTarget">
-المستلم
-</label>
+<label for="notificationTarget">المستلم</label>
 
 <select id="notificationTarget" required>
-<option value="all">
-جميع الموظفين
-</option>
+<option value="all">جميع الموظفين</option>
 </select>
 
 <div class="notify-help">
@@ -1536,31 +1423,15 @@ onclick="closeEditModal()"
 
 <div class="field">
 
-<label for="notificationType">
-نوع التنبيه
-</label>
+<label for="notificationType">نوع التنبيه</label>
 
 <select id="notificationType">
 
-<option value="general">
-تنبيه عام
-</option>
-
-<option value="information">
-معلومة إدارية
-</option>
-
-<option value="announcement">
-إعلان
-</option>
-
-<option value="approval">
-اعتماد الملف
-</option>
-
-<option value="correction">
-تصحيح البيانات
-</option>
+<option value="general">تنبيه عام</option>
+<option value="information">معلومة إدارية</option>
+<option value="announcement">إعلان</option>
+<option value="approval">اعتماد الملف</option>
+<option value="correction">تصحيح البيانات</option>
 
 </select>
 
@@ -1568,9 +1439,7 @@ onclick="closeEditModal()"
 
 <div class="field">
 
-<label for="notificationTitle">
-عنوان التنبيه
-</label>
+<label for="notificationTitle">عنوان التنبيه</label>
 
 <input
 id="notificationTitle"
@@ -1584,9 +1453,7 @@ required
 
 <div class="field">
 
-<label for="notificationMessage">
-محتوى التنبيه
-</label>
+<label for="notificationMessage">محتوى التنبيه</label>
 
 <textarea
 id="notificationMessage"
@@ -1599,11 +1466,7 @@ required
 
 <div class="notify-actions">
 
-<button
-type="submit"
-class="notify-send"
-id="notificationSendBtn"
->
+<button type="submit" class="notify-send" id="notificationSendBtn">
 إرسال التنبيه
 </button>
 
@@ -1618,33 +1481,32 @@ onclick="closeNotificationModal()"
 </div>
 
 </form>
+
 </div>
+
 </div>
 
 
 <script>
 
 const supabaseClient =
-window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
-);
+window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
-let allEmployees = [];
-let selectedEmployee = null;
+let allEmployees=[];
+let selectedEmployee=null;
+let editingEmployee=null;
 
 
 /* =========================
-   ADMIN CHECK
+   التحقق من المسؤول
 ========================= */
 
 async function checkAdmin(){
 
 try{
 
-const {
-data:sessionData
-}=await supabaseClient.auth.getSession();
+const {data:sessionData} =
+await supabaseClient.auth.getSession();
 
 const session=sessionData?.session;
 
@@ -1655,10 +1517,8 @@ return false;
 
 }
 
-const {
-data:employee,
-error
-}=await supabaseClient
+const {data:employee,error} =
+await supabaseClient
 .from("employees")
 .select("role")
 .eq("user_id",session.user.id)
@@ -1692,7 +1552,7 @@ return false;
 
 
 /* =========================
-   LOAD EMPLOYEES
+   تحميل الموظفين
 ========================= */
 
 async function loadEmployees(){
@@ -1701,10 +1561,8 @@ try{
 
 setBusy(true);
 
-const {
-data,
-error
-}=await supabaseClient
+const {data,error} =
+await supabaseClient
 .from("employees")
 .select("*")
 .eq("role","employee")
@@ -1715,7 +1573,9 @@ if(error)throw error;
 allEmployees=data||[];
 
 updateStats();
+
 renderEmployees();
+
 updateLastRefresh();
 
 }catch(e){
@@ -1732,9 +1592,13 @@ setBusy(false);
 
 }
 
+
 function refreshEmployees(){
+
 loadEmployees();
+
 }
+
 
 function updateLastRefresh(){
 
@@ -1756,6 +1620,7 @@ minute:"2-digit"
 
 }
 
+
 function setBusy(busy){
 
 document
@@ -1765,9 +1630,9 @@ document
 b.disabled=busy;
 
 b.textContent=
-busy?
-"⏳ تحديث...":
-"🔄 تحديث";
+busy
+?"⏳ تحديث..."
+:"🔄 تحديث";
 
 });
 
@@ -1775,55 +1640,40 @@ busy?
 
 
 /* =========================
-   STATISTICS
+   الإحصائيات
 ========================= */
 
 function updateStats(){
 
-const count=x=>
-allEmployees.filter(x).length;
+const count=x=>allEmployees.filter(x).length;
 
-document.getElementById(
-"totalEmployees"
-).textContent=
+document.getElementById("totalEmployees").textContent=
 allEmployees.length;
 
-document.getElementById(
-"activeEmployees"
-).textContent=
+document.getElementById("activeEmployees").textContent=
 count(e=>e.work_status==="active");
 
-document.getElementById(
-"secondedEmployees"
-).textContent=
+document.getElementById("secondedEmployees").textContent=
 count(e=>e.work_status==="seconded");
 
-document.getElementById(
-"pendingEmployees"
-).textContent=
+document.getElementById("pendingEmployees").textContent=
 count(e=>e.profile_status==="pending");
 
-document.getElementById(
-"correctionEmployees"
-).textContent=
+document.getElementById("correctionEmployees").textContent=
 count(e=>e.profile_status==="needs_correction");
 
 }
 
 
 /* =========================
-   FILTERS
+   الفلاتر
 ========================= */
 
 function quickFilter(status){
 
-document.getElementById(
-"statusFilter"
-).value=status;
+document.getElementById("statusFilter").value=status;
 
-document.getElementById(
-"profileFilter"
-).value="all";
+document.getElementById("profileFilter").value="all";
 
 clearActiveStatCards();
 
@@ -1832,22 +1682,18 @@ document.querySelector(
 `.stat-card[data-filter="${status}"]`
 );
 
-if(card)
-card.classList.add("active-card");
+if(card)card.classList.add("active-card");
 
 renderEmployees();
 
 }
 
+
 function quickProfileFilter(status){
 
-document.getElementById(
-"statusFilter"
-).value="all";
+document.getElementById("statusFilter").value="all";
 
-document.getElementById(
-"profileFilter"
-).value=status;
+document.getElementById("profileFilter").value=status;
 
 clearActiveStatCards();
 
@@ -1856,36 +1702,29 @@ document.querySelector(
 `.stat-card[data-profile-filter="${status}"]`
 );
 
-if(card)
-card.classList.add("active-card");
+if(card)card.classList.add("active-card");
 
 renderEmployees();
 
 }
 
+
 function clearActiveStatCards(){
 
 document
 .querySelectorAll(".stat-card")
-.forEach(c=>
-c.classList.remove("active-card")
-);
+.forEach(c=>c.classList.remove("active-card"));
 
 }
 
+
 function resetFilters(){
 
-document.getElementById(
-"searchInput"
-).value="";
+document.getElementById("searchInput").value="";
 
-document.getElementById(
-"statusFilter"
-).value="all";
+document.getElementById("statusFilter").value="all";
 
-document.getElementById(
-"profileFilter"
-).value="all";
+document.getElementById("profileFilter").value="all";
 
 clearActiveStatCards();
 
@@ -1895,13 +1734,12 @@ renderEmployees();
 
 
 /* =========================
-   RENDER EMPLOYEES
+   عرض الموظفين
 ========================= */
 
 function renderEmployees(){
 
-const body=
-document.getElementById("employeesBody");
+const body=document.getElementById("employeesBody");
 
 const search=
 document
@@ -1916,8 +1754,7 @@ document.getElementById("statusFilter").value;
 const pf=
 document.getElementById("profileFilter").value;
 
-const filtered=
-allEmployees.filter(e=>{
+const filtered=allEmployees.filter(e=>{
 
 const text=[
 e.nom_ar,
@@ -1938,10 +1775,8 @@ e.phone
 .toLowerCase();
 
 return
-(!search||text.includes(search))
-&&
-(sf==="all"||e.work_status===sf)
-&&
+(!search||text.includes(search)) &&
+(sf==="all"||e.work_status===sf) &&
 (pf==="all"||e.profile_status===pf);
 
 });
@@ -1963,10 +1798,8 @@ if(notice){
 
 notice.className=
 (pending||correction)
-?
-"notice warning-note"
-:
-"notice";
+?"notice warning-note"
+:"notice";
 
 notice.textContent=
 (pending||correction)
@@ -1980,9 +1813,7 @@ notice.textContent=
 if(!filtered.length){
 
 const counter=
-document.getElementById(
-"tableCounter"
-);
+document.getElementById("tableCounter");
 
 if(counter)
 counter.textContent="0 موظف";
@@ -1995,9 +1826,7 @@ return;
 }
 
 const counter=
-document.getElementById(
-"tableCounter"
-);
+document.getElementById("tableCounter");
 
 if(counter)
 counter.textContent=
@@ -2009,13 +1838,9 @@ filtered.map(e=>`
 <tr>
 
 <td>
-<strong>
-${escapeHtml(e.nom_ar||"-")}
-</strong>
+<strong>${escapeHtml(e.nom_ar||"-")}</strong>
 <br>
-<small>
-${escapeHtml(e.nom_fr||"")}
-</small>
+<small>${escapeHtml(e.nom_fr||"")}</small>
 </td>
 
 <td>
@@ -2063,7 +1888,7 @@ onclick="viewEmployee('${e.id}')"
 
 <button
 class="btn btn-edit"
-onclick="openEditModal('${e.id}')"
+onclick="openEditEmployee('${e.id}')"
 >
 ✏️ تصحيح
 </button>
@@ -2079,8 +1904,7 @@ onclick="approveEmployee('${e.id}')"
 اعتماد
 </button>
 `
-:
-""
+:""
 }
 
 <button
@@ -2109,7 +1933,7 @@ onclick="deleteEmployee('${e.id}')"
 
 
 /* =========================
-   STATUS HELPERS
+   الحالات
 ========================= */
 
 function getProfileBadge(s){
@@ -2124,20 +1948,20 @@ return '<span class="badge badge-pending">قيد المراجعة</span>';
 
 }
 
+
 function getProfileText(s){
 
 return
 s==="approved"
-?
-"معتمد"
+?"معتمد"
 :
 s==="needs_correction"
-?
-"يحتاج إلى تصحيح"
+?"يحتاج إلى تصحيح"
 :
 "قيد المراجعة";
 
 }
+
 
 function formatDate(s){
 
@@ -2145,26 +1969,11 @@ if(!s)return "-";
 
 return new Date(
 s+"T00:00:00"
-).toLocaleDateString("ar-DZ");
+)
+.toLocaleDateString("ar-DZ");
 
 }
 
-function formatDateTime(s){
-
-if(!s)return "-";
-
-return new Date(s).toLocaleString(
-"ar-DZ",
-{
-year:"numeric",
-month:"2-digit",
-day:"2-digit",
-hour:"2-digit",
-minute:"2-digit"
-}
-);
-
-}
 
 function getDeadlineBadge(s){
 
@@ -2194,6 +2003,11 @@ return `<span class="badge badge-normal">${f}</span>`;
 
 }
 
+
+/* =========================
+   تفاصيل الموظف
+========================= */
+
 function detail(label,value){
 
 return `
@@ -2213,24 +2027,16 @@ ${escapeHtml(value||"-")}
 }
 
 
-/* =========================
-   VIEW EMPLOYEE
-========================= */
-
 function viewEmployee(id){
 
 selectedEmployee=
-allEmployees.find(
-e=>e.id===id
-);
+allEmployees.find(e=>e.id===id);
 
 if(!selectedEmployee)return;
 
 const e=selectedEmployee;
 
-document.getElementById(
-"employeeDetails"
-).innerHTML=
+document.getElementById("employeeDetails").innerHTML=
 
 detail(
 "الاسم واللقب بالعربية",
@@ -2308,17 +2114,14 @@ detail(
 "المؤسسة المستقبلة",
 e.host_institution
 )+
-
 detail(
 "المصلحة / المكتب لدى المؤسسة المستقبلة",
 e.host_service
 )+
-
 detail(
 "تاريخ البداية",
 formatDate(e.disposition_start)
 )+
-
 detail(
 "تاريخ النهاية",
 formatDate(e.disposition_end)
@@ -2335,21 +2138,15 @@ getProfileText(e.profile_status)
 detail(
 "ملاحظة المسؤول",
 e.admin_note||"لا توجد ملاحظات"
-)+
-
-detail(
-"آخر تصحيح من طرف الموظف",
-formatDateTime(e.correction_submitted_at)
 );
 
-document.getElementById(
-"modalActions"
-).innerHTML=
+
+document.getElementById("modalActions").innerHTML=
 
 `
 <button
 class="edit-modal"
-onclick="closeModal();openEditModal('${e.id}')"
+onclick="closeModal();openEditEmployee('${e.id}')"
 >
 ✏️ تصحيح المعلومات
 </button>
@@ -2390,11 +2187,12 @@ onclick="deleteEmployee('${e.id}');closeModal()"
 </button>
 `;
 
-document.getElementById(
-"employeeModal"
-).classList.add("show");
+document
+.getElementById("employeeModal")
+.classList.add("show");
 
 }
+
 
 function closeModal(){
 
@@ -2406,37 +2204,60 @@ document
 
 
 /* =========================
-   ADMIN DIRECT EDIT
+   تصحيح معلومات الموظف
 ========================= */
 
-function openEditModal(id){
+function openEditEmployee(id){
 
-selectedEmployee=
-allEmployees.find(
-e=>e.id===id
-);
+const e=
+allEmployees.find(x=>x.id===id);
 
-if(!selectedEmployee)return;
+if(!e)return;
 
-const e=selectedEmployee;
+editingEmployee=e;
 
-document.getElementById("edit_nom_ar").value=e.nom_ar||"";
-document.getElementById("edit_nom_fr").value=e.nom_fr||"";
-document.getElementById("edit_nin").value=e.nin||"";
-document.getElementById("edit_email").value=e.email||"";
-document.getElementById("edit_phone").value=e.phone||"";
+document.getElementById("editEmployeeId").value=e.id;
 
-document.getElementById("edit_grade").value=e.grade||"";
-document.getElementById("edit_poste_ar").value=e.poste_ar||"";
-document.getElementById("edit_poste_fr").value=e.poste_fr||"";
 
-document.getElementById("edit_service_ar").value=e.service_ar||"";
-document.getElementById("edit_service_fr").value=e.service_fr||"";
+/*
+   نملأ الحقول بالقيم الموجودة فعليًا.
+   المسؤول يستطيع تعديل أي قيمة يريدها.
+*/
 
-document.getElementById("edit_lieu_travail_ar").value=
+document.getElementById("edit_nom_ar").value=
+e.nom_ar||"";
+
+document.getElementById("edit_nom_fr").value=
+e.nom_fr||"";
+
+document.getElementById("edit_nin").value=
+e.nin||"";
+
+document.getElementById("edit_phone").value=
+e.phone||"";
+
+document.getElementById("edit_email").value=
+e.email||"";
+
+document.getElementById("edit_grade").value=
+e.grade||"";
+
+document.getElementById("edit_poste_ar").value=
+e.poste_ar||"";
+
+document.getElementById("edit_poste_fr").value=
+e.poste_fr||"";
+
+document.getElementById("edit_service_ar").value=
+e.service_ar||"";
+
+document.getElementById("edit_service_fr").value=
+e.service_fr||"";
+
+document.getElementById("edit_lieu_ar").value=
 e.lieu_travail_ar||"";
 
-document.getElementById("edit_lieu_travail_fr").value=
+document.getElementById("edit_lieu_fr").value=
 e.lieu_travail_fr||"";
 
 document.getElementById("edit_work_status").value=
@@ -2454,25 +2275,34 @@ e.disposition_start||"";
 document.getElementById("edit_disposition_end").value=
 e.disposition_end||"";
 
-document.getElementById(
-"editModal"
-).classList.add("show");
-
-}
-
-function closeEditModal(){
 
 document
-.getElementById("editModal")
-.classList.remove("show");
+.getElementById("editEmployeeModal")
+.classList.add("show");
 
 }
 
-async function saveEmployeeEdit(event){
+
+function closeEditEmployeeModal(){
+
+document
+.getElementById("editEmployeeModal")
+.classList.remove("show");
+
+editingEmployee=null;
+
+}
+
+
+/* =========================
+   حفظ تصحيح المعلومات
+========================= */
+
+async function saveEmployeeCorrection(event){
 
 event.preventDefault();
 
-if(!selectedEmployee){
+if(!editingEmployee){
 
 alert("لم يتم تحديد الموظف.");
 
@@ -2480,163 +2310,312 @@ return;
 
 }
 
-const e=selectedEmployee;
-
 const btn=
-document.getElementById(
-"saveEditBtn"
-);
-
-const changes={
-
-nom_ar:
-document.getElementById(
-"edit_nom_ar"
-).value.trim(),
-
-nom_fr:
-document.getElementById(
-"edit_nom_fr"
-).value.trim(),
-
-nin:
-document.getElementById(
-"edit_nin"
-).value.trim(),
-
-email:
-document.getElementById(
-"edit_email"
-).value.trim(),
-
-phone:
-document.getElementById(
-"edit_phone"
-).value.trim(),
-
-grade:
-document.getElementById(
-"edit_grade"
-).value.trim(),
-
-poste_ar:
-document.getElementById(
-"edit_poste_ar"
-).value.trim(),
-
-poste_fr:
-document.getElementById(
-"edit_poste_fr"
-).value.trim(),
-
-service_ar:
-document.getElementById(
-"edit_service_ar"
-).value.trim(),
-
-service_fr:
-document.getElementById(
-"edit_service_fr"
-).value.trim(),
-
-lieu_travail_ar:
-document.getElementById(
-"edit_lieu_travail_ar"
-).value.trim(),
-
-lieu_travail_fr:
-document.getElementById(
-"edit_lieu_travail_fr"
-).value.trim(),
-
-work_status:
-document.getElementById(
-"edit_work_status"
-).value,
-
-host_institution:
-document.getElementById(
-"edit_host_institution"
-).value.trim(),
-
-host_service:
-document.getElementById(
-"edit_host_service"
-).value.trim(),
-
-disposition_start:
-document.getElementById(
-"edit_disposition_start"
-).value||null,
-
-disposition_end:
-document.getElementById(
-"edit_disposition_end"
-).value||null
-
-};
-
-
-/*
-إذا أصبحت الوضعية نشطة،
-نمسح معلومات الوضع تحت التصرف
-حتى لا تبقى بيانات قديمة.
-*/
-
-if(changes.work_status==="active"){
-
-changes.host_institution=null;
-changes.host_service=null;
-changes.disposition_start=null;
-changes.disposition_end=null;
-
-}
-
-if(
-changes.disposition_start &&
-changes.disposition_end &&
-changes.disposition_end<
-changes.disposition_start
-){
-
-alert(
-"تاريخ نهاية الوضع تحت التصرف لا يمكن أن يكون قبل تاريخ البداية."
-);
-
-return;
-
-}
-
-if(!confirm(
-"هل تريد حفظ التصحيحات على ملف الموظف؟"
-)){
-
-return;
-
-}
+document.getElementById("editSaveBtn");
 
 btn.disabled=true;
-btn.textContent="⏳ جاري حفظ التصحيح...";
+
+btn.textContent="جاري حفظ التعديلات...";
+
 
 try{
 
-const {
-error
-}=
+/*
+   مهم جدًا:
+   نقوم بتحديث الحقول الخاصة بنموذج التصحيح فقط.
+   لا نرسل user_id أو role أو created_at أو profile_status
+   أو أي حقول أخرى، وبالتالي تبقى البيانات الأخرى محفوظة.
+*/
+
+const changes={};
+
+
+/* الاسم */
+
+const nom_ar=
+document
+.getElementById("edit_nom_ar")
+.value
+.trim();
+
+if(nom_ar !== (editingEmployee.nom_ar||"")){
+changes.nom_ar=nom_ar||null;
+}
+
+
+/* الاسم بالفرنسية */
+
+const nom_fr=
+document
+.getElementById("edit_nom_fr")
+.value
+.trim();
+
+if(nom_fr !== (editingEmployee.nom_fr||"")){
+changes.nom_fr=nom_fr||null;
+}
+
+
+/* NIN */
+
+const nin=
+document
+.getElementById("edit_nin")
+.value
+.trim();
+
+if(nin !== (editingEmployee.nin||"")){
+changes.nin=nin||null;
+}
+
+
+/* الهاتف */
+
+const phone=
+document
+.getElementById("edit_phone")
+.value
+.trim();
+
+if(phone !== (editingEmployee.phone||"")){
+changes.phone=phone||null;
+}
+
+
+/* البريد الإلكتروني */
+
+const email=
+document
+.getElementById("edit_email")
+.value
+.trim();
+
+if(email !== (editingEmployee.email||"")){
+changes.email=email||null;
+}
+
+
+/* الرتبة */
+
+const grade=
+document
+.getElementById("edit_grade")
+.value
+.trim();
+
+if(grade !== (editingEmployee.grade||"")){
+changes.grade=grade||null;
+}
+
+
+/* المنصب بالعربية */
+
+const poste_ar=
+document
+.getElementById("edit_poste_ar")
+.value
+.trim();
+
+if(poste_ar !== (editingEmployee.poste_ar||"")){
+changes.poste_ar=poste_ar||null;
+}
+
+
+/* المنصب بالفرنسية */
+
+const poste_fr=
+document
+.getElementById("edit_poste_fr")
+.value
+.trim();
+
+if(poste_fr !== (editingEmployee.poste_fr||"")){
+changes.poste_fr=poste_fr||null;
+}
+
+
+/* المصلحة بالعربية */
+
+const service_ar=
+document
+.getElementById("edit_service_ar")
+.value
+.trim();
+
+if(service_ar !== (editingEmployee.service_ar||"")){
+changes.service_ar=service_ar||null;
+}
+
+
+/* المصلحة بالفرنسية */
+
+const service_fr=
+document
+.getElementById("edit_service_fr")
+.value
+.trim();
+
+if(service_fr !== (editingEmployee.service_fr||"")){
+changes.service_fr=service_fr||null;
+}
+
+
+/* مكان العمل بالعربية */
+
+const lieu_ar=
+document
+.getElementById("edit_lieu_ar")
+.value
+.trim();
+
+if(lieu_ar !== (editingEmployee.lieu_travail_ar||"")){
+changes.lieu_travail_ar=lieu_ar||null;
+}
+
+
+/* مكان العمل بالفرنسية */
+
+const lieu_fr=
+document
+.getElementById("edit_lieu_fr")
+.value
+.trim();
+
+if(lieu_fr !== (editingEmployee.lieu_travail_fr||"")){
+changes.lieu_travail_fr=lieu_fr||null;
+}
+
+
+/* الوضعية */
+
+const work_status=
+document
+.getElementById("edit_work_status")
+.value;
+
+if(work_status !== (editingEmployee.work_status||"")){
+changes.work_status=work_status;
+}
+
+
+/* المؤسسة المستقبلة */
+
+const host_institution=
+document
+.getElementById("edit_host_institution")
+.value
+.trim();
+
+if(
+host_institution !==
+(editingEmployee.host_institution||"")
+){
+
+changes.host_institution=
+host_institution||null;
+
+}
+
+
+/* المصلحة لدى المؤسسة المستقبلة */
+
+const host_service=
+document
+.getElementById("edit_host_service")
+.value
+.trim();
+
+if(
+host_service !==
+(editingEmployee.host_service||"")
+){
+
+changes.host_service=
+host_service||null;
+
+}
+
+
+/* تاريخ البداية */
+
+const disposition_start=
+document
+.getElementById("edit_disposition_start")
+.value;
+
+if(
+disposition_start !==
+(editingEmployee.disposition_start||"")
+){
+
+changes.disposition_start=
+disposition_start||null;
+
+}
+
+
+/* تاريخ النهاية */
+
+const disposition_end=
+document
+.getElementById("edit_disposition_end")
+.value;
+
+if(
+disposition_end !==
+(editingEmployee.disposition_end||"")
+){
+
+changes.disposition_end=
+disposition_end||null;
+
+}
+
+
+/*
+   إذا لم يتم تغيير أي معلومة
+*/
+
+if(Object.keys(changes).length===0){
+
+alert("لم يتم إجراء أي تعديل.");
+
+btn.disabled=false;
+
+btn.textContent="💾 حفظ التصحيح";
+
+return;
+
+}
+
+
+/*
+   التحديث يتم على سجل الموظف فقط.
+   لا يتم لمس بقية الأعمدة.
+*/
+
+const {error}=
 await supabaseClient
 .from("employees")
 .update(changes)
-.eq("id",e.id)
+.eq("id",editingEmployee.id)
 .eq("role","employee");
 
 if(error)throw error;
 
 
-/* تحديث البيانات محليًا */
+/*
+   تحديث النسخة المحلية مباشرة.
+*/
+
+editingEmployee={
+...editingEmployee,
+...changes
+};
 
 const index=
 allEmployees.findIndex(
-x=>x.id===e.id
+x=>x.id===editingEmployee.id
 );
 
 if(index!==-1){
@@ -2649,32 +2628,63 @@ allEmployees[index]={
 }
 
 
-/* إرسال تنبيه للموظف */
+/*
+   إغلاق النافذة وإعادة عرض البيانات.
+*/
 
-if(e.user_id){
+closeEditEmployeeModal();
 
-const adminUser=
+updateStats();
+
+renderEmployees();
+
+
+/*
+   إذا كانت نافذة تفاصيل الموظف مفتوحة،
+   نعيد تحميل التفاصيل بالقيم الجديدة.
+*/
+
+if(
+selectedEmployee &&
+selectedEmployee.id===editingEmployee.id
+){
+
+selectedEmployee=
+allEmployees.find(
+x=>x.id===editingEmployee.id
+);
+
+viewEmployee(editingEmployee.id);
+
+}
+
+
+/*
+   إشعار اختياري للموظف.
+   لا نغير حالة الملف ولا نرسل طلب تصحيح.
+*/
+
+if(editingEmployee.user_id){
+
+const currentUser=
 (await supabaseClient.auth.getUser())
 .data.user?.id||null;
 
-const {
-error:notificationError
-}=
+const {error:notificationError}=
 await supabaseClient
 .from("notifications")
 .insert({
 
-user_id:e.user_id,
+user_id:editingEmployee.user_id,
 
-title:
-"تم تصحيح معلومات ملفك الوظيفي",
+title:"تم تصحيح معلومات ملفك",
 
 message:
-"قام المسؤول بتعديل بعض المعلومات في ملفك الوظيفي. يرجى الدخول إلى المنصة والاطلاع على بياناتك.",
+"قام المسؤول بتصحيح بعض المعلومات في ملفك الوظيفي. يرجى الاطلاع على ملفك للتأكد من صحة البيانات.",
 
-type:"correction",
+type:"information",
 
-created_by:adminUser
+created_by:currentUser
 
 });
 
@@ -2689,28 +2699,23 @@ notificationError
 
 }
 
-closeEditModal();
 
-updateStats();
+alert("تم تصحيح معلومات الموظف وحفظ التعديلات بنجاح.");
 
-renderEmployees();
 
-alert(
-"تم تصحيح معلومات الموظف وحفظها بنجاح، وتم إرسال تنبيه له."
-);
+}catch(e){
 
-}catch(error){
-
-console.error(error);
+console.error(e);
 
 alert(
-"حدث خطأ أثناء حفظ التصحيح:\n"+
-(error.message||"خطأ غير معروف")
+"حدث خطأ أثناء حفظ التصحيح: "+
+(e.message||"خطأ غير معروف")
 );
 
 }finally{
 
 btn.disabled=false;
+
 btn.textContent="💾 حفظ التصحيح";
 
 }
@@ -2719,26 +2724,20 @@ btn.textContent="💾 حفظ التصحيح";
 
 
 /* =========================
-   APPROVE
+   اعتماد الملف
 ========================= */
 
 async function approveEmployee(id){
 
-if(!confirm(
-"هل تريد اعتماد ملف هذا الموظف؟"
-))
+if(!confirm("هل تريد اعتماد ملف هذا الموظف؟"))
 return;
 
 try{
 
 const employee=
-allEmployees.find(
-x=>x.id===id
-);
+allEmployees.find(x=>x.id===id);
 
-const {
-error
-}=
+const {error}=
 await supabaseClient
 .from("employees")
 .update({
@@ -2750,10 +2749,6 @@ admin_note:null
 if(error)throw error;
 
 if(employee?.user_id){
-
-const adminUser=
-(await supabaseClient.auth.getUser())
-.data.user?.id||null;
 
 const {
 error:notificationError
@@ -2771,7 +2766,10 @@ message:
 
 type:"approval",
 
-created_by:adminUser
+created_by:
+(
+await supabaseClient.auth.getUser()
+).data.user?.id||null
 
 });
 
@@ -2803,7 +2801,7 @@ alert(
 
 
 /* =========================
-   REQUEST CORRECTION
+   طلب تصحيح من الموظف
 ========================= */
 
 async function requestCorrection(id){
@@ -2828,36 +2826,20 @@ return;
 try{
 
 const employee=
-allEmployees.find(
-x=>x.id===id
-);
+allEmployees.find(x=>x.id===id);
 
-const {
-error
-}=
+const {error}=
 await supabaseClient
 .from("employees")
 .update({
-
-profile_status:
-"needs_correction",
-
-admin_note:
-note.trim(),
-
-correction_submitted_at:
-null
-
+profile_status:"needs_correction",
+admin_note:note.trim()
 })
 .eq("id",id);
 
 if(error)throw error;
 
 if(employee?.user_id){
-
-const adminUser=
-(await supabaseClient.auth.getUser())
-.data.user?.id||null;
 
 const {
 error:notificationError
@@ -2868,15 +2850,16 @@ await supabaseClient
 
 user_id:employee.user_id,
 
-title:
-"يرجى تصحيح بيانات ملفك",
+title:"يرجى تصحيح بيانات ملفك",
 
-message:
-note.trim(),
+message:note.trim(),
 
 type:"correction",
 
-created_by:adminUser
+created_by:
+(
+await supabaseClient.auth.getUser()
+).data.user?.id||null
 
 });
 
@@ -2908,30 +2891,28 @@ alert(
 
 
 /* =========================
-   DELETE
+   حذف الموظف
 ========================= */
 
 async function deleteEmployee(id){
 
 const e=
-allEmployees.find(
-x=>x.id===id
-);
+allEmployees.find(x=>x.id===id);
 
 if(!e)return;
 
-if(!confirm(
+if(
+!confirm(
 "هل أنت متأكد من حذف ملف الموظف:\n"+
 (e.nom_ar||e.nom_fr||"هذا الموظف")+
 "؟\n\nلا يمكن التراجع عن هذه العملية."
-))
+)
+)
 return;
 
 try{
 
-const {
-error
-}=
+const {error}=
 await supabaseClient
 .from("employees")
 .delete()
@@ -2967,7 +2948,7 @@ alert(
 
 
 /* =========================
-   NOTIFICATIONS
+   الإشعارات
 ========================= */
 
 function openNotificationModal(){
@@ -2984,18 +2965,18 @@ allEmployees
 `
 <option value="${escapeHtml(e.user_id||"")}">
 ${escapeHtml(e.nom_ar||e.nom_fr||"موظف بدون اسم")}
-—
-${escapeHtml(e.nin||"")}
+— ${escapeHtml(e.nin||"")}
 </option>
 `
 )
 .join("");
 
-document.getElementById(
-"notificationModal"
-).classList.add("show");
+document
+.getElementById("notificationModal")
+.classList.add("show");
 
 }
+
 
 function closeNotificationModal(){
 
@@ -3004,6 +2985,7 @@ document
 .classList.remove("show");
 
 }
+
 
 async function sendNotification(event){
 
@@ -3022,12 +3004,14 @@ document.getElementById(
 const title=
 document.getElementById(
 "notificationTitle"
-).value.trim();
+).value
+.trim();
 
 const msg=
 document.getElementById(
 "notificationMessage"
-).value.trim();
+).value
+.trim();
 
 const btn=
 document.getElementById(
@@ -3045,13 +3029,15 @@ return;
 }
 
 btn.disabled=true;
+
 btn.textContent="جاري الإرسال...";
 
 try{
 
 const userId=
-(await supabaseClient.auth.getUser())
-.data.user?.id||null;
+(
+await supabaseClient.auth.getUser()
+).data.user?.id||null;
 
 let rows=[];
 
@@ -3072,15 +3058,15 @@ created_by:userId
 
 }else{
 
-rows=[
-{
+rows=[{
+
 user_id:target,
 title,
 message:msg,
 type,
 created_by:userId
-}
-];
+
+}];
 
 }
 
@@ -3089,9 +3075,7 @@ throw new Error(
 "لا يوجد موظفون صالحون لاستقبال التنبيه."
 );
 
-const {
-error
-}=
+const {error}=
 await supabaseClient
 .from("notifications")
 .insert(rows);
@@ -3099,9 +3083,7 @@ await supabaseClient
 if(error)throw error;
 
 document
-.getElementById(
-"notificationForm"
-)
+.getElementById("notificationForm")
 .reset();
 
 closeNotificationModal();
@@ -3126,6 +3108,7 @@ alert(
 }finally{
 
 btn.disabled=false;
+
 btn.textContent="إرسال التنبيه";
 
 }
@@ -3134,7 +3117,7 @@ btn.textContent="إرسال التنبيه";
 
 
 /* =========================
-   EXCEL
+   Excel
 ========================= */
 
 function getExportRows(list){
@@ -3199,16 +3182,12 @@ e.disposition_start||"",
 e.disposition_end||"",
 
 "حالة الملف":
-getProfileText(e.profile_status),
-
-"آخر تصحيح من الموظف":
-formatDateTime(
-e.correction_submitted_at
-)
+getProfileText(e.profile_status)
 
 }));
 
 }
+
 
 function makeSheet(list){
 
@@ -3221,27 +3200,23 @@ rows.length
 ?
 rows
 :
-[
-{
+[{
 "رقم":"",
 "Nom et prénom":"",
 "الاسم واللقب بالعربية":""
-}
-]
+}]
 );
 
 ws["!cols"]=
 Object.keys(
-rows[0]||
-{x:1}
+rows[0]||{"x":1}
 )
-.map(()=>
-({wch:20})
-);
+.map(()=>({wch:20}));
 
 return ws;
 
 }
+
 
 function exportExcel(){
 
@@ -3337,7 +3312,7 @@ new Date()
 
 
 /* =========================
-   PRINT
+   الطباعة
 ========================= */
 
 function printEmployees(){
@@ -3353,14 +3328,14 @@ document
 .toLowerCase();
 
 const sf=
-document.getElementById(
-"statusFilter"
-).value;
+document
+.getElementById("statusFilter")
+.value;
 
 const pf=
-document.getElementById(
-"profileFilter"
-).value;
+document
+.getElementById("profileFilter")
+.value;
 
 const t=[
 e.nom_ar,
@@ -3379,10 +3354,8 @@ e.lieu_travail_fr
 .toLowerCase();
 
 return
-(!s||t.includes(s))
-&&
-(sf==="all"||e.work_status===sf)
-&&
+(!s||t.includes(s)) &&
+(sf==="all"||e.work_status===sf) &&
 (pf==="all"||e.profile_status===pf);
 
 });
@@ -3403,7 +3376,7 @@ window.print();
 
 
 /* =========================
-   HELPERS
+   أدوات
 ========================= */
 
 function escapeHtml(v){
@@ -3421,6 +3394,7 @@ String(v)
 
 }
 
+
 function showError(t){
 
 document.getElementById(
@@ -3436,12 +3410,14 @@ ${escapeHtml(t)}
 
 
 /* =========================
-   LOGOUT
+   تسجيل الخروج
 ========================= */
 
 async function logout(){
 
-await supabaseClient.auth.signOut();
+await supabaseClient
+.auth
+.signOut();
 
 location.href="index.html";
 
@@ -3449,7 +3425,7 @@ location.href="index.html";
 
 
 /* =========================
-   EVENTS
+   الأحداث
 ========================= */
 
 document
@@ -3464,17 +3440,19 @@ closeModal();
 }
 );
 
+
 document
-.getElementById("editModal")
+.getElementById("editEmployeeModal")
 .addEventListener(
 "click",
 function(e){
 
 if(e.target===this)
-closeEditModal();
+closeEditEmployeeModal();
 
 }
 );
+
 
 document
 .getElementById("notificationModal")
@@ -3488,6 +3466,15 @@ closeNotificationModal();
 }
 );
 
+
+document
+.getElementById("editEmployeeForm")
+.addEventListener(
+"submit",
+saveEmployeeCorrection
+);
+
+
 document
 .getElementById("notificationForm")
 .addEventListener(
@@ -3495,16 +3482,9 @@ document
 sendNotification
 );
 
-document
-.getElementById("editEmployeeForm")
-.addEventListener(
-"submit",
-saveEmployeeEdit
-);
-
 
 /* =========================
-   INIT
+   تشغيل الصفحة
 ========================= */
 
 (async function init(){
