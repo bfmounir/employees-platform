@@ -32,10 +32,10 @@ button,input,select{font-family:inherit}
 .btn,.export-btn,.print-btn,.refresh-btn{border:none;cursor:pointer;font-weight:700;transition:.2s;display:inline-flex;align-items:center;justify-content:center;gap:7px}.export-btn,.print-btn,.refresh-btn{height:44px;padding:0 14px;border-radius:12px;font-size:12px}.export-btn{background:linear-gradient(135deg,#0b8f91,#087477);color:#fff;box-shadow:0 5px 12px rgba(8,116,119,.16)}.print-btn{background:#eef5f8;color:#31576b}.refresh-btn{background:#f0f7f8;color:#087477}.export-btn:hover,.print-btn:hover,.refresh-btn:hover{transform:translateY(-1px);filter:brightness(.98)}.refresh-btn:disabled{opacity:.65;cursor:wait;transform:none}.refresh-box{display:flex;align-items:center;gap:9px;margin-right:auto}.refresh-info{font-size:10px;color:#8998a1;white-space:nowrap}
 .table-card{background:#fff;border:1px solid var(--line);border-radius:19px;box-shadow:var(--shadow);overflow:hidden}.table-header{padding:18px 20px;border-bottom:1px solid #edf1f4;display:flex;justify-content:space-between;align-items:center;gap:10px}.table-title-wrap{display:flex;align-items:center;gap:12px}.table-title-icon{width:39px;height:39px;border-radius:12px;background:#edf8f8;color:var(--teal);display:grid;place-items:center}.table-title-icon svg{width:20px}.table-header h2{margin:0;color:var(--navy);font-size:17px;font-weight:800}.table-header p{margin:2px 0 0;color:#8a98a0;font-size:10px}.table-counter{font-size:11px;color:#5e747f;background:#f4f8fa;padding:7px 11px;border-radius:10px;font-weight:700}
 .table-wrapper{overflow-x:auto}table{width:100%;border-collapse:separate;border-spacing:0;min-width:1100px}th{background:#f8fafb;color:#637580;padding:13px 12px;text-align:right;font-size:11px;font-weight:800;white-space:nowrap;border-bottom:1px solid #e9eef1}td{padding:13px 12px;border-bottom:1px solid #eef2f4;font-size:12px;vertical-align:middle}tbody tr:last-child td{border-bottom:none}tbody tr{transition:.15s}tbody tr:hover td{background:#fbfdfd}td strong{color:#203b4a;font-weight:800}td small{color:#99a6ad;font-size:10px}.badge{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:20px;font-size:10px;font-weight:800;white-space:nowrap}.badge:before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.75}.badge-active,.badge-approved{background:#e9f8ef;color:#18733c}.badge-seconded,.badge-pending,.badge-warning{background:#fff4df;color:#a86c00}.badge-correction,.badge-expired{background:#fff0f0;color:#b32e2e}.badge-normal{background:#edf6ff;color:#17659b}
-.actions{display:flex;gap:6px;flex-wrap:wrap}.btn{padding:7px 10px;border-radius:9px;font-size:10px}.btn svg{width:13px;height:13px}.btn-view{background:#eaf4fb;color:#17659b}.btn-approve{background:#e9f8ef;color:#18733c}.btn-correction{background:#fff3f3;color:#b32e2e}.btn-delete{background:#ffeaea;color:#a52828}.btn:hover{transform:translateY(-1px);filter:brightness(.97)}
+.actions{display:flex;gap:6px;flex-wrap:wrap}.btn{padding:7px 10px;border-radius:9px;font-size:10px}.btn svg{width:13px;height:13px}.btn-view{background:#eaf4fb;color:#17659b}.btn-approve{background:#e9f8ef;color:#18733c}.btn-correction{background:#fff3f3;color:#b32e2e}.btn-edit{background:#eef5ff;color:#17659b}.btn:hover{transform:translateY(-1px);filter:brightness(.97)}
 .empty,.loading{text-align:center!important;color:#8a989f;padding:38px!important;font-size:12px}.loading:before{content:'◌';display:inline-block;margin-left:6px;animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
 .error{background:#fff0f0;color:#a52828;border:1px solid #f3d1d1;padding:12px 15px;border-radius:12px;margin-bottom:15px;font-size:12px;font-weight:700}
-.modal{display:none;position:fixed;inset:0;background:rgba(12,30,42,.55);backdrop-filter:blur(4px);z-index:50;padding:25px;overflow:auto}.modal.show{display:block}.modal-content{max-width:900px;margin:5vh auto;background:#fff;border-radius:22px;box-shadow:0 25px 70px rgba(0,0,0,.2);overflow:hidden}.modal-header{padding:18px 20px;background:linear-gradient(135deg,#f7fbfc,#eef7f8);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.modal-header h2{margin:0;color:var(--navy);font-size:18px}.close{width:36px;height:36px;border:0;border-radius:11px;background:#fff;color:#61747e;font-size:23px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.05)}.details-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;padding:20px}.detail{background:#f8fafb;border:1px solid #edf2f4;padding:12px 13px;border-radius:12px}.detail-label{color:#7d8c95;font-size:10px;margin-bottom:5px;font-weight:600}.detail-value{color:#263f4e;font-size:12px;font-weight:800;word-break:break-word}.modal-actions{padding:0 20px 20px;display:flex;gap:9px;flex-wrap:wrap}.modal-actions button{border:none;padding:10px 15px;border-radius:11px;cursor:pointer;font-weight:700;font-family:inherit}.approve-modal{background:#087f8c;color:#fff}.correction-modal{background:#fff0f0;color:#a52828}.delete-modal{background:#ffe9e9;color:#a52828}
+.modal{display:none;position:fixed;inset:0;background:rgba(12,30,42,.55);backdrop-filter:blur(4px);z-index:50;padding:25px;overflow:auto}.modal.show{display:block}.modal-content{max-width:900px;margin:5vh auto;background:#fff;border-radius:22px;box-shadow:0 25px 70px rgba(0,0,0,.2);overflow:hidden}.modal-header{padding:18px 20px;background:linear-gradient(135deg,#f7fbfc,#eef7f8);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.modal-header h2{margin:0;color:var(--navy);font-size:18px}.close{width:36px;height:36px;border:0;border-radius:11px;background:#fff;color:#61747e;font-size:23px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.05)}.details-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:11px;padding:20px}.detail{background:#f8fafb;border:1px solid #edf2f4;padding:12px 13px;border-radius:12px}.detail-label{color:#7d8c95;font-size:10px;margin-bottom:5px;font-weight:600}.detail-value{color:#263f4e;font-size:12px;font-weight:800;word-break:break-word}.modal-actions{padding:0 20px 20px;display:flex;gap:9px;flex-wrap:wrap}.modal-actions button{border:none;padding:10px 15px;border-radius:11px;cursor:pointer;font-weight:700;font-family:inherit}.approve-modal{background:#087f8c;color:#fff}.correction-modal{background:#fff0f0;color:#a52828}.edit-modal{background:#eef5ff;color:#17659b}
 
 .notify-btn{height:44px;padding:0 15px;border:none;border-radius:12px;cursor:pointer;font-family:inherit;font-size:12px;font-weight:800;background:linear-gradient(135deg,#123047,#0b8f91);color:#fff;display:inline-flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 5px 14px rgba(11,143,145,.16);transition:.2s}.notify-btn:hover{transform:translateY(-1px);filter:brightness(.98)}
 .notify-form{padding:20px}.notify-form .field{margin-bottom:14px}.notify-form label{display:block;color:#526874;font-size:12px;font-weight:800;margin-bottom:7px}.notify-form input,.notify-form textarea,.notify-form select{width:100%;border:1px solid #dce6eb;border-radius:12px;padding:11px 13px;font-family:inherit;font-size:12px;outline:none;background:#fbfdfe}.notify-form textarea{min-height:120px;resize:vertical}.notify-form input:focus,.notify-form textarea:focus,.notify-form select:focus{border-color:#68babc;box-shadow:0 0 0 3px rgba(11,143,145,.09);background:#fff}.notify-actions{display:flex;gap:9px;justify-content:flex-start;margin-top:18px}.notify-send{border:0;background:#087f8c;color:#fff;padding:11px 18px;border-radius:11px;font-family:inherit;font-weight:800;cursor:pointer}.notify-cancel{border:0;background:#eef3f5;color:#536873;padding:11px 18px;border-radius:11px;font-family:inherit;font-weight:800;cursor:pointer}.notify-help{font-size:10px;color:#8b9aa2;margin-top:5px}
@@ -109,6 +109,7 @@ button,input,select{font-family:inherit}
 <script>
 const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 let allEmployees=[],selectedEmployee=null;
+// حماية: هذه الصفحة لا تحتوي على أي عملية حذف لسجلات employees.
 
 async function checkAdmin(){
  try{
@@ -191,7 +192,7 @@ function renderEmployees(){
   <button class="btn btn-view" onclick="viewEmployee('${e.id}')">عرض</button>
   ${e.profile_status!=="approved"?`<button class="btn btn-approve" onclick="approveEmployee('${e.id}')">اعتماد</button>`:""}
   <button class="btn btn-correction" onclick="requestCorrection('${e.id}')">طلب تصحيح</button>
-  <button class="btn btn-delete" onclick="deleteEmployee('${e.id}')">حذف</button>
+  <button class="btn btn-edit" onclick="editEmployeeInfo('${e.id}')">✏️ تصحيح</button>
   </div></td></tr>`).join("");
 }
 
@@ -215,7 +216,7 @@ function viewEmployee(id){
  detail("حالة الملف",getProfileText(e.profile_status))+detail("ملاحظة المسؤول",e.admin_note||"لا توجد ملاحظات");
  document.getElementById("modalActions").innerHTML=
  (e.profile_status!=="approved"?`<button class="approve-modal" onclick="approveEmployee('${e.id}');closeModal()">اعتماد الملف</button>`:"")+
- `<button class="correction-modal" onclick="requestCorrection('${e.id}');closeModal()">طلب تصحيح البيانات</button><button class="delete-modal" onclick="deleteEmployee('${e.id}');closeModal()">حذف الموظف</button>`;
+ `<button class="correction-modal" onclick="requestCorrection('${e.id}');closeModal()">طلب تصحيح البيانات</button><button class="edit-modal" onclick="editEmployeeInfo('${e.id}')">✏️ تصحيح المعلومات</button>`;
  document.getElementById("employeeModal").classList.add("show");
 }
 function closeModal(){document.getElementById("employeeModal").classList.remove("show")}
@@ -245,12 +246,51 @@ async function requestCorrection(id){
   await loadEmployees();alert("تم إرسال طلب التصحيح والتنبيه للموظف.");
  }catch(e){console.error(e);alert("حدث خطأ أثناء إرسال طلب التصحيح.")}
 }
-async function deleteEmployee(id){
- const e=allEmployees.find(x=>x.id===id);if(!e)return;
- if(!confirm("هل أنت متأكد من حذف ملف الموظف:\\n"+(e.nom_ar||e.nom_fr||"هذا الموظف")+"؟\\n\\nلا يمكن التراجع عن هذه العملية."))return;
- try{const {error}=await supabaseClient.from("employees").delete().eq("id",id).eq("role","employee");if(error)throw error;allEmployees=allEmployees.filter(x=>x.id!==id);updateStats();renderEmployees();alert("تم حذف ملف الموظف بنجاح.")}
- catch(err){console.error(err);alert("تعذر حذف الموظف. تأكد من صلاحيات الحذف في قاعدة البيانات.")}
+async function editEmployeeInfo(id){
+  const employee=allEmployees.find(x=>x.id===id);
+  if(!employee)return;
+
+  const fields=[
+    ['nom_ar','الاسم واللقب بالعربية'],['nom_fr','Nom et prénom'],
+    ['poste_ar','منصب العمل بالعربية'],['poste_fr','Poste de travail'],
+    ['lieu_travail_ar','مكان العمل بالعربية'],['lieu_travail_fr','Lieu de travail'],
+    ['grade','الرتبة'],['nin','NIN'],['email','البريد الإلكتروني'],['phone','الهاتف'],
+    ['service_ar','المصلحة / المكتب'],['service_fr','Service / Bureau'],
+    ['work_status','الوضعية'],['host_institution','المؤسسة المستقبلة'],['host_service','مصلحة المؤسسة المستقبلة'],
+    ['disposition_start','تاريخ بداية الوضع تحت التصرف'],['disposition_end','تاريخ نهاية الوضع تحت التصرف']
+  ];
+  const changes={};
+  for(const [key,label] of fields){
+    if(key==='work_status'){
+      const current=employee[key]||'active';
+      const value=prompt(label+'\n\nالقيمة الحالية: '+current+'\n\nاكتب active أو seconded:',current);
+      if(value===null)continue;
+      const v=value.trim();
+      if(!['active','seconded'].includes(v)){alert('الوضعية يجب أن تكون active أو seconded.');return;}
+      if(v!==current)changes[key]=v;
+      continue;
+    }
+    const current=employee[key]??'';
+    const value=prompt('تصحيح '+label+'\n\nالقيمة الحالية: '+current+'\n\nأدخل القيمة الجديدة:',String(current));
+    if(value===null)continue;
+    const v=value.trim();
+    if(v!==String(current))changes[key]=v===''?null:v;
+  }
+  if(changes.work_status && changes.work_status!=='seconded'){
+    changes.host_institution=null;changes.host_service=null;changes.disposition_start=null;changes.disposition_end=null;
+  }
+  if(!Object.keys(changes).length){alert('لم يتم إجراء أي تعديل.');return;}
+  try{
+    const {data,error}=await supabaseClient.from('employees').update(changes).eq('id',employee.id).eq('role','employee').select('*').single();
+    if(error)throw error;
+    Object.assign(employee,data||changes);
+    selectedEmployee=employee;
+    updateStats();renderEmployees();
+    if(document.getElementById('employeeModal').classList.contains('show'))viewEmployee(employee.id);
+    alert('تم تصحيح معلومات الموظف بنجاح.');
+  }catch(err){console.error(err);alert('تعذر حفظ التصحيح: '+(err.message||'خطأ غير معروف'));}
 }
+
 function openNotificationModal(){
  const select=document.getElementById("notificationTarget");
  select.innerHTML='<option value="all">جميع الموظفين</option>'+allEmployees.map(e=>`<option value="${escapeHtml(e.user_id||"")}">${escapeHtml(e.nom_ar||e.nom_fr||"موظف بدون اسم")} — ${escapeHtml(e.nin||"")}</option>`).join("");
@@ -297,4 +337,27 @@ function exportExcel(){
  const wb=XLSX.utils.book_new();
  XLSX.utils.book_append_sheet(wb,makeSheet(allEmployees),"جميع الموظفين");
  XLSX.utils.book_append_sheet(wb,makeSheet(allEmployees.filter(e=>e.work_status==="active")),"الموظفون النشطون");
- XLS
+ XLSX.utils.book_append_sheet(wb,makeSheet(allEmployees.filter(e=>e.work_status==="seconded")),"تحت التصرف");
+ XLSX.utils.book_append_sheet(wb,makeSheet(allEmployees.filter(e=>e.profile_status==="pending")),"قيد المراجعة");
+ XLSX.utils.book_append_sheet(wb,makeSheet(allEmployees.filter(e=>e.profile_status==="approved")),"المعتمدون");
+ XLSX.utils.book_append_sheet(wb,makeSheet(allEmployees.filter(e=>e.profile_status==="needs_correction")),"يحتاج تصحيح");
+ XLSX.writeFile(wb,"DRH_الموظفون_"+new Date().toISOString().slice(0,10)+".xlsx");
+}
+function printEmployees(){
+ const filtered=allEmployees.filter(e=>{
+  const s=document.getElementById("searchInput").value.trim().toLowerCase(),sf=document.getElementById("statusFilter").value,pf=document.getElementById("profileFilter").value;
+  const t=[e.nom_ar,e.nom_fr,e.nin,e.grade,e.service_ar,e.service_fr,e.poste_ar,e.poste_fr,e.lieu_travail_ar,e.lieu_travail_fr].filter(Boolean).join(" ").toLowerCase();
+  return (!s||t.includes(s))&&(sf==="all"||e.work_status===sf)&&(pf==="all"||e.profile_status===pf);
+ });
+ if(!filtered.length){alert("لا توجد بيانات للطباعة.");return}window.print();
+}
+function escapeHtml(v){return v==null?"":String(v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;")}
+function showError(t){document.getElementById("errorBox").innerHTML=`<div class="error">${escapeHtml(t)}</div>`}
+async function logout(){await supabaseClient.auth.signOut();location.href="index.html"}
+document.getElementById("employeeModal").addEventListener("click",function(e){if(e.target===this)closeModal()});
+document.getElementById("notificationModal").addEventListener("click",function(e){if(e.target===this)closeNotificationModal()});
+document.getElementById("notificationForm").addEventListener("submit",sendNotification);
+(async function init(){if(await checkAdmin())await loadEmployees()})();
+</script>
+</body>
+</html>
