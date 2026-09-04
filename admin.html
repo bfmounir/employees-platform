@@ -1,100 +1,102 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>لوحة تحكم المسؤول - إدارة الموظفين</title>
+\<!DOCTYPE html>
+\<html lang="ar" dir="rtl">
+\<head>
+\<meta charset="UTF-8">
+\<meta name="viewport" content="width=device-width, initial-scale=1.0">
+\<title>لوحة تحكم المسؤول - إدارة الموظفين\</title>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+\<script src="[https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2](https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2)">\</script>
+\<script src="config.js">\</script>
+\<script src="[https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js](https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js)">\</script>
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap');
+\<style>
+@import url('[https://fonts.googleapis.com/css2?family=Cairo\:wght@400;500;600;700;800&display=swap](https://fonts.googleapis.com/css2?family=Cairo\:wght@400;500;600;700;800\&display=swap)');
 
-:root{
- --navy:#123047;
- --navy2:#0c2639;
- --teal:#0b8f91;
- --teal2:#087477;
- --bg:#f4f7f9;
- --card:#ffffff;
- --line:#e6edf1;
- --muted:#71818d;
- --text:#263b49;
- --shadow:0 10px 30px rgba(24,55,72,.07);
- --shadow2:0 16px 40px rgba(24,55,72,.12);
+\:root{
+ \--navy:#123047;
+ \--navy2:#0c2639;
+ \--teal:#0b8f91;
+ \--teal2:#087477;
+ \--bg:#f4f7f9;
+ \--card:#ffffff;
+ \--line:#e6edf1;
+ \--muted:#71818d;
+ \--text:#263b49;
+ \--shadow:0 10px 30px rgba(24,55,72,.07);
+ \--shadow2:0 16px 40px rgba(24,55,72,.12);
 }
 
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
+\*{box-sizing\:border-box}
+
+html{scroll-behavior\:smooth}
 
 body{
  margin:0;
  font-family:'Cairo',Tahoma,Arial,sans-serif;
- background:radial-gradient(circle at 90% 0%,#e9f7f7 0,transparent 28%),var(--bg);
- color:var(--text)
+ background\:radial-gradient(circle at 90% 0%,#e9f7f7 0,transparent 28%),var(--bg);
+ color\:var(--text);
 }
 
-button,input,select,textarea{font-family:inherit}
+button,input,select,textarea{font-family\:inherit}
 
 .header{
- position:relative;
- overflow:hidden;
- background:linear-gradient(135deg,var(--navy2) 0%,#0d4b61 52%,var(--teal2) 100%);
+ position\:relative;
+ overflow\:hidden;
+ background\:linear-gradient(135deg,var(--navy2) 0%,#0d4b61 52%,var(--teal2) 100%);
  color:#fff;
  padding:27px 30px;
- box-shadow:0 8px 25px rgba(7,47,65,.16)
+ box-shadow:0 8px 25px rgba(7,47,65,.16);
 }
 
-.header:before,.header:after{
+.header\:before,
+.header\:after{
  content:'';
- position:absolute;
+ position\:absolute;
  border-radius:50%;
- background:rgba(255,255,255,.055);
- pointer-events:none
+ background\:rgba(255,255,255,.055);
+ pointer-events\:none;
 }
 
-.header:before{
+.header\:before{
  width:250px;
  height:250px;
  left:-80px;
- top:-150px
+ top:-150px;
 }
 
-.header:after{
+.header\:after{
  width:330px;
  height:330px;
  right:-130px;
- bottom:-260px
+ bottom:-260px;
 }
 
 .header-content{
  max-width:1450px;
- margin:auto;
- display:flex;
- justify-content:space-between;
- align-items:center;
+ margin\:auto;
+ display\:flex;
+ justify-content\:space-between;
+ align-items\:center;
  gap:20px;
- position:relative;
- z-index:1
+ position\:relative;
+ z-index:1;
 }
 
 .brand{
- display:flex;
- align-items:center;
- gap:15px
+ display\:flex;
+ align-items\:center;
+ gap:15px;
 }
 
 .brand-icon{
  width:52px;
  height:52px;
  border-radius:16px;
- background:rgba(255,255,255,.13);
+ background\:rgba(255,255,255,.13);
  border:1px solid rgba(255,255,255,.18);
- display:grid;
- place-items:center;
- box-shadow:inset 0 1px rgba(255,255,255,.12)
+ display\:grid;
+ place-items\:center;
+ box-shadow\:inset 0 1px rgba(255,255,255,.12);
 }
 
 .brand-icon svg{width:28px;height:28px}
@@ -103,144 +105,147 @@ button,input,select,textarea{font-family:inherit}
  margin:0 0 4px;
  font-size:25px;
  font-weight:800;
- letter-spacing:-.3px
+ letter-spacing:-.3px;
 }
 
 .header p{
  margin:0;
  opacity:.82;
- font-size:13px
+ font-size:13px;
 }
 
 .header-meta{
  font-size:11px;
  opacity:.68;
- margin-top:4px
+ margin-top:4px;
 }
 
 .logout-btn{
  border:1px solid rgba(255,255,255,.18);
- background:rgba(255,255,255,.1);
+ background\:rgba(255,255,255,.1);
  color:#fff;
  padding:11px 17px;
  border-radius:12px;
- cursor:pointer;
+ cursor\:pointer;
  font-weight:700;
- display:flex;
- align-items:center;
+ display\:flex;
+ align-items\:center;
  gap:8px;
- transition:.2s
+ transition:.2s;
 }
 
-.logout-btn:hover{
- background:rgba(255,255,255,.18);
- transform:translateY(-1px)
+.logout-btn\:hover{
+ background\:rgba(255,255,255,.18);
+ transform\:translateY(-1px);
 }
 
 .container{
  max-width:1450px;
  margin:27px auto;
- padding:0 20px
+ padding:0 20px;
 }
 
 .section-kicker{
- display:flex;
- align-items:center;
+ display\:flex;
+ align-items\:center;
  gap:8px;
- color:var(--muted);
+ color\:var(--muted);
  font-size:12px;
  font-weight:700;
- margin:0 0 10px
+ margin:0 0 10px;
 }
 
-.section-kicker:before{
+.section-kicker\:before{
  content:'';
  width:7px;
  height:7px;
  border-radius:50%;
- background:var(--teal);
- box-shadow:0 0 0 5px rgba(11,143,145,.10)
+ background\:var(--teal);
+ box-shadow:0 0 0 5px rgba(11,143,145,.10);
 }
 
 .stats{
- display:grid;
- grid-template-columns:repeat(5,1fr);
+ display\:grid;
+ grid-template-columns\:repeat(5,1fr);
  gap:15px;
- margin-bottom:21px
+ margin-bottom:21px;
 }
 
 .stat-card{
- position:relative;
- overflow:hidden;
- background:var(--card);
+ position\:relative;
+ overflow\:hidden;
+ background\:var(--card);
  border:1px solid var(--line);
  border-radius:18px;
  padding:18px;
- box-shadow:var(--shadow);
- cursor:pointer;
- transition:transform .2s,box-shadow .2s,border-color .2s
+ box-shadow\:var(--shadow);
+ cursor\:pointer;
+ transition\:transform .2s,box-shadow .2s,border-color .2s;
 }
 
-.stat-card:after{
+.stat-card\:after{
  content:'';
- position:absolute;
+ position\:absolute;
  width:90px;
  height:90px;
  border-radius:50%;
  left:-38px;
  bottom:-45px;
- background:rgba(11,143,145,.045)
+ background\:rgba(11,143,145,.045);
 }
 
-.stat-card:hover{
- transform:translateY(-3px);
- box-shadow:var(--shadow2);
- border-color:#d5e5e9
+.stat-card\:hover{
+ transform\:translateY(-3px);
+ box-shadow\:var(--shadow2);
+ border-color:#d5e5e9;
 }
 
 .stat-card.active-card{
  border-color:#58b8ba;
- box-shadow:0 0 0 3px rgba(11,143,145,.10),var(--shadow)
+ box-shadow:0 0 0 3px rgba(11,143,145,.10),var(--shadow);
 }
 
 .stat-top{
- display:flex;
- align-items:center;
- justify-content:space-between;
- gap:10px
+ display\:flex;
+ align-items\:center;
+ justify-content\:space-between;
+ gap:10px;
 }
 
 .stat-icon{
  width:40px;
  height:40px;
  border-radius:13px;
- display:grid;
- place-items:center;
+ display\:grid;
+ place-items\:center;
  background:#edf8f8;
- color:var(--teal)
+ color\:var(--teal);
 }
 
-.stat-icon svg{width:21px;height:21px}
+.stat-icon svg{
+ width:21px;
+ height:21px;
+}
 
 .stat-title{
- color:var(--muted);
+ color\:var(--muted);
  font-size:12px;
  font-weight:700;
- margin:0
+ margin:0;
 }
 
 .stat-number{
  font-size:30px;
  line-height:1.15;
  font-weight:800;
- color:var(--navy);
- margin-top:11px
+ color\:var(--navy);
+ margin-top:11px;
 }
 
 .stat-hint{
  font-size:10px;
  color:#9aa8b0;
- margin-top:4px
+ margin-top:4px;
 }
 
 .notice{
@@ -252,26 +257,26 @@ button,input,select,textarea{font-family:inherit}
  margin-bottom:18px;
  font-size:12px;
  font-weight:600;
- box-shadow:0 4px 14px rgba(12,80,90,.03)
+ box-shadow:0 4px 14px rgba(12,80,90,.03);
 }
 
 .warning-note{
  background:#fff8e8;
  color:#896100;
- border-color:#f1dfae
+ border-color:#f1dfae;
 }
 
 .toolbar{
- background:rgba(255,255,255,.92);
+ background\:rgba(255,255,255,.92);
  border:1px solid var(--line);
  border-radius:18px;
  padding:15px;
- box-shadow:var(--shadow);
- display:flex;
+ box-shadow\:var(--shadow);
+ display\:flex;
  gap:10px;
- flex-wrap:wrap;
- align-items:center;
- margin-bottom:18px
+ flex-wrap\:wrap;
+ align-items\:center;
+ margin-bottom:18px;
 }
 
 .toolbar input,
@@ -281,38 +286,40 @@ button,input,select,textarea{font-family:inherit}
  border:1px solid #dce6eb;
  border-radius:12px;
  font-size:12px;
- outline:none;
+ outline\:none;
  background:#fbfdfe;
- color:var(--text);
- transition:.2s
+ color\:var(--text);
+ transition:.2s;
 }
 
 .toolbar input{
  flex:1;
- min-width:245px
+ min-width:245px;
 }
 
-.toolbar input:focus,
-.toolbar select:focus{
+.toolbar input\:focus,
+.toolbar select\:focus{
  border-color:#68babc;
  box-shadow:0 0 0 3px rgba(11,143,145,.09);
- background:#fff
+ background:#fff;
 }
 
-.toolbar select{min-width:165px}
+.toolbar select{
+ min-width:165px;
+}
 
 .btn,
 .export-btn,
 .print-btn,
 .refresh-btn{
- border:none;
- cursor:pointer;
+ border\:none;
+ cursor\:pointer;
  font-weight:700;
  transition:.2s;
- display:inline-flex;
- align-items:center;
- justify-content:center;
- gap:7px
+ display\:inline-flex;
+ align-items\:center;
+ justify-content\:center;
+ gap:7px;
 }
 
 .export-btn,
@@ -321,72 +328,72 @@ button,input,select,textarea{font-family:inherit}
  height:44px;
  padding:0 14px;
  border-radius:12px;
- font-size:12px
+ font-size:12px;
 }
 
 .export-btn{
- background:linear-gradient(135deg,#0b8f91,#087477);
+ background\:linear-gradient(135deg,#0b8f91,#087477);
  color:#fff;
- box-shadow:0 5px 12px rgba(8,116,119,.16)
+ box-shadow:0 5px 12px rgba(8,116,119,.16);
 }
 
 .print-btn{
  background:#eef5f8;
- color:#31576b
+ color:#31576b;
 }
 
 .refresh-btn{
  background:#f0f7f8;
- color:#087477
+ color:#087477;
 }
 
-.export-btn:hover,
-.print-btn:hover,
-.refresh-btn:hover{
- transform:translateY(-1px);
- filter:brightness(.98)
+.export-btn\:hover,
+.print-btn\:hover,
+.refresh-btn\:hover{
+ transform\:translateY(-1px);
+ filter\:brightness(.98);
 }
 
-.refresh-btn:disabled{
+.refresh-btn\:disabled{
  opacity:.65;
- cursor:wait;
- transform:none
+ cursor\:wait;
+ transform\:none;
 }
 
 .refresh-box{
- display:flex;
- align-items:center;
+ display\:flex;
+ align-items\:center;
  gap:9px;
- margin-right:auto
+ margin-right\:auto;
 }
 
 .refresh-info{
  font-size:10px;
  color:#8998a1;
- white-space:nowrap
+ white-space\:nowrap;
 }
 
 .table-card{
  background:#fff;
  border:1px solid var(--line);
  border-radius:19px;
- box-shadow:var(--shadow);
- overflow:hidden
+ box-shadow\:var(--shadow);
+ overflow\:hidden;
 }
 
 .table-header{
  padding:18px 20px;
  border-bottom:1px solid #edf1f4;
- display:flex;
- justify-content:space-between;
- align-items:center;
- gap:10px
+ display\:flex;
+ justify-content\:space-between;
+ align-items\:center;
+ gap:10px;
 }
 
 .table-title-wrap{
- display:flex;
- align-items:center;
- gap:12px
+ display\:flex;
+ align-items\:center;
+ gap:12px;
 }
 
 .table-title-icon{
@@ -394,24 +401,24 @@ button,input,select,textarea{font-family:inherit}
  height:39px;
  border-radius:12px;
  background:#edf8f8;
- color:var(--teal);
- display:grid;
- place-items:center
+ color\:var(--teal);
+ display\:grid;
+ place-items\:center;
 }
 
 .table-title-icon svg{width:20px}
 
 .table-header h2{
  margin:0;
- color:var(--navy);
+ color\:var(--navy);
  font-size:17px;
- font-weight:800
+ font-weight:800;
 }
 
 .table-header p{
  margin:2px 0 0;
  color:#8a98a0;
- font-size:10px
+ font-size:10px;
 }
 
 .table-counter{
@@ -420,161 +427,160 @@ button,input,select,textarea{font-family:inherit}
  background:#f4f8fa;
  padding:7px 11px;
  border-radius:10px;
- font-weight:700
+ font-weight:700;
 }
 
-.table-wrapper{overflow-x:auto}
+.table-wrapper{overflow-x\:auto}
 
 table{
  width:100%;
- border-collapse:separate;
+ border-collapse\:separate;
  border-spacing:0;
- min-width:1100px
+ min-width:1100px;
 }
 
 th{
  background:#f8fafb;
  color:#637580;
  padding:13px 12px;
- text-align:right;
+ text-align\:right;
  font-size:11px;
  font-weight:800;
- white-space:nowrap;
- border-bottom:1px solid #e9eef1
+ white-space\:nowrap;
+ border-bottom:1px solid #e9eef1;
 }
 
 td{
  padding:13px 12px;
  border-bottom:1px solid #eef2f4;
  font-size:12px;
- vertical-align:middle
+ vertical-align\:middle;
 }
 
-tbody tr:last-child td{border-bottom:none}
+tbody tr\:last-child td{border-bottom\:none}
 
 tbody tr{transition:.15s}
 
-tbody tr:hover td{background:#fbfdfd}
+tbody tr\:hover td{background:#fbfdfd}
 
 td strong{
  color:#203b4a;
- font-weight:800
+ font-weight:800;
 }
 
 td small{
  color:#99a6ad;
- font-size:10px
+ font-size:10px;
 }
 
 .badge{
- display:inline-flex;
- align-items:center;
+ display\:inline-flex;
+ align-items\:center;
  gap:5px;
  padding:5px 9px;
  border-radius:20px;
  font-size:10px;
  font-weight:800;
- white-space:nowrap
+ white-space\:nowrap;
 }
 
-.badge:before{
+.badge\:before{
  content:'';
  width:6px;
  height:6px;
  border-radius:50%;
- background:currentColor;
- opacity:.75
+ background\:currentColor;
+ opacity:.75;
 }
 
 .badge-active,
 .badge-approved{
  background:#e9f8ef;
- color:#18733c
+ color:#18733c;
 }
 
 .badge-seconded,
 .badge-pending,
 .badge-warning{
  background:#fff4df;
- color:#a86c00
+ color:#a86c00;
 }
 
 .badge-correction,
 .badge-expired{
  background:#fff0f0;
- color:#b32e2e
+ color:#b32e2e;
 }
 
 .badge-normal{
  background:#edf6ff;
- color:#17659b
+ color:#17659b;
+}
+
+.badge-resubmitted{
+ background:#eaf4fb;
+ color:#17659b;
 }
 
 .actions{
- display:flex;
+ display\:flex;
  gap:6px;
- flex-wrap:wrap
+ flex-wrap\:wrap;
 }
 
 .btn{
  padding:7px 10px;
  border-radius:9px;
- font-size:10px
+ font-size:10px;
 }
 
 .btn svg{
  width:13px;
- height:13px
+ height:13px;
 }
 
 .btn-view{
  background:#eaf4fb;
- color:#17659b
+ color:#17659b;
 }
 
 .btn-approve{
  background:#e9f8ef;
- color:#18733c
+ color:#18733c;
 }
 
 .btn-correction{
  background:#fff3f3;
- color:#b32e2e
-}
-
-/* زر التصحيح المباشر */
-.btn-edit{
- background:#edf8f8;
- color:#087477
+ color:#b32e2e;
 }
 
 .btn-delete{
  background:#ffeaea;
- color:#a52828
+ color:#a52828;
 }
 
-.btn:hover{
- transform:translateY(-1px);
- filter:brightness(.97)
+.btn\:hover{
+ transform\:translateY(-1px);
+ filter\:brightness(.97);
 }
 
 .empty,
 .loading{
- text-align:center!important;
+ text-align\:center!important;
  color:#8a989f;
  padding:38px!important;
- font-size:12px
+ font-size:12px;
 }
 
-.loading:before{
+.loading\:before{
  content:'◌';
- display:inline-block;
+ display\:inline-block;
  margin-left:6px;
- animation:spin 1s linear infinite
+ animation\:spin 1s linear infinite;
 }
 
 @keyframes spin{
- to{transform:rotate(360deg)}
+ to{transform\:rotate(360deg)}
 }
 
 .error{
@@ -585,21 +591,21 @@ td small{
  border-radius:12px;
  margin-bottom:15px;
  font-size:12px;
- font-weight:700
+ font-weight:700;
 }
 
 .modal{
- display:none;
- position:fixed;
+ display\:none;
+ position\:fixed;
  inset:0;
- background:rgba(12,30,42,.55);
- backdrop-filter:blur(4px);
+ background\:rgba(12,30,42,.55);
+ backdrop-filter\:blur(4px);
  z-index:50;
  padding:25px;
- overflow:auto
+ overflow\:auto;
 }
 
-.modal.show{display:block}
+.modal.show{display\:block}
 
 .modal-content{
  max-width:900px;
@@ -607,22 +613,22 @@ td small{
  background:#fff;
  border-radius:22px;
  box-shadow:0 25px 70px rgba(0,0,0,.2);
- overflow:hidden
+ overflow\:hidden;
 }
 
 .modal-header{
  padding:18px 20px;
- background:linear-gradient(135deg,#f7fbfc,#eef7f8);
+ background\:linear-gradient(135deg,#f7fbfc,#eef7f8);
  border-bottom:1px solid var(--line);
- display:flex;
- justify-content:space-between;
- align-items:center
+ display\:flex;
+ justify-content\:space-between;
+ align-items\:center;
 }
 
 .modal-header h2{
  margin:0;
- color:var(--navy);
- font-size:18px
+ color\:var(--navy);
+ font-size:18px;
 }
 
 .close{
@@ -633,112 +639,120 @@ td small{
  background:#fff;
  color:#61747e;
  font-size:23px;
- cursor:pointer;
- box-shadow:0 2px 8px rgba(0,0,0,.05)
+ cursor\:pointer;
+ box-shadow:0 2px 8px rgba(0,0,0,.05);
 }
 
 .details-grid{
- display:grid;
- grid-template-columns:repeat(2,1fr);
+ display\:grid;
+ grid-template-columns\:repeat(2,1fr);
  gap:11px;
- padding:20px
+ padding:20px;
 }
 
 .detail{
  background:#f8fafb;
  border:1px solid #edf2f4;
  padding:12px 13px;
- border-radius:12px
+ border-radius:12px;
 }
 
 .detail-label{
  color:#7d8c95;
  font-size:10px;
  margin-bottom:5px;
- font-weight:600
+ font-weight:600;
 }
 
 .detail-value{
  color:#263f4e;
  font-size:12px;
  font-weight:800;
- word-break:break-word
+ word-break\:break-word;
+}
+
+.detail.highlight{
+ background:#eef8f8;
+ border-color:#cce8e8;
+}
+
+.detail.highlight .detail-label{
+ color:#087477;
+}
+
+.detail.highlight .detail-value{
+ color:#087477;
 }
 
 .modal-actions{
  padding:0 20px 20px;
- display:flex;
+ display\:flex;
  gap:9px;
- flex-wrap:wrap
+ flex-wrap\:wrap;
 }
 
 .modal-actions button{
- border:none;
+ border\:none;
  padding:10px 15px;
  border-radius:11px;
- cursor:pointer;
+ cursor\:pointer;
  font-weight:700;
- font-family:inherit
+ font-family\:inherit;
 }
 
 .approve-modal{
  background:#087f8c;
- color:#fff
+ color:#fff;
 }
 
 .correction-modal{
  background:#fff0f0;
- color:#a52828
-}
-
-.edit-modal{
- background:#edf8f8;
- color:#087477
+ color:#a52828;
 }
 
 .delete-modal{
  background:#ffe9e9;
- color:#a52828
+ color:#a52828;
 }
 
 .notify-btn{
  height:44px;
  padding:0 15px;
- border:none;
+ border\:none;
  border-radius:12px;
- cursor:pointer;
- font-family:inherit;
+ cursor\:pointer;
+ font-family\:inherit;
  font-size:12px;
  font-weight:800;
- background:linear-gradient(135deg,#123047,#0b8f91);
+ background\:linear-gradient(135deg,#123047,#0b8f91);
  color:#fff;
- display:inline-flex;
- align-items:center;
- justify-content:center;
+ display\:inline-flex;
+ align-items\:center;
+ justify-content\:center;
  gap:8px;
  box-shadow:0 5px 14px rgba(11,143,145,.16);
- transition:.2s
+ transition:.2s;
 }
 
-.notify-btn:hover{
- transform:translateY(-1px);
- filter:brightness(.98)
+.notify-btn\:hover{
+ transform\:translateY(-1px);
+ filter\:brightness(.98);
 }
 
 .notify-form{
- padding:20px
+ padding:20px;
 }
 
 .notify-form .field{
- margin-bottom:14px
+ margin-bottom:14px;
 }
 
 .notify-form label{
- display:block;
+ display\:block;
  color:#526874;
  font-size:12px;
  font-weight:800;
- margin-bottom:7px
+ margin-bottom:7px;
 }
 
 .notify-form input,
@@ -748,30 +762,30 @@ td small{
  border:1px solid #dce6eb;
  border-radius:12px;
  padding:11px 13px;
- font-family:inherit;
+ font-family\:inherit;
  font-size:12px;
- outline:none;
- background:#fbfdfe
+ outline\:none;
+ background:#fbfdfe;
 }
 
 .notify-form textarea{
  min-height:120px;
- resize:vertical
+ resize\:vertical;
 }
 
-.notify-form input:focus,
-.notify-form textarea:focus,
-.notify-form select:focus{
+.notify-form input\:focus,
+.notify-form textarea\:focus,
+.notify-form select\:focus{
  border-color:#68babc;
  box-shadow:0 0 0 3px rgba(11,143,145,.09);
- background:#fff
+ background:#fff;
 }
 
 .notify-actions{
- display:flex;
+ display\:flex;
  gap:9px;
- justify-content:flex-start;
- margin-top:18px
+ justify-content\:flex-start;
+ margin-top:18px;
 }
 
 .notify-send{
@@ -780,9 +794,9 @@ td small{
  color:#fff;
  padding:11px 18px;
  border-radius:11px;
- font-family:inherit;
+ font-family\:inherit;
  font-weight:800;
- cursor:pointer
+ cursor\:pointer;
 }
 
 .notify-cancel{
@@ -791,137 +805,43 @@ td small{
  color:#536873;
  padding:11px 18px;
  border-radius:11px;
- font-family:inherit;
+ font-family\:inherit;
  font-weight:800;
- cursor:pointer
+ cursor\:pointer;
 }
 
 .notify-help{
  font-size:10px;
  color:#8b9aa2;
- margin-top:5px
-}
-
-/* نموذج تصحيح معلومات الموظف */
-.edit-form{
- padding:20px
-}
-
-.edit-notice{
- background:#eef8f8;
- border:1px solid #d4eeee;
- color:#126c6e;
- padding:11px 13px;
- border-radius:12px;
- font-size:11px;
- font-weight:700;
- margin-bottom:18px
-}
-
-.edit-grid{
- display:grid;
- grid-template-columns:repeat(2,1fr);
- gap:13px
-}
-
-.edit-field{
- display:flex;
- flex-direction:column
-}
-
-.edit-field.full{
- grid-column:1/-1
-}
-
-.edit-field label{
- color:#526874;
- font-size:11px;
- font-weight:800;
- margin-bottom:6px
-}
-
-.edit-field input,
-.edit-field select{
- width:100%;
- height:43px;
- border:1px solid #dce6eb;
- border-radius:11px;
- padding:0 12px;
- font-family:inherit;
- font-size:12px;
- outline:none;
- background:#fbfdfe;
- color:var(--text)
-}
-
-.edit-field input:focus,
-.edit-field select:focus{
- border-color:#68babc;
- box-shadow:0 0 0 3px rgba(11,143,145,.09);
- background:#fff
-}
-
-.edit-actions{
- display:flex;
- gap:9px;
- margin-top:20px;
- padding-top:17px;
- border-top:1px solid #edf1f4
-}
-
-.edit-save{
- border:0;
- background:#087f8c;
- color:#fff;
- padding:11px 19px;
- border-radius:11px;
- font-family:inherit;
- font-weight:800;
- cursor:pointer
-}
-
-.edit-cancel{
- border:0;
- background:#eef3f5;
- color:#536873;
- padding:11px 19px;
- border-radius:11px;
- font-family:inherit;
- font-weight:800;
- cursor:pointer
-}
-
-.edit-save:disabled{
- opacity:.65;
- cursor:wait
+ margin-top:5px;
 }
 
 @media(max-width:1100px){
- .stats{grid-template-columns:repeat(3,1fr)}
+ .stats{grid-template-columns\:repeat(3,1fr)}
 }
 
 @media(max-width:760px){
  .header{padding:21px 17px}
  .header-content{
-  align-items:stretch;
-  flex-direction:column
+  align-items\:stretch;
+  flex-direction\:column;
  }
  .logout-btn{
   width:100%;
-  justify-content:center
+  justify-content\:center;
  }
  .brand-icon{
   width:46px;
-  height:46px
+  height:46px;
  }
  .header h1{font-size:21px}
  .container{
   margin:19px auto;
-  padding:0 12px
+  padding:0 12px;
  }
  .stats{
-  grid-template-columns:repeat(2,1fr);
-  gap:10px
+  grid-template-columns\:repeat(2,1fr);
+  gap:10px;
  }
  .stat-card{padding:14px}
  .stat-number{font-size:25px}
@@ -931,36 +851,28 @@ td small{
  .export-btn,
  .print-btn,
  .refresh-btn{
-  width:100%
+  width:100%;
  }
  .toolbar input{min-width:0}
  .refresh-box{
   width:100%;
   margin-right:0;
-  justify-content:space-between
+  justify-content\:space-between;
  }
  .refresh-box .refresh-btn{
-  width:auto;
-  flex:0 0 auto
+  width\:auto;
+  flex:0 0 auto;
  }
  .table-header{padding:15px}
- .details-grid{
-  grid-template-columns:1fr
- }
- .edit-grid{
-  grid-template-columns:1fr
- }
- .edit-field.full{
-  grid-column:auto
- }
+ .details-grid{grid-template-columns:1fr}
  .modal{padding:12px}
  .modal-content{margin:2vh auto}
 }
 
 @media(max-width:450px){
  .stats{grid-template-columns:1fr}
- .stat-top{align-items:flex-start}
- .table-counter{display:none}
+ .stat-top{align-items\:flex-start}
+ .table-counter{display\:none}
 }
 
 @media print{
@@ -971,2530 +883,2146 @@ td small{
  .notice,
  .modal,
  .no-print{
-  display:none!important
+  display\:none!important;
  }
  .container{
-  max-width:none;
+  max-width\:none;
   margin:0;
-  padding:0
+  padding:0;
  }
  .table-card{
-  box-shadow:none;
-  border:none
+  box-shadow\:none;
+  border\:none;
  }
  .table-header{
-  padding:0 0 10px
+  padding:0 0 10px;
  }
  .table-header h2{font-size:18px}
- .table-wrapper{overflow:visible}
+ .table-wrapper{overflow\:visible}
  table{
   min-width:0;
-  font-size:10px
+  font-size:10px;
  }
- th,td{
+ th,
+ td{
   padding:6px 4px;
-  font-size:10px
+  font-size:10px;
  }
- .actions{display:none}
+ .actions{display\:none}
 }
-</style>
-</head>
+\</style>
+\</head>
 
-<body>
+\<body>
 
-<header class="header">
-<div class="header-content">
+\<header class="header">
+\<div class="header-content">
 
-<div class="brand">
-<div class="brand-icon">
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-<path d="M4 19V9l8-5 8 5v10"/>
-<path d="M8 19v-6h8v6M10 9h4M12 7v4M10 9h4"/>
-</svg>
-</div>
+\<div class="brand">
 
-<div>
-<h1>لوحة تحكم المسؤول</h1>
-<p>إدارة ومتابعة بيانات الموظفين</p>
-<div class="header-meta">
+\<div class="brand-icon">
+\<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+\<path d="M4 19V9l8-5 8 5v10"/>
+\<path d="M8 19v-6h8v6M10 9h4M12 7v4M10 9h4"/>
+\</svg>
+\</div>
+
+\<div>
+\<h1>لوحة تحكم المسؤول\</h1>
+\<p>إدارة ومتابعة بيانات الموظفين\</p>
+\<div class="header-meta">
 المؤسسة العمومية الإستشفائية بأولف — إدارة الموارد البشرية
-</div>
-</div>
-</div>
+\</div>
+\</div>
 
-<button class="logout-btn" onclick="logout()">
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-<path d="M10 17l5-5-5-5"/>
-<path d="M15 12H3"/>
-<path d="M21 19V5a2 2 0 0 0-2-2h-6"/>
-</svg>
+\</div>
+
+\<button class="logout-btn" onclick="logout()">
+\<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+\<path d="M10 17l5-5-5-5"/>
+\<path d="M15 12H3"/>
+\<path d="M21 19V5a2 2 0 0 0-2-2h-6"/>
+\</svg>
 تسجيل الخروج
-</button>
+\</button>
 
-</div>
-</header>
+\</div>
+\</header>
 
-<main class="container">
+\<main class="container">
 
-<div id="errorBox"></div>
+\<div id="errorBox">\</div>
 
-<div id="statusNotice" class="notice">
+\<div id="statusNotice" class="notice">
 سيتم عرض جميع ملفات الموظفين هنا، مع إبراز الملفات التي تحتاج إلى مراجعة أو تصحيح.
-</div>
+\</div>
 
-<div class="section-kicker">نظرة عامة على ملفات الموظفين</div>
+\<div class="section-kicker">
+نظرة عامة على ملفات الموظفين
+\</div>
 
-<div class="stats">
+\<div class="stats">
 
-<div class="stat-card" data-filter="all" onclick="quickFilter('all')">
-<div class="stat-top">
-<div class="stat-title">إجمالي الموظفين</div>
-<div class="stat-icon">
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-<path d="M16 20v-1.5a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4V20"/>
-<circle cx="9.5" cy="7" r="3.5"/>
-<path d="M17 11a3 3 0 1 0 0-6M17 14.5h1a4 4 0 0 1 4 4V20"/>
-</svg>
-</div>
-</div>
-<div class="stat-number" id="totalEmployees">0</div>
-<div class="stat-hint">جميع الموظفين المسجلين</div>
-</div>
+\<div class="stat-card" data-filter="all" onclick="quickFilter('all')">
+\<div class="stat-top">
+\<div class="stat-title">إجمالي الموظفين\</div>
+\<div class="stat-icon">
+\<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+\<path d="M16 20v-1.5a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4V20"/>
+\<circle cx="9.5" cy="7" r="3.5"/>
+\<path d="M17 11a3 3 0 1 0 0-6M17 14.5h1a4 4 0 0 1 4 4V20"/>
+\</svg>
+\</div>
+\</div>
+\<div class="stat-number" id="totalEmployees">0\</div>
+\<div class="stat-hint">جميع الموظفين المسجلين\</div>
+\</div>
 
-<div class="stat-card" data-filter="active" onclick="quickFilter('active')">
-<div class="stat-top">
-<div class="stat-title">الموظفون النشطون</div>
-<div class="stat-icon">
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-<circle cx="12" cy="8" r="3.5"/>
-<path d="M5 20a7 7 0 0 1 14 0"/>
-</svg>
-</div>
-</div>
-<div class="stat-number" id="activeEmployees">0</div>
-<div class="stat-hint">في وضعية عمل نشطة</div>
-</div>
+\<div class="stat-card" data-filter="active" onclick="quickFilter('active')">
+\<div class="stat-top">
+\<div class="stat-title">الموظفون النشطون\</div>
+\<div class="stat-icon">
+\<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+\<circle cx="12" cy="8" r="3.5"/>
+\<path d="M5 20a7 7 0 0 1 14 0"/>
+\</svg>
+\</div>
+\</div>
+\<div class="stat-number" id="activeEmployees">0\</div>
+\<div class="stat-hint">في وضعية عمل نشطة\</div>
+\</div>
 
-<div class="stat-card" data-filter="seconded" onclick="quickFilter('seconded')">
-<div class="stat-top">
-<div class="stat-title">موضوعون تحت التصرف</div>
-<div class="stat-icon">
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-<rect x="3" y="6" width="18" height="14" rx="2"/>
-<path d="M8 6V4h8v2M3 11h18M10 14h4"/>
-</svg>
-</div>
-</div>
-<div class="stat-number" id="secondedEmployees">0</div>
-<div class="stat-hint">مع متابعة مدة الوضعية</div>
-</div>
+\<div class="stat-card" data-filter="seconded" onclick="quickFilter('seconded')">
+\<div class="stat-top">
+\<div class="stat-title">موضوعون تحت التصرف\</div>
+\<div class="stat-icon">
+\<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+\<rect x="3" y="6" width="18" height="14" rx="2"/>
+\<path d="M8 6V4h8v2M3 11h18M10 14h4"/>
+\</svg>
+\</div>
+\</div>
+\<div class="stat-number" id="secondedEmployees">0\</div>
+\<div class="stat-hint">مع متابعة مدة الوضعية\</div>
+\</div>
 
-<div class="stat-card" data-profile-filter="pending" onclick="quickProfileFilter('pending')">
-<div class="stat-top">
-<div class="stat-title">قيد المراجعة</div>
-<div class="stat-icon">
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-<path d="M12 3a9 9 0 1 0 9 9"/>
-<path d="M12 7v5l3 2"/>
-<path d="M19 3v5h-5"/>
-</svg>
-</div>
-</div>
-<div class="stat-number" id="pendingEmployees">0</div>
-<div class="stat-hint">ملفات بانتظار اعتماد المسؤول</div>
-</div>
+\<div class="stat-card" data-profile-filter="pending" onclick="quickProfileFilter('pending')">
+\<div class="stat-top">
+\<div class="stat-title">قيد المراجعة\</div>
+\<div class="stat-icon">
+\<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+\<path d="M12 3a9 9 0 1 0 9 9"/>
+\<path d="M12 7v5l3 2"/>
+\<path d="M19 3v5h-5"/>
+\</svg>
+\</div>
+\</div>
+\<div class="stat-number" id="pendingEmployees">0\</div>
+\<div class="stat-hint">ملفات بانتظار اعتماد المسؤول\</div>
+\</div>
 
-<div class="stat-card" data-profile-filter="needs_correction" onclick="quickProfileFilter('needs_correction')">
-<div class="stat-top">
-<div class="stat-title">يحتاج إلى تصحيح</div>
-<div class="stat-icon">
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-<path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4z"/>
-<path d="M13.5 6.5l4 4"/>
-</svg>
-</div>
-</div>
-<div class="stat-number" id="correctionEmployees">0</div>
-<div class="stat-hint">ملفات تحتاج تدخل الموظف</div>
-</div>
+\<div class="stat-card" data-profile-filter="needs\_correction" onclick="quickProfileFilter('needs\_correction')">
+\<div class="stat-top">
+\<div class="stat-title">يحتاج إلى تصحيح\</div>
+\<div class="stat-icon">
+\<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+\<path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4z"/>
+\<path d="M13.5 6.5l4 4"/>
+\</svg>
+\</div>
+\</div>
+\<div class="stat-number" id="correctionEmployees">0\</div>
+\<div class="stat-hint">ملفات تحتاج تدخل الموظف\</div>
+\</div>
 
-</div>
+\</div>
 
-<div class="toolbar no-print">
+\<div class="toolbar no-print">
 
-<input
-id="searchInput"
-type="text"
-placeholder="ابحث بالاسم أو الفرنسية أو NIN أو الرتبة..."
-oninput="renderEmployees()"
->
+\<input
+ id="searchInput"
+ type="text"
+ placeholder="ابحث بالاسم أو الفرنسية أو NIN أو الرتبة..."
+ oninput="renderEmployees()"
+\>
 
-<select id="statusFilter" onchange="renderEmployees()">
-<option value="all">جميع الوضعيات</option>
-<option value="active">نشط</option>
-<option value="seconded">موضوع تحت التصرف</option>
-</select>
+\<select id="statusFilter" onchange="renderEmployees()">
+\<option value="all">جميع الوضعيات\</option>
+\<option value="active">نشط\</option>
+\<option value="seconded">موضوع تحت التصرف\</option>
+\</select>
 
-<select id="profileFilter" onchange="renderEmployees()">
-<option value="all">جميع حالات الملف</option>
-<option value="pending">قيد المراجعة</option>
-<option value="approved">معتمد</option>
-<option value="needs_correction">يحتاج تصحيح</option>
-</select>
+\<select id="profileFilter" onchange="renderEmployees()">
+\<option value="all">جميع حالات الملف\</option>
+\<option value="pending">قيد المراجعة\</option>
+\<option value="approved">معتمد\</option>
+\<option value="needs\_correction">يحتاج تصحيح\</option>
+\</select>
 
-<button class="notify-btn" onclick="openNotificationModal()">
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
-<path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
-<path d="M10 21h4"/>
-</svg>
+\<button class="notify-btn" onclick="openNotificationModal()">
+\<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+\<path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+\<path d="M10 21h4"/>
+\</svg>
 إرسال تنبيه
-</button>
+\</button>
 
-<button class="export-btn" onclick="exportExcel()">
-<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-<path d="M4 4h11v16H4z"/>
-<path d="M8 8h3M8 12h3M8 16h3M15 8h5v12h-5"/>
-</svg>
+\<button class="export-btn" onclick="exportExcel()">
+\<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+\<path d="M4 4h11v16H4z"/>
+\<path d="M8 8h3M8 12h3M8 16h3M15 8h5v12h-5"/>
+\</svg>
 تصدير Excel
-</button>
+\</button>
 
-<button class="print-btn" onclick="resetFilters()">
-<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-<path d="M4 4l16 16M20 4L4 20"/>
-</svg>
+\<button class="print-btn" onclick="resetFilters()">
+\<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+\<path d="M4 4l16 16M20 4L4 20"/>
+\</svg>
 مسح الفلاتر
-</button>
+\</button>
 
-<button class="print-btn" onclick="printEmployees()">
-<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-<path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
-<path d="M6 14h12v7H6z"/>
-</svg>
+\<button class="print-btn" onclick="printEmployees()">
+\<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+\<path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+\<path d="M6 14h12v7H6z"/>
+\</svg>
 طباعة القائمة
-</button>
+\</button>
 
-<div class="refresh-box">
-<button class="refresh-btn" onclick="refreshEmployees()">
-<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-<path d="M20 11a8 8 0 0 0-14.9-4M4 5v5h5M4 13a8 8 0 0 0 14.9 4M20 19v-5h-5"/>
-</svg>
+\<div class="refresh-box">
+\<button class="refresh-btn" onclick="refreshEmployees()">
+\<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+\<path d="M20 11a8 8 0 0 0-14.9-4M4 5v5h5M4 13a8 8 0 0 0 14.9 4M20 19v-5h-5"/>
+\</svg>
 تحديث
-</button>
-<span id="lastRefresh" class="refresh-info">آخر تحديث: --</span>
-</div>
+\</button>
+\<span id="lastRefresh" class="refresh-info">آخر تحديث: --\</span>
+\</div>
 
-</div>
+\</div>
 
-<div class="table-card">
+\<div class="table-card">
 
-<div class="table-header">
-<div class="table-title-wrap">
+\<div class="table-header">
 
-<div class="table-title-icon">
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-<path d="M4 5h16v14H4z"/>
-<path d="M4 9h16M9 5v14"/>
-<path d="M12 12h5M12 15h5"/>
-</svg>
-</div>
+\<div class="table-title-wrap">
 
-<div>
-<h2>قائمة الموظفين</h2>
-<p>عرض ومراجعة ومتابعة الملفات المسجلة</p>
-</div>
+\<div class="table-title-icon">
+\<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+\<path d="M4 5h16v14H4z"/>
+\<path d="M4 9h16M9 5v14"/>
+\<path d="M12 12h5M12 15h5"/>
+\</svg>
+\</div>
 
-</div>
+\<div>
+\<h2>قائمة الموظفين\</h2>
+\<p>عرض ومراجعة ومتابعة الملفات المسجلة\</p>
+\</div>
 
-<div id="tableCounter" class="table-counter">0 موظف</div>
+\</div>
 
-</div>
+\<div id="tableCounter" class="table-counter">
+0 موظف
+\</div>
 
-<div class="table-wrapper">
+\</div>
 
-<table>
+\<div class="table-wrapper">
 
-<thead>
-<tr>
-<th>الاسم واللقب</th>
-<th>الرتبة</th>
-<th>المصلحة / المكتب</th>
-<th>الوضعية</th>
-<th>حالة الملف</th>
-<th>نهاية الوضع تحت التصرف</th>
-<th class="no-print">الإجراءات</th>
-</tr>
-</thead>
+\<table>
 
-<tbody id="employeesBody">
-<tr>
-<td colspan="7" class="loading">جاري تحميل البيانات...</td>
-</tr>
-</tbody>
+\<thead>
+\<tr>
+\<th>الاسم واللقب\</th>
+\<th>الرتبة\</th>
+\<th>المصلحة / المكتب\</th>
+\<th>الوضعية\</th>
+\<th>حالة الملف\</th>
+\<th>نهاية الوضع تحت التصرف\</th>
+\<th class="no-print">الإجراءات\</th>
+\</tr>
+\</thead>
 
-</table>
+\<tbody id="employeesBody">
+\<tr>
+\<td colspan="7" class="loading">
+جاري تحميل البيانات...
+\</td>
+\</tr>
+\</tbody>
 
-</div>
-</div>
+\</table>
 
-</main>
+\</div>
+\</div>
 
+\</main>
 
-<!-- نافذة تفاصيل الموظف -->
+\<div id="employeeModal" class="modal">
 
-<div id="employeeModal" class="modal">
+\<div class="modal-content">
 
-<div class="modal-content">
+\<div class="modal-header">
+\<h2>تفاصيل الموظف\</h2>
+\<button class="close" onclick="closeModal()">×\</button>
+\</div>
 
-<div class="modal-header">
-<h2>تفاصيل الموظف</h2>
-<button class="close" onclick="closeModal()">×</button>
-</div>
+\<div id="employeeDetails" class="details-grid">\</div>
 
-<div id="employeeDetails" class="details-grid"></div>
+\<div id="modalActions" class="modal-actions">\</div>
 
-<div id="modalActions" class="modal-actions"></div>
+\</div>
+\</div>
 
-</div>
+\<div id="notificationModal" class="modal">
 
-</div>
+\<div class="modal-content" style="max-width:620px">
 
+\<div class="modal-header">
+\<h2>إرسال تنبيه\</h2>
+\<button class="close" onclick="closeNotificationModal()">×\</button>
+\</div>
 
-<!-- نافذة تصحيح معلومات الموظف -->
+\<form id="notificationForm" class="notify-form">
 
-<div id="editEmployeeModal" class="modal">
+\<div class="field">
+\<label for="notificationTarget">المستلم\</label>
 
-<div class="modal-content" style="max-width:1000px">
+\<select id="notificationTarget" required>
+\<option value="all">جميع الموظفين\</option>
+\</select>
 
-<div class="modal-header">
-
-<h2>✏️ تصحيح معلومات الموظف</h2>
-
-<button class="close" onclick="closeEditEmployeeModal()">×</button>
-
-</div>
-
-<form id="editEmployeeForm" class="edit-form">
-
-<div class="edit-notice">
-يمكن للمسؤول تعديل المعلومات المطلوبة فقط. المعلومات الأخرى الموجودة في ملف الموظف ستبقى محفوظة كما هي، ولن يتم تغيير صلاحيات الحساب أو رقم المستخدم.
-</div>
-
-<input type="hidden" id="editEmployeeId">
-
-<div class="edit-grid">
-
-<div class="edit-field">
-<label for="edit_nom_ar">الاسم واللقب بالعربية</label>
-<input id="edit_nom_ar" type="text">
-</div>
-
-<div class="edit-field">
-<label for="edit_nom_fr">Nom et prénom</label>
-<input id="edit_nom_fr" type="text">
-</div>
-
-<div class="edit-field">
-<label for="edit_nin">رقم التعريف الوطني NIN</label>
-<input id="edit_nin" type="text">
-</div>
-
-<div class="edit-field">
-<label for="edit_phone">الهاتف الشخصي</label>
-<input id="edit_phone" type="text">
-</div>
-
-<div class="edit-field">
-<label for="edit_email">البريد الإلكتروني</label>
-<input id="edit_email" type="email">
-</div>
-
-<div class="edit-field">
-<label for="edit_grade">الرتبة</label>
-<input id="edit_grade" type="text">
-</div>
-
-<div class="edit-field">
-<label for="edit_poste_ar">منصب العمل بالعربية</label>
-<input id="edit_poste_ar" type="text">
-</div>
-
-<div class="edit-field">
-<label for="edit_poste_fr">Poste de travail</label>
-<input id="edit_poste_fr" type="text">
-</div>
-
-<div class="edit-field">
-<label for="edit_service_ar">المصلحة / المكتب</label>
-<input id="edit_service_ar" type="text">
-</div>
-
-<div class="edit-field">
-<label for="edit_service_fr">Service / Bureau</label>
-<input id="edit_service_fr" type="text">
-</div>
-
-<div class="edit-field">
-<label for="edit_lieu_ar">مكان العمل</label>
-<input id="edit_lieu_ar" type="text">
-</div>
-
-<div class="edit-field">
-<label for="edit_lieu_fr">Lieu de travail</label>
-<input id="edit_lieu_fr" type="text">
-</div>
-
-<div class="edit-field">
-<label for="edit_work_status">الوضعية</label>
-
-<select id="edit_work_status">
-<option value="active">نشط</option>
-<option value="seconded">موضوع تحت التصرف</option>
-</select>
-
-</div>
-
-<div class="edit-field">
-<label for="edit_host_institution">المؤسسة المستقبلة</label>
-<input id="edit_host_institution" type="text">
-</div>
-
-<div class="edit-field">
-<label for="edit_host_service">المصلحة / المكتب لدى المؤسسة المستقبلة</label>
-<input id="edit_host_service" type="text">
-</div>
-
-<div class="edit-field">
-<label for="edit_disposition_start">تاريخ بداية الوضع تحت التصرف</label>
-<input id="edit_disposition_start" type="date">
-</div>
-
-<div class="edit-field">
-<label for="edit_disposition_end">تاريخ نهاية الوضع تحت التصرف</label>
-<input id="edit_disposition_end" type="date">
-</div>
-
-</div>
-
-<div class="edit-actions">
-
-<button type="submit" class="edit-save" id="editSaveBtn">
-💾 حفظ التصحيح
-</button>
-
-<button type="button" class="edit-cancel" onclick="closeEditEmployeeModal()">
-إلغاء
-</button>
-
-</div>
-
-</form>
-
-</div>
-
-</div>
-
-
-<!-- نافذة إرسال التنبيه -->
-
-<div id="notificationModal" class="modal">
-
-<div class="modal-content" style="max-width:620px">
-
-<div class="modal-header">
-<h2>إرسال تنبيه</h2>
-<button class="close" onclick="closeNotificationModal()">×</button>
-</div>
-
-<form id="notificationForm" class="notify-form">
-
-<div class="field">
-
-<label for="notificationTarget">المستلم</label>
-
-<select id="notificationTarget" required>
-<option value="all">جميع الموظفين</option>
-</select>
-
-<div class="notify-help">
+\<div class="notify-help">
 يمكنك إرسال التنبيه إلى موظف محدد أو إلى جميع الموظفين.
-</div>
+\</div>
+\</div>
 
-</div>
+\<div class="field">
+\<label for="notificationType">نوع التنبيه\</label>
 
-<div class="field">
+\<select id="notificationType">
+\<option value="general">تنبيه عام\</option>
+\<option value="information">معلومة إدارية\</option>
+\<option value="announcement">إعلان\</option>
+\<option value="approval">اعتماد الملف\</option>
+\<option value="correction">تصحيح البيانات\</option>
+\</select>
+\</div>
 
-<label for="notificationType">نوع التنبيه</label>
+\<div class="field">
+\<label for="notificationTitle">عنوان التنبيه\</label>
+\<input
+ id="notificationTitle"
+ type="text"
+ maxlength="120"
+ placeholder="مثال: تنبيه إداري"
+ required
+\>
+\</div>
 
-<select id="notificationType">
+\<div class="field">
+\<label for="notificationMessage">محتوى التنبيه\</label>
 
-<option value="general">تنبيه عام</option>
-<option value="information">معلومة إدارية</option>
-<option value="announcement">إعلان</option>
-<option value="approval">اعتماد الملف</option>
-<option value="correction">تصحيح البيانات</option>
+\<textarea
+ id="notificationMessage"
+ maxlength="2000"
+ placeholder="اكتب نص التنبيه هنا..."
+ required
+\>\</textarea>
+\</div>
 
-</select>
+\<div class="notify-actions">
 
-</div>
-
-<div class="field">
-
-<label for="notificationTitle">عنوان التنبيه</label>
-
-<input
-id="notificationTitle"
-type="text"
-maxlength="120"
-placeholder="مثال: تنبيه إداري"
-required
->
-
-</div>
-
-<div class="field">
-
-<label for="notificationMessage">محتوى التنبيه</label>
-
-<textarea
-id="notificationMessage"
-maxlength="2000"
-placeholder="اكتب نص التنبيه هنا..."
-required
-></textarea>
-
-</div>
-
-<div class="notify-actions">
-
-<button type="submit" class="notify-send" id="notificationSendBtn">
+\<button type="submit" class="notify-send" id="notificationSendBtn">
 إرسال التنبيه
-</button>
+\</button>
 
-<button
-type="button"
-class="notify-cancel"
-onclick="closeNotificationModal()"
->
+\<button
+ type="button"
+ class="notify-cancel"
+ onclick="closeNotificationModal()"
+\>
 إلغاء
-</button>
+\</button>
 
-</div>
+\</div>
 
-</form>
+\</form>
+\</div>
+\</div>
 
-</div>
-
-</div>
-
-
-<script>
+\<script>
 
 const supabaseClient =
-window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+ window\.supabase.createClient(SUPABASE\_URL,SUPABASE\_KEY);
 
-let allEmployees=[];
-let selectedEmployee=null;
-let editingEmployee=null;
+let allEmployees = [];
+let selectedEmployee = null;
 
 
-/* =========================
+
+/\* =========================
    التحقق من المسؤول
-========================= */
+\========================= \*/
 
 async function checkAdmin(){
 
-try{
+ try{
 
-const {data:sessionData} =
-await supabaseClient.auth.getSession();
+  const {data\:sessionData} =
+   await supabaseClient.auth.getSession();
 
-const session=sessionData?.session;
+  const session = sessionData?.session;
 
-if(!session?.user){
+  if(!session?.user){
+   location.href="index.html";
+   return false;
+  }
 
-location.href="index.html";
-return false;
+  const {data\:employee,error} =
+   await supabaseClient
+   .from("employees")
+   .select("role")
+   .eq("user\_id",session.user.id)
+   .maybeSingle();
 
-}
+  if(error) throw error;
 
-const {data:employee,error} =
-await supabaseClient
-.from("employees")
-.select("role")
-.eq("user_id",session.user.id)
-.maybeSingle();
+  if(!employee || employee.role!=="admin"){
 
-if(error)throw error;
+   await supabaseClient.auth.signOut();
 
-if(!employee || employee.role!=="admin"){
+   location.href="index.html";
 
-await supabaseClient.auth.signOut();
+   return false;
+  }
 
-location.href="index.html";
+  return true;
 
-return false;
+ }catch(e){
 
-}
+  console.error(e);
 
-return true;
+  showError("تعذر التحقق من صلاحيات المسؤول.");
 
-}catch(e){
-
-console.error(e);
-
-showError("تعذر التحقق من صلاحيات المسؤول.");
-
-return false;
-
-}
-
+  return false;
+ }
 }
 
 
-/* =========================
+
+/\* =========================
    تحميل الموظفين
-========================= */
+\========================= \*/
 
 async function loadEmployees(){
 
-try{
+ try{
 
-setBusy(true);
+  setBusy(true);
 
-const {data,error} =
-await supabaseClient
-.from("employees")
-.select("*")
-.eq("role","employee")
-.order("created_at",{ascending:false});
+  const {data,error} =
+   await supabaseClient
+   .from("employees")
+   .select("\*")
+   .eq("role","employee")
+   .order("created\_at",{ascending\:false});
 
-if(error)throw error;
+  if(error) throw error;
 
-allEmployees=data||[];
+  allEmployees = data || [];
 
-updateStats();
+  updateStats();
 
-renderEmployees();
+  renderEmployees();
 
-updateLastRefresh();
+  updateLastRefresh();
 
-}catch(e){
+ }catch(e){
 
-console.error(e);
+  console.error(e);
 
-showError("حدث خطأ أثناء تحميل بيانات الموظفين.");
+  showError(
+   "حدث خطأ أثناء تحميل بيانات الموظفين."
+  );
 
-}finally{
+ }finally{
 
-setBusy(false);
-
+  setBusy(false);
+ }
 }
-
-}
-
 
 function refreshEmployees(){
-
-loadEmployees();
-
+ loadEmployees();
 }
 
+
+
+/\* =========================
+   آخر تحديث
+\========================= \*/
 
 function updateLastRefresh(){
 
-const el=document.getElementById("lastRefresh");
+ const el =
+  document.getElementById("lastRefresh");
 
-if(el){
+ if(el){
 
-el.textContent=
-"آخر تحديث: "+
-new Date().toLocaleTimeString(
-"ar-DZ",
-{
-hour:"2-digit",
-minute:"2-digit"
+  el.textContent =
+   "آخر تحديث: "+
+   new Date().toLocaleTimeString(
+    "ar-DZ",
+    {
+     hour:"2-digit",
+     minute:"2-digit"
+    }
+   );
+ }
 }
-);
 
-}
 
-}
 
+/\* =========================
+   حالة التحديث
+\========================= \*/
 
 function setBusy(busy){
 
-document
-.querySelectorAll(".refresh-btn")
-.forEach(b=>{
+ document
+ .querySelectorAll(".refresh-btn")
+ .forEach(b=>{
 
-b.disabled=busy;
+  b.disabled=busy;
 
-b.textContent=
-busy
-?"⏳ تحديث..."
-:"🔄 تحديث";
-
-});
-
+  b.textContent =
+   busy
+   ?"⏳ تحديث..."
+   :"🔄 تحديث";
+ });
 }
 
 
-/* =========================
+
+/\* =========================
    الإحصائيات
-========================= */
+\========================= \*/
 
 function updateStats(){
 
-const count=x=>allEmployees.filter(x).length;
+ const count =
+  condition =>
+   allEmployees.filter(condition).length;
 
-document.getElementById("totalEmployees").textContent=
-allEmployees.length;
+ document.getElementById(
+  "totalEmployees"
+ ).textContent =
+  allEmployees.length;
 
-document.getElementById("activeEmployees").textContent=
-count(e=>e.work_status==="active");
+ document.getElementById(
+  "activeEmployees"
+ ).textContent =
+  count(e=>e.work\_status==="active");
 
-document.getElementById("secondedEmployees").textContent=
-count(e=>e.work_status==="seconded");
+ document.getElementById(
+  "secondedEmployees"
+ ).textContent =
+  count(e=>e.work\_status==="seconded");
 
-document.getElementById("pendingEmployees").textContent=
-count(e=>e.profile_status==="pending");
+ document.getElementById(
+  "pendingEmployees"
+ ).textContent =
+  count(e=>e.profile\_status==="pending");
 
-document.getElementById("correctionEmployees").textContent=
-count(e=>e.profile_status==="needs_correction");
-
+ document.getElementById(
+  "correctionEmployees"
+ ).textContent =
+  count(e=>e.profile\_status==="needs\_correction");
 }
 
 
-/* =========================
-   الفلاتر
-========================= */
+
+/\* =========================
+   الفلاتر السريعة
+\========================= \*/
 
 function quickFilter(status){
 
-document.getElementById("statusFilter").value=status;
+ document.getElementById(
+  "statusFilter"
+ ).value=status;
 
-document.getElementById("profileFilter").value="all";
+ document.getElementById(
+  "profileFilter"
+ ).value="all";
 
-clearActiveStatCards();
+ clearActiveStatCards();
 
-const card=
-document.querySelector(
-`.stat-card[data-filter="${status}"]`
-);
+ const card =
+  document.querySelector(
+   \`.stat-card[data-filter="${status}"]\`
+  );
 
-if(card)card.classList.add("active-card");
+ if(card)
+  card.classList.add("active-card");
 
-renderEmployees();
-
+ renderEmployees();
 }
+
 
 
 function quickProfileFilter(status){
 
-document.getElementById("statusFilter").value="all";
+ document.getElementById(
+  "statusFilter"
+ ).value="all";
 
-document.getElementById("profileFilter").value=status;
+ document.getElementById(
+  "profileFilter"
+ ).value=status;
 
-clearActiveStatCards();
+ clearActiveStatCards();
 
-const card=
-document.querySelector(
-`.stat-card[data-profile-filter="${status}"]`
-);
+ const card =
+  document.querySelector(
+   \`.stat-card[data-profile-filter="${status}"]\`
+  );
 
-if(card)card.classList.add("active-card");
+ if(card)
+  card.classList.add("active-card");
 
-renderEmployees();
-
+ renderEmployees();
 }
+
 
 
 function clearActiveStatCards(){
 
-document
-.querySelectorAll(".stat-card")
-.forEach(c=>c.classList.remove("active-card"));
-
+ document
+ .querySelectorAll(".stat-card")
+ .forEach(c=>
+  c.classList.remove("active-card")
+ );
 }
+
 
 
 function resetFilters(){
 
-document.getElementById("searchInput").value="";
+ document.getElementById(
+  "searchInput"
+ ).value="";
 
-document.getElementById("statusFilter").value="all";
+ document.getElementById(
+  "statusFilter"
+ ).value="all";
 
-document.getElementById("profileFilter").value="all";
+ document.getElementById(
+  "profileFilter"
+ ).value="all";
 
-clearActiveStatCards();
+ clearActiveStatCards();
 
-renderEmployees();
-
+ renderEmployees();
 }
 
 
-/* =========================
+
+/\* =========================
    عرض الموظفين
-========================= */
+\========================= \*/
 
 function renderEmployees(){
 
-const body=document.getElementById("employeesBody");
+ const body =
+  document.getElementById(
+   "employeesBody"
+  );
 
-const search=
-document
-.getElementById("searchInput")
-.value
-.trim()
-.toLowerCase();
+ const search =
+  document
+  .getElementById("searchInput")
+  .value
+  .trim()
+  .toLowerCase();
 
-const sf=
-document.getElementById("statusFilter").value;
+ const sf =
+  document.getElementById(
+   "statusFilter"
+  ).value;
 
-const pf=
-document.getElementById("profileFilter").value;
+ const pf =
+  document.getElementById(
+   "profileFilter"
+  ).value;
 
-const filtered=allEmployees.filter(e=>{
 
-const text=[
-e.nom_ar,
-e.nom_fr,
-e.nin,
-e.grade,
-e.service_ar,
-e.service_fr,
-e.poste_ar,
-e.poste_fr,
-e.lieu_travail_ar,
-e.lieu_travail_fr,
-e.email,
-e.phone
-]
-.filter(Boolean)
-.join(" ")
-.toLowerCase();
 
-return
-(!search||text.includes(search)) &&
-(sf==="all"||e.work_status===sf) &&
-(pf==="all"||e.profile_status===pf);
+ const filtered =
+  allEmployees.filter(e=>{
 
-});
+   const text = [
+    e.nom\_ar,
+    e.nom\_fr,
+    e.nin,
+    e.grade,
+    e.service\_ar,
+    e.service\_fr,
+    e.poste\_ar,
+    e.poste\_fr,
+    e.lieu\_travail\_ar,
+    e.lieu\_travail\_fr,
+    e.email,
+    e.phone
+   ]
+   .filter(Boolean)
+   .join(" ")
+   .toLowerCase();
 
-const pending=
-allEmployees.filter(
-e=>e.profile_status==="pending"
-).length;
 
-const correction=
-allEmployees.filter(
-e=>e.profile_status==="needs_correction"
-).length;
 
-const notice=
-document.getElementById("statusNotice");
+   return (
+    (!search || text.includes(search)) &&
+    (sf==="all" || e.work\_status===sf) &&
+    (pf==="all" || e.profile\_status===pf)
+   );
 
-if(notice){
+  });
 
-notice.className=
-(pending||correction)
-?"notice warning-note"
-:"notice";
 
-notice.textContent=
-(pending||correction)
-?
-`تنبيه إداري: يوجد ${pending} ملف${pending===1?"":"ات"} قيد المراجعة و${correction} ملف${correction===1?"":"ات"} يحتاج إلى تصحيح.`
-:
-"لا توجد حاليًا ملفات معلقة للمراجعة أو التصحيح.";
 
-}
+ const pending =
+  allEmployees.filter(
+   e=>e.profile\_status==="pending"
+  ).length;
 
-if(!filtered.length){
 
-const counter=
-document.getElementById("tableCounter");
 
-if(counter)
-counter.textContent="0 موظف";
+ const correction =
+  allEmployees.filter(
+   e=>e.profile\_status==="needs\_correction"
+  ).length;
 
-body.innerHTML=
-'<tr><td colspan="7" class="empty">لا توجد بيانات مطابقة للفلاتر الحالية.</td></tr>';
 
-return;
 
-}
+ const notice =
+  document.getElementById(
+   "statusNotice"
+  );
 
-const counter=
-document.getElementById("tableCounter");
 
-if(counter)
-counter.textContent=
-filtered.length+" موظف";
 
-body.innerHTML=
-filtered.map(e=>`
+ if(notice){
 
-<tr>
+  notice.className =
+   (pending || correction)
+   ?"notice warning-note"
+   :"notice";
 
-<td>
-<strong>${escapeHtml(e.nom_ar||"-")}</strong>
-<br>
-<small>${escapeHtml(e.nom_fr||"")}</small>
-</td>
 
-<td>
+
+  notice.textContent =
+   (pending || correction)
+
+   ?\`تنبيه إداري: يوجد ${pending} ملف${pending===1?"":"ات"} قيد المراجعة و${correction} ملف${correction===1?"":"ات"} يحتاج إلى تصحيح.\`
+
+   :"لا توجد حاليًا ملفات معلقة للمراجعة أو التصحيح.";
+ }
+
+
+
+ if(!filtered.length){
+
+  const counter =
+   document.getElementById(
+    "tableCounter"
+   );
+
+  if(counter)
+   counter.textContent="0 موظف";
+
+  body.innerHTML =
+   '\<tr>\<td colspan="7" class="empty">لا توجد بيانات مطابقة للفلاتر الحالية.\</td>\</tr>';
+
+  return;
+ }
+
+
+
+ const counter =
+  document.getElementById(
+   "tableCounter"
+  );
+
+ if(counter)
+  counter.textContent =
+   filtered.length+" موظف";
+
+
+
+ body.innerHTML =
+  filtered.map(e=>\`
+
+\<tr>
+
+\<td>
+\<strong>
+${escapeHtml(e.nom\_ar||"-")}
+\</strong>
+\<br>
+\<small>
+${escapeHtml(e.nom\_fr||"")}
+\</small>
+\</td>
+
+\<td>
 ${escapeHtml(e.grade||"-")}
-</td>
+\</td>
 
-<td>
-${escapeHtml(e.service_ar||"-")}
-</td>
+\<td>
+${escapeHtml(e.service\_ar||"-")}
+\</td>
 
-<td>
+\<td>
+
 ${
-e.work_status==="seconded"
-?
-'<span class="badge badge-seconded">موضوع تحت التصرف</span>'
-:
-'<span class="badge badge-active">نشط</span>'
+ e.work\_status==="seconded"
+
+ ?'\<span class="badge badge-seconded">موضوع تحت التصرف\</span>'
+
+ :'\<span class="badge badge-active">نشط\</span>'
 }
-</td>
 
-<td>
-${getProfileBadge(e.profile_status)}
-</td>
+\</td>
 
-<td>
+\<td>
+
+${getProfileBadge(e.profile\_status)}
+
 ${
-e.work_status==="seconded"
-?
-getDeadlineBadge(e.disposition_end)
-:
-"-"
+ e.correction\_submitted\_at
+
+ ?'\<br>\<span class="badge badge-resubmitted" style="margin-top:5px">أعيد التصحيح\</span>'
+
+ :""
 }
-</td>
 
-<td class="no-print">
+\</td>
 
-<div class="actions">
+\<td>
 
-<button
-class="btn btn-view"
-onclick="viewEmployee('${e.id}')"
->
+${
+ e.work\_status==="seconded"
+
+ ?getDeadlineBadge(e.disposition\_end)
+
+ :"-"
+}
+
+\</td>
+
+\<td class="no-print">
+
+\<div class="actions">
+
+\<button
+ class="btn btn-view"
+ onclick="viewEmployee('${e.id}')"
+\>
 عرض
-</button>
-
-<button
-class="btn btn-edit"
-onclick="openEditEmployee('${e.id}')"
->
-✏️ تصحيح
-</button>
+\</button>
 
 ${
-e.profile_status!=="approved"
-?
-`
-<button
-class="btn btn-approve"
-onclick="approveEmployee('${e.id}')"
->
-اعتماد
-</button>
-`
-:""
+ e.profile\_status!=="approved"
+
+ ?\`
+ \<button
+  class="btn btn-approve"
+  onclick="approveEmployee('${e.id}')"
+ \>
+ اعتماد
+ \</button>
+ \`
+
+ :""
 }
 
-<button
-class="btn btn-correction"
-onclick="requestCorrection('${e.id}')"
->
+\<button
+ class="btn btn-correction"
+ onclick="requestCorrection('${e.id}')"
+\>
 طلب تصحيح
-</button>
+\</button>
 
-<button
-class="btn btn-delete"
-onclick="deleteEmployee('${e.id}')"
->
+\<button
+ class="btn btn-delete"
+ onclick="deleteEmployee('${e.id}')"
+\>
 حذف
-</button>
+\</button>
 
-</div>
+\</div>
 
-</td>
+\</td>
 
-</tr>
+\</tr>
 
-`).join("");
-
+\`).join("");
 }
 
 
-/* =========================
-   الحالات
-========================= */
+
+/\* =========================
+   حالة الملف
+\========================= \*/
 
 function getProfileBadge(s){
 
-if(s==="approved")
-return '<span class="badge badge-approved">معتمد</span>';
+ if(s==="approved")
+  return '\<span class="badge badge-approved">معتمد\</span>';
 
-if(s==="needs_correction")
-return '<span class="badge badge-correction">يحتاج تصحيح</span>';
+ if(s==="needs\_correction")
+  return '\<span class="badge badge-correction">يحتاج تصحيح\</span>';
 
-return '<span class="badge badge-pending">قيد المراجعة</span>';
-
+ return '\<span class="badge badge-pending">قيد المراجعة\</span>';
 }
+
 
 
 function getProfileText(s){
 
-return
-s==="approved"
-?"معتمد"
-:
-s==="needs_correction"
-?"يحتاج إلى تصحيح"
-:
-"قيد المراجعة";
-
+ return s==="approved"
+  ?"معتمد"
+  \:s==="needs\_correction"
+   ?"يحتاج إلى تصحيح"
+   :"قيد المراجعة";
 }
 
+
+
+/\* =========================
+   التاريخ والوقت
+\========================= \*/
 
 function formatDate(s){
 
-if(!s)return "-";
+ if(!s) return "-";
 
-return new Date(
-s+"T00:00:00"
-)
-.toLocaleDateString("ar-DZ");
-
+ return new Date(
+  s+"T00:00:00"
+ ).toLocaleDateString("ar-DZ");
 }
 
+
+
+function formatDateTime(s){
+
+ if(!s) return "-";
+
+ const d = new Date(s);
+
+ if(isNaN(d.getTime()))
+  return "-";
+
+ return d.toLocaleString(
+  "ar-DZ",
+  {
+   year:"numeric",
+   month:"2-digit",
+   day:"2-digit",
+   hour:"2-digit",
+   minute:"2-digit"
+  }
+ );
+}
+
+
+
+/\* =========================
+   نهاية الوضع تحت التصرف
+\========================= \*/
 
 function getDeadlineBadge(s){
 
-if(!s)return "-";
+ if(!s) return "-";
 
-const today=new Date();
+ const today=new Date();
 
-today.setHours(0,0,0,0);
+ today.setHours(0,0,0,0);
 
-const d=
-new Date(s+"T00:00:00");
+ const d=
+  new Date(s+"T00:00:00");
 
-const days=
-Math.ceil(
-(d-today)/86400000
-);
+ const days=
+  Math.ceil(
+   (d-today)/86400000
+  );
 
-const f=formatDate(s);
+ const f=formatDate(s);
 
-if(days<0)
-return `<span class="badge badge-expired">منتهٍ: ${f}</span>`;
+ if(days<0)
 
-if(days<=30)
-return `<span class="badge badge-warning">${f}<br>متبقي ${days} يوم</span>`;
+  return \`
+   \<span class="badge badge-expired">
+   منتهٍ: ${f}
+   \</span>
+  \`;
 
-return `<span class="badge badge-normal">${f}</span>`;
 
+
+ if(days<=30)
+
+  return \`
+   \<span class="badge badge-warning">
+   ${f}\<br>
+   متبقي ${days} يوم
+   \</span>
+  \`;
+
+
+
+ return \`
+  \<span class="badge badge-normal">
+  ${f}
+  \</span>
+ \`;
 }
 
 
-/* =========================
+
+/\* =========================
    تفاصيل الموظف
-========================= */
+\========================= \*/
 
-function detail(label,value){
+function detail(
+ label,
+ value,
+ highlight=false
+){
 
-return `
-<div class="detail">
+ return \`
+ \<div class="detail ${highlight?"highlight":""}">
 
-<div class="detail-label">
-${escapeHtml(label)}
-</div>
+ \<div class="detail-label">
+ ${escapeHtml(label)}
+ \</div>
 
-<div class="detail-value">
-${escapeHtml(value||"-")}
-</div>
+ \<div class="detail-value">
+ ${escapeHtml(value||"-")}
+ \</div>
 
-</div>
-`;
-
+ \</div>
+ \`;
 }
+
 
 
 function viewEmployee(id){
 
-selectedEmployee=
-allEmployees.find(e=>e.id===id);
+ selectedEmployee =
+  allEmployees.find(
+   e=>e.id===id
+  );
 
-if(!selectedEmployee)return;
+ if(!selectedEmployee)
+  return;
 
-const e=selectedEmployee;
-
-document.getElementById("employeeDetails").innerHTML=
-
-detail(
-"الاسم واللقب بالعربية",
-e.nom_ar
-)+
-
-detail(
-"Nom et prénom",
-e.nom_fr
-)+
-
-detail(
-"منصب العمل",
-e.poste_ar
-)+
-
-detail(
-"Poste de travail",
-e.poste_fr
-)+
-
-detail(
-"مكان العمل",
-e.lieu_travail_ar
-)+
-
-detail(
-"Lieu de travail",
-e.lieu_travail_fr
-)+
-
-detail(
-"الرتبة",
-e.grade
-)+
-
-detail(
-"NIN",
-e.nin
-)+
-
-detail(
-"البريد الإلكتروني",
-e.email
-)+
-
-detail(
-"الهاتف الشخصي",
-e.phone
-)+
-
-detail(
-"المصلحة / المكتب",
-e.service_ar
-)+
-
-detail(
-"Service / Bureau",
-e.service_fr
-)+
-
-detail(
-"الوضعية",
-e.work_status==="seconded"
-?
-"موضوع تحت التصرف"
-:
-"نشط"
-)+
-
-(
-e.work_status==="seconded"
-?
-detail(
-"المؤسسة المستقبلة",
-e.host_institution
-)+
-detail(
-"المصلحة / المكتب لدى المؤسسة المستقبلة",
-e.host_service
-)+
-detail(
-"تاريخ البداية",
-formatDate(e.disposition_start)
-)+
-detail(
-"تاريخ النهاية",
-formatDate(e.disposition_end)
-)
-:
-""
-)+
-
-detail(
-"حالة الملف",
-getProfileText(e.profile_status)
-)+
-
-detail(
-"ملاحظة المسؤول",
-e.admin_note||"لا توجد ملاحظات"
-);
+ const e=selectedEmployee;
 
 
-document.getElementById("modalActions").innerHTML=
 
-`
-<button
-class="edit-modal"
-onclick="closeModal();openEditEmployee('${e.id}')"
->
-✏️ تصحيح المعلومات
-</button>
-`
+ let html =
 
-+
+ detail(
+  "الاسم واللقب بالعربية",
+  e.nom\_ar
+ )
 
-(
-e.profile_status!=="approved"
-?
-`
-<button
-class="approve-modal"
-onclick="approveEmployee('${e.id}');closeModal()"
->
-اعتماد الملف
-</button>
-`
-:
-""
-)
+ +detail(
+  "Nom et prénom",
+  e.nom\_fr
+ )
 
-+
+ +detail(
+  "منصب العمل",
+  e.poste\_ar
+ )
 
-`
-<button
-class="correction-modal"
-onclick="requestCorrection('${e.id}');closeModal()"
->
-طلب تصحيح البيانات
-</button>
+ +detail(
+  "Poste de travail",
+  e.poste\_fr
+ )
 
-<button
-class="delete-modal"
-onclick="deleteEmployee('${e.id}');closeModal()"
->
-حذف الموظف
-</button>
-`;
+ +detail(
+  "مكان العمل",
+  e.lieu\_travail\_ar
+ )
 
-document
-.getElementById("employeeModal")
-.classList.add("show");
+ +detail(
+  "Lieu de travail",
+  e.lieu\_travail\_fr
+ )
 
+ +detail(
+  "الرتبة",
+  e.grade
+ )
+
+ +detail(
+  "NIN",
+  e.nin
+ )
+
+ +detail(
+  "البريد الإلكتروني",
+  e.email
+ )
+
+ +detail(
+  "الهاتف الشخصي",
+  e.phone
+ )
+
+ +detail(
+  "المصلحة / المكتب",
+  e.service\_ar
+ )
+
+ +detail(
+  "Service / Bureau",
+  e.service\_fr
+ )
+
+ +detail(
+  "الوضعية",
+  e.work\_status==="seconded"
+   ?"موضوع تحت التصرف"
+   :"نشط"
+ );
+
+
+
+ if(e.work\_status==="seconded"){
+
+  html +=
+
+   detail(
+    "المؤسسة المستقبلة",
+    e.host\_institution
+   )
+
+   +detail(
+    "المصلحة / المكتب لدى المؤسسة المستقبلة",
+    e.host\_service
+   )
+
+   +detail(
+    "تاريخ البداية",
+    formatDate(e.disposition\_start)
+   )
+
+   +detail(
+    "تاريخ النهاية",
+    formatDate(e.disposition\_end)
+   );
+ }
+
+
+
+ html +=
+
+  detail(
+   "حالة الملف",
+   getProfileText(e.profile\_status)
+  );
+
+
+
+ /\*
+   الإضافة الجديدة:
+   عرض وقت إعادة إرسال التصحيح
+  \*/
+
+ if(e.correction\_submitted\_at){
+
+  html +=
+
+   detail(
+    "تاريخ ووقت إعادة إرسال التصحيح",
+    formatDateTime(
+     e.correction\_submitted\_at
+    ),
+    true
+   );
+
+ }
+
+
+
+ html +=
+
+  detail(
+   "ملاحظة المسؤول",
+   e.admin\_note || "لا توجد ملاحظات"
+  );
+
+
+
+ document.getElementById(
+  "employeeDetails"
+ ).innerHTML=html;
+
+
+
+ document.getElementById(
+  "modalActions"
+ ).innerHTML=
+
+ (
+  e.profile\_status!=="approved"
+
+  ?\`
+   \<button
+    class="approve-modal"
+    onclick="approveEmployee('${e.id}');closeModal()"
+   \>
+   اعتماد الملف
+   \</button>
+   \`
+
+  :""
+ )
+
+ \+
+
+ \`
+ \<button
+  class="correction-modal"
+  onclick="requestCorrection('${e.id}');closeModal()"
+ \>
+ طلب تصحيح البيانات
+ \</button>
+
+ \<button
+  class="delete-modal"
+  onclick="deleteEmployee('${e.id}');closeModal()"
+ \>
+ حذف الموظف
+ \</button>
+ \`;
+
+
+
+ document.getElementById(
+  "employeeModal"
+ ).classList.add("show");
 }
+
 
 
 function closeModal(){
 
-document
-.getElementById("employeeModal")
-.classList.remove("show");
-
+ document.getElementById(
+  "employeeModal"
+ ).classList.remove("show");
 }
 
 
-/* =========================
-   تصحيح معلومات الموظف
-========================= */
 
-function openEditEmployee(id){
-
-const e=
-allEmployees.find(x=>x.id===id);
-
-if(!e)return;
-
-editingEmployee=e;
-
-document.getElementById("editEmployeeId").value=e.id;
-
-
-/*
-   نملأ الحقول بالقيم الموجودة فعليًا.
-   المسؤول يستطيع تعديل أي قيمة يريدها.
-*/
-
-document.getElementById("edit_nom_ar").value=
-e.nom_ar||"";
-
-document.getElementById("edit_nom_fr").value=
-e.nom_fr||"";
-
-document.getElementById("edit_nin").value=
-e.nin||"";
-
-document.getElementById("edit_phone").value=
-e.phone||"";
-
-document.getElementById("edit_email").value=
-e.email||"";
-
-document.getElementById("edit_grade").value=
-e.grade||"";
-
-document.getElementById("edit_poste_ar").value=
-e.poste_ar||"";
-
-document.getElementById("edit_poste_fr").value=
-e.poste_fr||"";
-
-document.getElementById("edit_service_ar").value=
-e.service_ar||"";
-
-document.getElementById("edit_service_fr").value=
-e.service_fr||"";
-
-document.getElementById("edit_lieu_ar").value=
-e.lieu_travail_ar||"";
-
-document.getElementById("edit_lieu_fr").value=
-e.lieu_travail_fr||"";
-
-document.getElementById("edit_work_status").value=
-e.work_status||"active";
-
-document.getElementById("edit_host_institution").value=
-e.host_institution||"";
-
-document.getElementById("edit_host_service").value=
-e.host_service||"";
-
-document.getElementById("edit_disposition_start").value=
-e.disposition_start||"";
-
-document.getElementById("edit_disposition_end").value=
-e.disposition_end||"";
-
-
-document
-.getElementById("editEmployeeModal")
-.classList.add("show");
-
-}
-
-
-function closeEditEmployeeModal(){
-
-document
-.getElementById("editEmployeeModal")
-.classList.remove("show");
-
-editingEmployee=null;
-
-}
-
-
-/* =========================
-   حفظ تصحيح المعلومات
-========================= */
-
-async function saveEmployeeCorrection(event){
-
-event.preventDefault();
-
-if(!editingEmployee){
-
-alert("لم يتم تحديد الموظف.");
-
-return;
-
-}
-
-const btn=
-document.getElementById("editSaveBtn");
-
-btn.disabled=true;
-
-btn.textContent="جاري حفظ التعديلات...";
-
-
-try{
-
-/*
-   مهم جدًا:
-   نقوم بتحديث الحقول الخاصة بنموذج التصحيح فقط.
-   لا نرسل user_id أو role أو created_at أو profile_status
-   أو أي حقول أخرى، وبالتالي تبقى البيانات الأخرى محفوظة.
-*/
-
-const changes={};
-
-
-/* الاسم */
-
-const nom_ar=
-document
-.getElementById("edit_nom_ar")
-.value
-.trim();
-
-if(nom_ar !== (editingEmployee.nom_ar||"")){
-changes.nom_ar=nom_ar||null;
-}
-
-
-/* الاسم بالفرنسية */
-
-const nom_fr=
-document
-.getElementById("edit_nom_fr")
-.value
-.trim();
-
-if(nom_fr !== (editingEmployee.nom_fr||"")){
-changes.nom_fr=nom_fr||null;
-}
-
-
-/* NIN */
-
-const nin=
-document
-.getElementById("edit_nin")
-.value
-.trim();
-
-if(nin !== (editingEmployee.nin||"")){
-changes.nin=nin||null;
-}
-
-
-/* الهاتف */
-
-const phone=
-document
-.getElementById("edit_phone")
-.value
-.trim();
-
-if(phone !== (editingEmployee.phone||"")){
-changes.phone=phone||null;
-}
-
-
-/* البريد الإلكتروني */
-
-const email=
-document
-.getElementById("edit_email")
-.value
-.trim();
-
-if(email !== (editingEmployee.email||"")){
-changes.email=email||null;
-}
-
-
-/* الرتبة */
-
-const grade=
-document
-.getElementById("edit_grade")
-.value
-.trim();
-
-if(grade !== (editingEmployee.grade||"")){
-changes.grade=grade||null;
-}
-
-
-/* المنصب بالعربية */
-
-const poste_ar=
-document
-.getElementById("edit_poste_ar")
-.value
-.trim();
-
-if(poste_ar !== (editingEmployee.poste_ar||"")){
-changes.poste_ar=poste_ar||null;
-}
-
-
-/* المنصب بالفرنسية */
-
-const poste_fr=
-document
-.getElementById("edit_poste_fr")
-.value
-.trim();
-
-if(poste_fr !== (editingEmployee.poste_fr||"")){
-changes.poste_fr=poste_fr||null;
-}
-
-
-/* المصلحة بالعربية */
-
-const service_ar=
-document
-.getElementById("edit_service_ar")
-.value
-.trim();
-
-if(service_ar !== (editingEmployee.service_ar||"")){
-changes.service_ar=service_ar||null;
-}
-
-
-/* المصلحة بالفرنسية */
-
-const service_fr=
-document
-.getElementById("edit_service_fr")
-.value
-.trim();
-
-if(service_fr !== (editingEmployee.service_fr||"")){
-changes.service_fr=service_fr||null;
-}
-
-
-/* مكان العمل بالعربية */
-
-const lieu_ar=
-document
-.getElementById("edit_lieu_ar")
-.value
-.trim();
-
-if(lieu_ar !== (editingEmployee.lieu_travail_ar||"")){
-changes.lieu_travail_ar=lieu_ar||null;
-}
-
-
-/* مكان العمل بالفرنسية */
-
-const lieu_fr=
-document
-.getElementById("edit_lieu_fr")
-.value
-.trim();
-
-if(lieu_fr !== (editingEmployee.lieu_travail_fr||"")){
-changes.lieu_travail_fr=lieu_fr||null;
-}
-
-
-/* الوضعية */
-
-const work_status=
-document
-.getElementById("edit_work_status")
-.value;
-
-if(work_status !== (editingEmployee.work_status||"")){
-changes.work_status=work_status;
-}
-
-
-/* المؤسسة المستقبلة */
-
-const host_institution=
-document
-.getElementById("edit_host_institution")
-.value
-.trim();
-
-if(
-host_institution !==
-(editingEmployee.host_institution||"")
-){
-
-changes.host_institution=
-host_institution||null;
-
-}
-
-
-/* المصلحة لدى المؤسسة المستقبلة */
-
-const host_service=
-document
-.getElementById("edit_host_service")
-.value
-.trim();
-
-if(
-host_service !==
-(editingEmployee.host_service||"")
-){
-
-changes.host_service=
-host_service||null;
-
-}
-
-
-/* تاريخ البداية */
-
-const disposition_start=
-document
-.getElementById("edit_disposition_start")
-.value;
-
-if(
-disposition_start !==
-(editingEmployee.disposition_start||"")
-){
-
-changes.disposition_start=
-disposition_start||null;
-
-}
-
-
-/* تاريخ النهاية */
-
-const disposition_end=
-document
-.getElementById("edit_disposition_end")
-.value;
-
-if(
-disposition_end !==
-(editingEmployee.disposition_end||"")
-){
-
-changes.disposition_end=
-disposition_end||null;
-
-}
-
-
-/*
-   إذا لم يتم تغيير أي معلومة
-*/
-
-if(Object.keys(changes).length===0){
-
-alert("لم يتم إجراء أي تعديل.");
-
-btn.disabled=false;
-
-btn.textContent="💾 حفظ التصحيح";
-
-return;
-
-}
-
-
-/*
-   التحديث يتم على سجل الموظف فقط.
-   لا يتم لمس بقية الأعمدة.
-*/
-
-const {error}=
-await supabaseClient
-.from("employees")
-.update(changes)
-.eq("id",editingEmployee.id)
-.eq("role","employee");
-
-if(error)throw error;
-
-
-/*
-   تحديث النسخة المحلية مباشرة.
-*/
-
-editingEmployee={
-...editingEmployee,
-...changes
-};
-
-const index=
-allEmployees.findIndex(
-x=>x.id===editingEmployee.id
-);
-
-if(index!==-1){
-
-allEmployees[index]={
-...allEmployees[index],
-...changes
-};
-
-}
-
-
-/*
-   إغلاق النافذة وإعادة عرض البيانات.
-*/
-
-closeEditEmployeeModal();
-
-updateStats();
-
-renderEmployees();
-
-
-/*
-   إذا كانت نافذة تفاصيل الموظف مفتوحة،
-   نعيد تحميل التفاصيل بالقيم الجديدة.
-*/
-
-if(
-selectedEmployee &&
-selectedEmployee.id===editingEmployee.id
-){
-
-selectedEmployee=
-allEmployees.find(
-x=>x.id===editingEmployee.id
-);
-
-viewEmployee(editingEmployee.id);
-
-}
-
-
-/*
-   إشعار اختياري للموظف.
-   لا نغير حالة الملف ولا نرسل طلب تصحيح.
-*/
-
-if(editingEmployee.user_id){
-
-const currentUser=
-(await supabaseClient.auth.getUser())
-.data.user?.id||null;
-
-const {error:notificationError}=
-await supabaseClient
-.from("notifications")
-.insert({
-
-user_id:editingEmployee.user_id,
-
-title:"تم تصحيح معلومات ملفك",
-
-message:
-"قام المسؤول بتصحيح بعض المعلومات في ملفك الوظيفي. يرجى الاطلاع على ملفك للتأكد من صحة البيانات.",
-
-type:"information",
-
-created_by:currentUser
-
-});
-
-if(notificationError){
-
-console.warn(
-"Notification error:",
-notificationError
-);
-
-}
-
-}
-
-
-alert("تم تصحيح معلومات الموظف وحفظ التعديلات بنجاح.");
-
-
-}catch(e){
-
-console.error(e);
-
-alert(
-"حدث خطأ أثناء حفظ التصحيح: "+
-(e.message||"خطأ غير معروف")
-);
-
-}finally{
-
-btn.disabled=false;
-
-btn.textContent="💾 حفظ التصحيح";
-
-}
-
-}
-
-
-/* =========================
+/\* =========================
    اعتماد الملف
-========================= */
+\========================= \*/
 
 async function approveEmployee(id){
 
-if(!confirm("هل تريد اعتماد ملف هذا الموظف؟"))
-return;
+ if(!confirm(
+  "هل تريد اعتماد ملف هذا الموظف؟"
+ )) return;
 
-try{
 
-const employee=
-allEmployees.find(x=>x.id===id);
 
-const {error}=
-await supabaseClient
-.from("employees")
-.update({
-profile_status:"approved",
-admin_note:null
-})
-.eq("id",id);
+ try{
 
-if(error)throw error;
+  const employee =
+   allEmployees.find(
+    x=>x.id===id
+   );
 
-if(employee?.user_id){
 
-const {
-error:notificationError
-}=
-await supabaseClient
-.from("notifications")
-.insert({
 
-user_id:employee.user_id,
+  const {error} =
+   await supabaseClient
+   .from("employees")
+   .update({
+    profile\_status:"approved",
+    admin\_note\:null
+   })
+   .eq("id",id);
 
-title:"تم اعتماد ملفك الوظيفي",
 
-message:
-"تمت مراجعة بياناتك الوظيفية واعتماد ملفك من طرف المسؤول.",
 
-type:"approval",
+  if(error) throw error;
 
-created_by:
-(
-await supabaseClient.auth.getUser()
-).data.user?.id||null
 
-});
 
-if(notificationError)
-console.warn(
-"Notification error:",
-notificationError
-);
+  if(employee?.user\_id){
 
+   const {
+    error\:notificationError
+   } =
+    await supabaseClient
+    .from("notifications")
+    .insert({
+
+     user\_id\:employee.user\_id,
+
+     title:"تم اعتماد ملفك الوظيفي",
+
+     message:
+      "تمت مراجعة بياناتك الوظيفية واعتماد ملفك من طرف المسؤول.",
+
+     type:"approval",
+
+     created\_by:
+      (await supabaseClient.auth.getUser())
+      .data.user?.id || null
+    });
+
+
+
+   if(notificationError)
+    console.warn(
+     "Notification error:",
+     notificationError
+    );
+  }
+
+
+
+  await loadEmployees();
+
+  alert(
+   "تم اعتماد ملف الموظف بنجاح وتم إرسال تنبيه له."
+  );
+
+
+
+ }catch(e){
+
+  console.error(e);
+
+  alert(
+   "حدث خطأ أثناء اعتماد الملف."
+  );
+ }
 }
 
-await loadEmployees();
-
-alert(
-"تم اعتماد ملف الموظف بنجاح وتم إرسال تنبيه له."
-);
-
-}catch(e){
-
-console.error(e);
-
-alert(
-"حدث خطأ أثناء اعتماد الملف."
-);
-
-}
-
-}
 
 
-/* =========================
-   طلب تصحيح من الموظف
-========================= */
+/\* =========================
+   طلب التصحيح
+\========================= \*/
 
 async function requestCorrection(id){
 
-const note=
-prompt(
-"اكتب ملاحظة التصحيح المطلوبة من الموظف:"
-);
+ const note =
+  prompt(
+   "اكتب ملاحظة التصحيح المطلوبة من الموظف:"
+  );
 
-if(note===null)return;
 
-if(!note.trim()){
 
-alert(
-"يجب كتابة ملاحظة توضح المطلوب تصحيحه."
-);
+ if(note===null) return;
 
-return;
 
+
+ if(!note.trim()){
+
+  alert(
+   "يجب كتابة ملاحظة توضح المطلوب تصحيحه."
+  );
+
+  return;
+ }
+
+
+
+ try{
+
+  const employee =
+   allEmployees.find(
+    x=>x.id===id
+   );
+
+
+
+  const {error} =
+   await supabaseClient
+   .from("employees")
+   .update({
+
+    profile\_status:"needs\_correction",
+
+    admin\_note\:note.trim()
+
+   })
+   .eq("id",id);
+
+
+
+  if(error) throw error;
+
+
+
+  if(employee?.user\_id){
+
+   const {
+    error\:notificationError
+   } =
+    await supabaseClient
+    .from("notifications")
+    .insert({
+
+     user\_id\:employee.user\_id,
+
+     title:"يرجى تصحيح بيانات ملفك",
+
+     message\:note.trim(),
+
+     type:"correction",
+
+     created\_by:
+      (await supabaseClient.auth.getUser())
+      .data.user?.id || null
+    });
+
+
+
+   if(notificationError)
+    console.warn(
+     "Notification error:",
+     notificationError
+    );
+  }
+
+
+
+  await loadEmployees();
+
+
+
+  alert(
+   "تم إرسال طلب التصحيح والتنبيه للموظف."
+  );
+
+
+
+ }catch(e){
+
+  console.error(e);
+
+  alert(
+   "حدث خطأ أثناء إرسال طلب التصحيح."
+  );
+ }
 }
 
-try{
-
-const employee=
-allEmployees.find(x=>x.id===id);
-
-const {error}=
-await supabaseClient
-.from("employees")
-.update({
-profile_status:"needs_correction",
-admin_note:note.trim()
-})
-.eq("id",id);
-
-if(error)throw error;
-
-if(employee?.user_id){
-
-const {
-error:notificationError
-}=
-await supabaseClient
-.from("notifications")
-.insert({
-
-user_id:employee.user_id,
-
-title:"يرجى تصحيح بيانات ملفك",
-
-message:note.trim(),
-
-type:"correction",
-
-created_by:
-(
-await supabaseClient.auth.getUser()
-).data.user?.id||null
-
-});
-
-if(notificationError)
-console.warn(
-"Notification error:",
-notificationError
-);
-
-}
-
-await loadEmployees();
-
-alert(
-"تم إرسال طلب التصحيح والتنبيه للموظف."
-);
-
-}catch(e){
-
-console.error(e);
-
-alert(
-"حدث خطأ أثناء إرسال طلب التصحيح."
-);
-
-}
-
-}
 
 
-/* =========================
+/\* =========================
    حذف الموظف
-========================= */
+\========================= \*/
 
 async function deleteEmployee(id){
 
-const e=
-allEmployees.find(x=>x.id===id);
+ const e =
+  allEmployees.find(
+   x=>x.id===id
+  );
 
-if(!e)return;
+ if(!e) return;
 
-if(
-!confirm(
-"هل أنت متأكد من حذف ملف الموظف:\n"+
-(e.nom_ar||e.nom_fr||"هذا الموظف")+
-"؟\n\nلا يمكن التراجع عن هذه العملية."
-)
-)
-return;
 
-try{
 
-const {error}=
-await supabaseClient
-.from("employees")
-.delete()
-.eq("id",id)
-.eq("role","employee");
+ if(!confirm(
+  "هل أنت متأكد من حذف ملف الموظف:\n"+
+  (e.nom\_ar||e.nom\_fr||"هذا الموظف")+
+  "؟\n\nلا يمكن التراجع عن هذه العملية."
+ )) return;
 
-if(error)throw error;
 
-allEmployees=
-allEmployees.filter(
-x=>x.id!==id
-);
 
-updateStats();
+ try{
 
-renderEmployees();
+  const {error} =
+   await supabaseClient
+   .from("employees")
+   .delete()
+   .eq("id",id)
+   .eq("role","employee");
 
-alert(
-"تم حذف ملف الموظف بنجاح."
-);
 
-}catch(err){
 
-console.error(err);
+  if(error) throw error;
 
-alert(
-"تعذر حذف الموظف. تأكد من صلاحيات الحذف في قاعدة البيانات."
-);
 
+
+  allEmployees =
+   allEmployees.filter(
+    x=>x.id!==id
+   );
+
+
+
+  updateStats();
+
+  renderEmployees();
+
+
+
+  alert(
+   "تم حذف ملف الموظف بنجاح."
+  );
+
+
+
+ }catch(err){
+
+  console.error(err);
+
+  alert(
+   "تعذر حذف الموظف. تأكد من صلاحيات الحذف في قاعدة البيانات."
+  );
+ }
 }
 
-}
 
 
-/* =========================
+/\* =========================
    الإشعارات
-========================= */
+\========================= \*/
 
 function openNotificationModal(){
 
-const select=
-document.getElementById(
-"notificationTarget"
-);
+ const select =
+  document.getElementById(
+   "notificationTarget"
+  );
 
-select.innerHTML=
-'<option value="all">جميع الموظفين</option>'+
-allEmployees
-.map(e=>
-`
-<option value="${escapeHtml(e.user_id||"")}">
-${escapeHtml(e.nom_ar||e.nom_fr||"موظف بدون اسم")}
-— ${escapeHtml(e.nin||"")}
-</option>
-`
-)
-.join("");
 
-document
-.getElementById("notificationModal")
-.classList.add("show");
 
+ select.innerHTML =
+  '\<option value="all">جميع الموظفين\</option>'+
+
+  allEmployees
+  .map(e=>\`
+
+   \<option value="${escapeHtml(e.user\_id||"")}">
+
+   ${escapeHtml(
+    e.nom\_ar||
+    e.nom\_fr||
+    "موظف بدون اسم"
+   )}
+
+   — ${escapeHtml(e.nin||"")}
+
+   \</option>
+
+  \`)
+  .join("");
+
+
+
+ document.getElementById(
+  "notificationModal"
+ ).classList.add("show");
 }
+
 
 
 function closeNotificationModal(){
 
-document
-.getElementById("notificationModal")
-.classList.remove("show");
-
+ document.getElementById(
+  "notificationModal"
+ ).classList.remove("show");
 }
+
 
 
 async function sendNotification(event){
 
-event.preventDefault();
+ event.preventDefault();
 
-const target=
-document.getElementById(
-"notificationTarget"
-).value;
 
-const type=
-document.getElementById(
-"notificationType"
-).value;
 
-const title=
-document.getElementById(
-"notificationTitle"
-).value
-.trim();
+ const target =
+  document.getElementById(
+   "notificationTarget"
+  ).value;
 
-const msg=
-document.getElementById(
-"notificationMessage"
-).value
-.trim();
 
-const btn=
-document.getElementById(
-"notificationSendBtn"
-);
 
-if(!title||!msg){
+ const type =
+  document.getElementById(
+   "notificationType"
+  ).value;
 
-alert(
-"يرجى إدخال عنوان ومحتوى التنبيه."
-);
 
-return;
 
+ const title =
+  document.getElementById(
+   "notificationTitle"
+  ).value.trim();
+
+
+
+ const msg =
+  document.getElementById(
+   "notificationMessage"
+  ).value.trim();
+
+
+
+ const btn =
+  document.getElementById(
+   "notificationSendBtn"
+  );
+
+
+
+ if(!title || !msg){
+
+  alert(
+   "يرجى إدخال عنوان ومحتوى التنبيه."
+  );
+
+  return;
+ }
+
+
+
+ btn.disabled=true;
+
+ btn.textContent=
+  "جاري الإرسال...";
+
+
+
+ try{
+
+  const userId =
+   (await supabaseClient.auth.getUser())
+   .data.user?.id || null;
+
+
+
+  let rows=[];
+
+
+
+  if(target==="all"){
+
+   rows =
+    allEmployees
+    .filter(e=>e.user\_id)
+    .map(e=>({
+
+     user\_id\:e.user\_id,
+
+     title,
+
+     message\:msg,
+
+     type,
+
+     created\_by\:userId
+
+    }));
+
+  }else{
+
+   rows=[{
+
+    user\_id\:target,
+
+    title,
+
+    message\:msg,
+
+    type,
+
+    created\_by\:userId
+
+   }];
+  }
+
+
+
+  if(!rows.length)
+   throw new Error(
+    "لا يوجد موظفون صالحون لاستقبال التنبيه."
+   );
+
+
+
+  const {error} =
+   await supabaseClient
+   .from("notifications")
+   .insert(rows);
+
+
+
+  if(error) throw error;
+
+
+
+  document.getElementById(
+   "notificationForm"
+  ).reset();
+
+
+
+  closeNotificationModal();
+
+
+
+  alert(
+
+   target==="all"
+
+   ?\`تم إرسال التنبيه إلى ${rows.length} موظفًا بنجاح.\`
+
+   :"تم إرسال التنبيه للموظف بنجاح."
+
+  );
+
+
+
+ }catch(e){
+
+  console.error(e);
+
+  alert(
+   "تعذر إرسال التنبيه: "+
+   (e.message||"خطأ غير معروف")
+  );
+
+
+
+ }finally{
+
+  btn.disabled=false;
+
+  btn.textContent=
+   "إرسال التنبيه";
+ }
 }
 
-btn.disabled=true;
-
-btn.textContent="جاري الإرسال...";
-
-try{
-
-const userId=
-(
-await supabaseClient.auth.getUser()
-).data.user?.id||null;
-
-let rows=[];
-
-if(target==="all"){
-
-rows=
-allEmployees
-.filter(e=>e.user_id)
-.map(e=>({
-
-user_id:e.user_id,
-title,
-message:msg,
-type,
-created_by:userId
-
-}));
-
-}else{
-
-rows=[{
-
-user_id:target,
-title,
-message:msg,
-type,
-created_by:userId
-
-}];
-
-}
-
-if(!rows.length)
-throw new Error(
-"لا يوجد موظفون صالحون لاستقبال التنبيه."
-);
-
-const {error}=
-await supabaseClient
-.from("notifications")
-.insert(rows);
-
-if(error)throw error;
-
-document
-.getElementById("notificationForm")
-.reset();
-
-closeNotificationModal();
-
-alert(
-target==="all"
-?
-`تم إرسال التنبيه إلى ${rows.length} موظفًا بنجاح.`
-:
-"تم إرسال التنبيه للموظف بنجاح."
-);
-
-}catch(e){
-
-console.error(e);
-
-alert(
-"تعذر إرسال التنبيه: "+
-(e.message||"خطأ غير معروف")
-);
-
-}finally{
-
-btn.disabled=false;
-
-btn.textContent="إرسال التنبيه";
-
-}
-
-}
 
 
-/* =========================
+/\* =========================
    Excel
-========================= */
+\========================= \*/
 
 function getExportRows(list){
 
-return list.map((e,i)=>({
+ return list.map((e,i)=>({
 
-"رقم":i+1,
+  "رقم"\:i+1,
 
-"Nom et prénom":
-e.nom_fr||"",
+  "Nom et prénom":
+   e.nom\_fr||"",
 
-"الاسم واللقب بالعربية":
-e.nom_ar||"",
+  "الاسم واللقب بالعربية":
+   e.nom\_ar||"",
 
-"منصب العمل":
-e.poste_ar||"",
+  "منصب العمل":
+   e.poste\_ar||"",
 
-"Poste de travail":
-e.poste_fr||"",
+  "Poste de travail":
+   e.poste\_fr||"",
 
-"مكان العمل":
-e.lieu_travail_ar||"",
+  "مكان العمل":
+   e.lieu\_travail\_ar||"",
 
-"Lieu de travail":
-e.lieu_travail_fr||"",
+  "Lieu de travail":
+   e.lieu\_travail\_fr||"",
 
-"Grade":
-e.grade||"",
+  "Grade":
+   e.grade||"",
 
-"NIN":
-e.nin||"",
+  "NIN":
+   e.nin||"",
 
-"Email":
-e.email||"",
+  "Email":
+   e.email||"",
 
-"Téléphone personnel":
-e.phone||"",
+  "Téléphone personnel":
+   e.phone||"",
 
-"نوع التكليف / Affectation":
-e.work_status==="seconded"
-?
-"موضوع تحت التصرف"
-:
-"نشط",
+  "نوع التكليف / Affectation":
+   e.work\_status==="seconded"
+    ?"موضوع تحت التصرف"
+    :"نشط",
 
-"المصلحة / المكتب":
-e.service_ar||"",
+  "المصلحة / المكتب":
+   e.service\_ar||"",
 
-"Service / Bureau":
-e.service_fr||"",
+  "Service / Bureau":
+   e.service\_fr||"",
 
-"المؤسسة المستقبلة":
-e.host_institution||"",
+  "المؤسسة المستقبلة":
+   e.host\_institution||"",
 
-"مصلحة المؤسسة المستقبلة":
-e.host_service||"",
+  "مصلحة المؤسسة المستقبلة":
+   e.host\_service||"",
 
-"تاريخ البداية":
-e.disposition_start||"",
+  "تاريخ البداية":
+   e.disposition\_start||"",
 
-"تاريخ النهاية":
-e.disposition_end||"",
+  "تاريخ النهاية":
+   e.disposition\_end||"",
 
-"حالة الملف":
-getProfileText(e.profile_status)
+  "حالة الملف":
+   getProfileText(
+    e.profile\_status
+   ),
 
-}));
+  "تاريخ ووقت إعادة التصحيح":
+   formatDateTime(
+    e.correction\_submitted\_at
+   )
 
+ }));
 }
+
 
 
 function makeSheet(list){
 
-const rows=
-getExportRows(list);
+ const rows =
+  getExportRows(list);
 
-const ws=
-XLSX.utils.json_to_sheet(
-rows.length
-?
-rows
-:
-[{
-"رقم":"",
-"Nom et prénom":"",
-"الاسم واللقب بالعربية":""
-}]
-);
 
-ws["!cols"]=
-Object.keys(
-rows[0]||{"x":1}
-)
-.map(()=>({wch:20}));
 
-return ws;
+ const ws =
+  XLSX.utils.json\_to\_sheet(
+   rows.length
+   ?rows
+   :[
+    {
+     "رقم":"",
+     "Nom et prénom":"",
+     "الاسم واللقب بالعربية":""
+    }
+   ]
+  );
 
+
+
+ ws["!cols"] =
+  Object.keys(
+   rows[0] ||
+   {x:1}
+  )
+  .map(()=>({wch:20}));
+
+
+
+ return ws;
 }
+
 
 
 function exportExcel(){
 
-if(typeof XLSX==="undefined"){
+ if(typeof XLSX==="undefined"){
 
-alert(
-"تعذر تحميل أداة Excel. تحقق من اتصال الإنترنت ثم أعد المحاولة."
-);
+  alert(
+   "تعذر تحميل أداة Excel. تحقق من اتصال الإنترنت ثم أعد المحاولة."
+  );
 
-return;
+  return;
+ }
 
+
+
+ if(!allEmployees.length){
+
+  alert(
+   "لا توجد بيانات موظفين للتصدير."
+  );
+
+  return;
+ }
+
+
+
+ const wb =
+  XLSX.utils.book\_new();
+
+
+
+ XLSX.utils.book\_append\_sheet(
+  wb,
+  makeSheet(allEmployees),
+  "جميع الموظفين"
+ );
+
+
+
+ XLSX.utils.book\_append\_sheet(
+  wb,
+  makeSheet(
+   allEmployees.filter(
+    e=>e.work\_status==="active"
+   )
+  ),
+  "الموظفون النشطون"
+ );
+
+
+
+ XLSX.utils.book\_append\_sheet(
+  wb,
+  makeSheet(
+   allEmployees.filter(
+    e=>e.work\_status==="seconded"
+   )
+  ),
+  "تحت التصرف"
+ );
+
+
+
+ XLSX.utils.book\_append\_sheet(
+  wb,
+  makeSheet(
+   allEmployees.filter(
+    e=>e.profile\_status==="pending"
+   )
+  ),
+  "قيد المراجعة"
+ );
+
+
+
+ XLSX.utils.book\_append\_sheet(
+  wb,
+  makeSheet(
+   allEmployees.filter(
+    e=>e.profile\_status==="approved"
+   )
+  ),
+  "المعتمدون"
+ );
+
+
+
+ XLSX.utils.book\_append\_sheet(
+  wb,
+  makeSheet(
+   allEmployees.filter(
+    e=>e.profile\_status==="needs\_correction"
+   )
+  ),
+  "يحتاج تصحيح"
+ );
+
+
+
+ XLSX.writeFile(
+  wb,
+  "DRH\_الموظفون\_"+
+  new Date()
+  .toISOString()
+  .slice(0,10)+
+  ".xlsx"
+ );
 }
 
-if(!allEmployees.length){
-
-alert(
-"لا توجد بيانات موظفين للتصدير."
-);
-
-return;
-
-}
-
-const wb=
-XLSX.utils.book_new();
-
-XLSX.utils.book_append_sheet(
-wb,
-makeSheet(allEmployees),
-"جميع الموظفين"
-);
-
-XLSX.utils.book_append_sheet(
-wb,
-makeSheet(
-allEmployees.filter(
-e=>e.work_status==="active"
-)
-),
-"الموظفون النشطون"
-);
-
-XLSX.utils.book_append_sheet(
-wb,
-makeSheet(
-allEmployees.filter(
-e=>e.work_status==="seconded"
-)
-),
-"تحت التصرف"
-);
-
-XLSX.utils.book_append_sheet(
-wb,
-makeSheet(
-allEmployees.filter(
-e=>e.profile_status==="pending"
-)
-),
-"قيد المراجعة"
-);
-
-XLSX.utils.book_append_sheet(
-wb,
-makeSheet(
-allEmployees.filter(
-e=>e.profile_status==="approved"
-)
-),
-"المعتمدون"
-);
-
-XLSX.utils.book_append_sheet(
-wb,
-makeSheet(
-allEmployees.filter(
-e=>e.profile_status==="needs_correction"
-)
-),
-"يحتاج تصحيح"
-);
-
-XLSX.writeFile(
-wb,
-"DRH_الموظفون_"+
-new Date()
-.toISOString()
-.slice(0,10)+
-".xlsx"
-);
-
-}
 
 
-/* =========================
+/\* =========================
    الطباعة
-========================= */
+\========================= \*/
 
 function printEmployees(){
 
-const filtered=
-allEmployees.filter(e=>{
+ const filtered =
+  allEmployees.filter(e=>{
 
-const s=
-document
-.getElementById("searchInput")
-.value
-.trim()
-.toLowerCase();
+   const s =
+    document
+    .getElementById("searchInput")
+    .value
+    .trim()
+    .toLowerCase();
 
-const sf=
-document
-.getElementById("statusFilter")
-.value;
 
-const pf=
-document
-.getElementById("profileFilter")
-.value;
 
-const t=[
-e.nom_ar,
-e.nom_fr,
-e.nin,
-e.grade,
-e.service_ar,
-e.service_fr,
-e.poste_ar,
-e.poste_fr,
-e.lieu_travail_ar,
-e.lieu_travail_fr
-]
-.filter(Boolean)
-.join(" ")
-.toLowerCase();
+   const sf =
+    document
+    .getElementById("statusFilter")
+    .value;
 
-return
-(!s||t.includes(s)) &&
-(sf==="all"||e.work_status===sf) &&
-(pf==="all"||e.profile_status===pf);
 
-});
 
-if(!filtered.length){
+   const pf =
+    document
+    .getElementById("profileFilter")
+    .value;
 
-alert(
-"لا توجد بيانات للطباعة."
-);
 
-return;
 
+   const t=[
+    e.nom\_ar,
+    e.nom\_fr,
+    e.nin,
+    e.grade,
+    e.service\_ar,
+    e.service\_fr,
+    e.poste\_ar,
+    e.poste\_fr,
+    e.lieu\_travail\_ar,
+    e.lieu\_travail\_fr
+   ]
+   .filter(Boolean)
+   .join(" ")
+   .toLowerCase();
+
+
+
+   return(
+    (!s||t.includes(s)) &&
+    (sf==="all"||e.work\_status===sf) &&
+    (pf==="all"||e.profile\_status===pf)
+   );
+  });
+
+
+
+ if(!filtered.length){
+
+  alert(
+   "لا توجد بيانات للطباعة."
+  );
+
+  return;
+ }
+
+
+
+ window\.print();
 }
 
-window.print();
-
-}
 
 
-/* =========================
-   أدوات
-========================= */
+/\* =========================
+   حماية HTML
+\========================= \*/
 
 function escapeHtml(v){
 
-return v==null
-?
-""
-:
-String(v)
-.replace(/&/g,"&amp;")
-.replace(/</g,"&lt;")
-.replace(/>/g,"&gt;")
-.replace(/"/g,"&quot;")
-.replace(/'/g,"&#039;");
+ if(v==null)
+  return "";
 
+ return String(v)
+  .replace(/&/g,"&amp;")
+  .replace(/\</g,"&lt;")
+  .replace(/>/g,"&gt;")
+  .replace(/"/g,"&quot;")
+  .replace(/'/g,"&#039;");
 }
 
+
+
+/\* =========================
+   الخطأ
+\========================= \*/
 
 function showError(t){
 
-document.getElementById(
-"errorBox"
-).innerHTML=
-`
-<div class="error">
-${escapeHtml(t)}
-</div>
-`;
+ document.getElementById(
+  "errorBox"
+ ).innerHTML=
 
+ \`\<div class="error">
+ ${escapeHtml(t)}
+ \</div>\`;
 }
 
 
-/* =========================
+
+/\* =========================
    تسجيل الخروج
-========================= */
+\========================= \*/
 
 async function logout(){
 
-await supabaseClient
-.auth
-.signOut();
+ await supabaseClient
+  .auth
+  .signOut();
 
-location.href="index.html";
-
+ location.href="index.html";
 }
 
 
-/* =========================
-   الأحداث
-========================= */
+
+/\* =========================
+   إغلاق النوافذ
+\========================= \*/
 
 document
 .getElementById("employeeModal")
 .addEventListener(
-"click",
-function(e){
+ "click",
+ function(e){
 
-if(e.target===this)
-closeModal();
-
-}
+  if(e.target===this)
+   closeModal();
+ }
 );
 
-
-document
-.getElementById("editEmployeeModal")
-.addEventListener(
-"click",
-function(e){
-
-if(e.target===this)
-closeEditEmployeeModal();
-
-}
-);
 
 
 document
 .getElementById("notificationModal")
 .addEventListener(
-"click",
-function(e){
+ "click",
+ function(e){
 
-if(e.target===this)
-closeNotificationModal();
-
-}
+  if(e.target===this)
+   closeNotificationModal();
+ }
 );
 
 
-document
-.getElementById("editEmployeeForm")
-.addEventListener(
-"submit",
-saveEmployeeCorrection
-);
 
+/\* =========================
+   تشغيل الصفحة
+\========================= \*/
 
 document
 .getElementById("notificationForm")
 .addEventListener(
-"submit",
-sendNotification
+ "submit",
+ sendNotification
 );
 
 
-/* =========================
-   تشغيل الصفحة
-========================= */
 
 (async function init(){
 
-if(await checkAdmin())
-await loadEmployees();
+ if(await checkAdmin())
+  await loadEmployees();
 
 })();
 
-</script>
+\</script>
 
-</body>
-</html>
+\</body>
+\</html>
