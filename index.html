@@ -3,33 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>منصة بيانات الموظفين | مصلحة الموارد البشرية</title>
+<title>منصة إدارة الموظفين</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap');
 *{box-sizing:border-box}
-body{margin:0;font-family:'Cairo',Arial,Tahoma,sans-serif;background:radial-gradient(circle at 15% 15%,rgba(8,127,140,.12),transparent 30%),radial-gradient(circle at 85% 85%,rgba(11,96,122,.10),transparent 32%),linear-gradient(135deg,#edf7f8,#f7fafc);min-height:100vh;display:flex;align-items:center;justify-content:center;color:#263746;padding:20px}
-.login-container{width:100%;max-width:500px}.login-card{position:relative;overflow:hidden;background:rgba(255,255,255,.97);border-radius:28px;padding:38px 36px 30px;box-shadow:0 22px 60px rgba(20,61,78,.14);border:1px solid rgba(255,255,255,.9)}.login-card:before{content:'';position:absolute;inset:0 0 auto 0;height:5px;background:linear-gradient(90deg,#087f8c,#19a79f,#0b607a)}
-.logo{width:78px;height:78px;margin:0 auto 17px;border-radius:24px;background:linear-gradient(145deg,#087f8c,#0b607a);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 26px rgba(8,127,140,.22)}.logo svg{width:43px;height:43px;stroke:currentColor;stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}
-h1{text-align:center;margin:0 0 7px;color:#12344d;font-size:25px;font-weight:800;letter-spacing:-.3px}.subtitle{text-align:center;color:#71808d;font-size:13.5px;margin-bottom:14px;line-height:1.8}.hr-badge{display:flex;align-items:center;justify-content:center;gap:8px;width:max-content;max-width:100%;margin:0 auto 23px;padding:7px 13px;border:1px solid #d5e9eb;background:#f2fbfb;color:#087f8c;border-radius:999px;font-size:12px;font-weight:700}.hr-badge svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:17px;padding:5px;background:#f2f7f8;border-radius:15px}.tab{border:0;background:transparent;color:#526575;padding:11px;border-radius:11px;cursor:pointer;font-weight:700;font-family:inherit;transition:.2s}.tab:hover{background:#e7f2f3}.tab.active{background:#087f8c;color:#fff;box-shadow:0 5px 12px rgba(8,127,140,.18)}
-.login-types{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:19px}.type-btn{border:1px solid #d8e4e9;background:#f8fafb;color:#526575;padding:12px;border-radius:12px;cursor:pointer;font-weight:700;font-size:14px;font-family:inherit;transition:.2s}.type-btn:hover{border-color:#9bc9ce}.type-btn.active{background:#e9f7f7;color:#087f8c;border-color:#087f8c;box-shadow:inset 0 0 0 1px rgba(8,127,140,.06)}
-.form-group{margin-bottom:16px}label{display:block;margin-bottom:7px;color:#344b5d;font-size:13.5px;font-weight:700}input{width:100%;padding:14px 15px;border:1px solid #d5e0e6;border-radius:12px;outline:none;font-size:15px;background:#fbfdff;direction:ltr;text-align:left;font-family:inherit;transition:.2s}input::placeholder{color:#a0adb5}input:focus{border-color:#087f8c;box-shadow:0 0 0 4px rgba(8,127,140,.08);background:#fff}input:focus{border-color:#087f8c;box-shadow:0 0 0 3px rgba(8,127,140,.08)}
-.main-btn{width:100%;border:none;background:linear-gradient(135deg,#087f8c,#0b607a);color:#fff;padding:14px;border-radius:12px;cursor:pointer;font-size:15.5px;font-weight:800;margin-top:5px;font-family:inherit;box-shadow:0 9px 20px rgba(8,127,140,.18);transition:.2s}.main-btn:hover{transform:translateY(-1px);box-shadow:0 12px 24px rgba(8,127,140,.23)}.main-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+body{margin:0;font-family:Arial,Tahoma,sans-serif;background:linear-gradient(135deg,#eef7f8,#f5f8fb);min-height:100vh;display:flex;align-items:center;justify-content:center;color:#263746;padding:20px}
+.login-container{width:100%;max-width:480px}.login-card{background:#fff;border-radius:22px;padding:35px;box-shadow:0 12px 40px rgba(0,0,0,.1);border:1px solid #e5edf1}
+.logo{width:75px;height:75px;margin:0 auto 18px;border-radius:20px;background:linear-gradient(135deg,#087f8c,#0b607a);color:#fff;display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:bold}
+h1{text-align:center;margin:0 0 8px;color:#12344d;font-size:25px}.subtitle{text-align:center;color:#71808d;font-size:14px;margin-bottom:22px;line-height:1.7}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}.tab{border:1px solid #d8e4e9;background:#f8fafb;color:#526575;padding:11px;border-radius:10px;cursor:pointer;font-weight:bold}.tab.active{background:#087f8c;color:#fff;border-color:#087f8c}
+.login-types{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}.type-btn{border:1px solid #d8e4e9;background:#f8fafb;color:#526575;padding:12px;border-radius:11px;cursor:pointer;font-weight:bold;font-size:14px}.type-btn.active{background:#087f8c;color:#fff;border-color:#087f8c}
+.form-group{margin-bottom:16px}label{display:block;margin-bottom:7px;color:#344b5d;font-size:14px;font-weight:bold}input{width:100%;padding:14px;border:1px solid #d5e0e6;border-radius:11px;outline:none;font-size:15px;background:#fbfdff;direction:ltr;text-align:left}input:focus{border-color:#087f8c;box-shadow:0 0 0 3px rgba(8,127,140,.08)}
+.main-btn{width:100%;border:none;background:linear-gradient(135deg,#087f8c,#0b607a);color:#fff;padding:14px;border-radius:11px;cursor:pointer;font-size:16px;font-weight:bold;margin-top:5px}.main-btn:disabled{opacity:.6;cursor:not-allowed}
 .message{display:none;padding:13px;border-radius:10px;margin-bottom:17px;font-size:13px;line-height:1.7}.message.error{display:block;background:#fff0f0;color:#a52828;border:1px solid #f2d1d1}.message.success{display:block;background:#eaf8ef;color:#18733c;border:1px solid #ccebd6}
-.hidden{display:none}.footer{text-align:center;margin-top:22px;color:#8a98a3;font-size:11.5px;line-height:1.9;border-top:1px solid #edf1f3;padding-top:17px}.footer strong{color:#526575}.security-note{display:flex;justify-content:center;align-items:center;gap:6px;margin-top:10px;color:#9aa7ae;font-size:10.5px}.security-note svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hidden{display:none}.footer{text-align:center;margin-top:22px;color:#8a98a3;font-size:12px;line-height:1.8}
 @media(max-width:480px){.login-card{padding:25px 20px}h1{font-size:22px}}
 </style>
 </head>
 <body>
 <div class="login-container"><div class="login-card">
-<div class="logo" aria-label="مصلحة الموارد البشرية">
-<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.8 3.1 8.1 7.5 9.5 4.4-1.4 7.5-4.7 7.5-9.5V6L12 3Z"/><path d="M12 7v8M8 11h8"/></svg>
-</div>
-<h1>منصة بيانات الموظفين</h1>
-<div class="subtitle">المؤسسة العمومية الإستشفائية بأولف<br>تسجيل وتحديث ومتابعة المعلومات المهنية</div>
-
+<div class="logo">م</div>
+<h1>منصة إدارة الموظفين</h1>
+<div class="subtitle">المؤسسة العمومية الإستشفائية بأولف<br>تسجيل وتحديث معلومات الموظفين</div>
 
 <div class="tabs">
 <button id="loginTab" class="tab active" type="button" onclick="showMode('login')">تسجيل الدخول</button>
@@ -59,7 +55,7 @@ h1{text-align:center;margin:0 0 7px;color:#12344d;font-size:25px;font-weight:800
 </form>
 </div>
 
-<div class="footer">بعد إنشاء الحساب، يقوم الموظف بإدخال معلوماته بنفسه، وتبقى المراجعة والمتابعة للمسؤول.<div class="security-note"><svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.2 2.6 7.5 7 9 4.4-1.5 7-4.8 7-9V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg><span>واجهة إدارية مخصصة لإدارة البيانات المهنية</span></div></div>
+<div class="footer">بعد إنشاء الحساب، يقوم الموظف بإدخال معلوماته بنفسه، وتبقى المراجعة والمتابعة للمسؤول.</div>
 </div></div>
 
 <script>
