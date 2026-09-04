@@ -396,6 +396,49 @@ color:#94a3b8;
 font-size:14px
 }
 
+.maintenance-page{
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:25px;
+background:#f3f7fb;
+direction:rtl
+}
+
+.maintenance-card{
+width:min(600px,100%);
+background:#fff;
+padding:45px 30px;
+border-radius:20px;
+text-align:center;
+box-shadow:0 10px 35px rgba(0,0,0,.10)
+}
+
+.maintenance-icon{
+font-size:55px;
+margin-bottom:15px
+}
+
+.maintenance-card h1{
+margin:0 0 15px;
+color:#0f766e;
+font-size:26px
+}
+
+.maintenance-card p{
+margin:0;
+color:#475569;
+font-size:16px;
+line-height:2
+}
+
+.maintenance-note{
+margin-top:25px!important;
+color:#94a3b8!important;
+font-size:13px!important
+}
+
 @media(max-width:700px){
 
 .header{
@@ -448,6 +491,14 @@ width:100%
 top:72px;
 right:10px;
 width:calc(100vw - 20px)
+}
+
+.maintenance-card{
+padding:35px 20px
+}
+
+.maintenance-card h1{
+font-size:23px
 }
 
 }
@@ -891,6 +942,68 @@ id="saveBtn">
 
 
 <script>
+
+/* =========================================================
+   إعداد وضع الصيانة
+   true  = المنصة متوقفة مؤقتًا
+   false = المنصة تعمل طبيعيًا
+
+   ملاحظة:
+   تغيير هذا المتغير لا يحذف ولا يعدل أي بيانات في Supabase.
+   ========================================================= */
+
+const MAINTENANCE_MODE = true;
+
+
+/* =========================================================
+   دالة عرض وضع الصيانة
+   ========================================================= */
+
+function showMaintenancePage(){
+
+document.body.innerHTML = `
+
+<div class="maintenance-page">
+
+<div class="maintenance-card">
+
+<div class="maintenance-icon">
+🔧
+</div>
+
+<h1>
+المنصة متوقفة مؤقتًا
+</h1>
+
+<p>
+تجري حاليًا أعمال الصيانة والتحديث على المنصة الرقمية لتسيير الموظفين.
+<br>
+يرجى المحاولة لاحقًا.
+</p>
+
+<p class="maintenance-note">
+جميع البيانات والحسابات محفوظة ولم يتم حذفها.
+</p>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+
+/* =========================================================
+   إذا كان وضع الصيانة مفعّلًا:
+   نعرض الصفحة ونوقف تنفيذ باقي كود الموظف.
+   ========================================================= */
+
+if(MAINTENANCE_MODE){
+
+showMaintenancePage();
+
+}else{
 
 /* =========================================================
    إنشاء عميل Supabase واحد فقط
@@ -1870,6 +1983,8 @@ window.location.href='index.html';
    ========================================================= */
 
 loadEmployee();
+
+}
 
 </script>
 
