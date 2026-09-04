@@ -1,136 +1,1056 @@
+```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>منصة إدارة الموظفين</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,Tahoma,sans-serif;background:linear-gradient(135deg,#eef7f8,#f5f8fb);min-height:100vh;display:flex;align-items:center;justify-content:center;color:#263746;padding:20px}
-.login-container{width:100%;max-width:480px}.login-card{background:#fff;border-radius:22px;padding:35px;box-shadow:0 12px 40px rgba(0,0,0,.1);border:1px solid #e5edf1}
-.logo{width:75px;height:75px;margin:0 auto 18px;border-radius:20px;background:linear-gradient(135deg,#087f8c,#0b607a);color:#fff;display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:bold}
-h1{text-align:center;margin:0 0 8px;color:#12344d;font-size:25px}.subtitle{text-align:center;color:#71808d;font-size:14px;margin-bottom:22px;line-height:1.7}
-.tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}.tab{border:1px solid #d8e4e9;background:#f8fafb;color:#526575;padding:11px;border-radius:10px;cursor:pointer;font-weight:bold}.tab.active{background:#087f8c;color:#fff;border-color:#087f8c}
-.login-types{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}.type-btn{border:1px solid #d8e4e9;background:#f8fafb;color:#526575;padding:12px;border-radius:11px;cursor:pointer;font-weight:bold;font-size:14px}.type-btn.active{background:#087f8c;color:#fff;border-color:#087f8c}
-.form-group{margin-bottom:16px}label{display:block;margin-bottom:7px;color:#344b5d;font-size:14px;font-weight:bold}input{width:100%;padding:14px;border:1px solid #d5e0e6;border-radius:11px;outline:none;font-size:15px;background:#fbfdff;direction:ltr;text-align:left}input:focus{border-color:#087f8c;box-shadow:0 0 0 3px rgba(8,127,140,.08)}
-.main-btn{width:100%;border:none;background:linear-gradient(135deg,#087f8c,#0b607a);color:#fff;padding:14px;border-radius:11px;cursor:pointer;font-size:16px;font-weight:bold;margin-top:5px}.main-btn:disabled{opacity:.6;cursor:not-allowed}
-.message{display:none;padding:13px;border-radius:10px;margin-bottom:17px;font-size:13px;line-height:1.7}.message.error{display:block;background:#fff0f0;color:#a52828;border:1px solid #f2d1d1}.message.success{display:block;background:#eaf8ef;color:#18733c;border:1px solid #ccebd6}
-.hidden{display:none}.footer{text-align:center;margin-top:22px;color:#8a98a3;font-size:12px;line-height:1.8}
-@media(max-width:480px){.login-card{padding:25px 20px}h1{font-size:22px}}
+
+body{
+ margin:0;
+ font-family:Arial,Tahoma,sans-serif;
+ background:linear-gradient(135deg,#eef7f8,#f5f8fb);
+ min-height:100vh;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ color:#263746;
+ padding:20px
+}
+
+.login-container{
+ width:100%;
+ max-width:480px
+}
+
+.login-card{
+ background:#fff;
+ border-radius:22px;
+ padding:35px;
+ box-shadow:0 12px 40px rgba(0,0,0,.1);
+ border:1px solid #e5edf1
+}
+
+.logo{
+ width:75px;
+ height:75px;
+ margin:0 auto 18px;
+ border-radius:20px;
+ background:linear-gradient(135deg,#087f8c,#0b607a);
+ color:#fff;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ font-size:34px;
+ font-weight:bold
+}
+
+h1{
+ text-align:center;
+ margin:0 0 8px;
+ color:#12344d;
+ font-size:25px
+}
+
+.subtitle{
+ text-align:center;
+ color:#71808d;
+ font-size:14px;
+ margin-bottom:22px;
+ line-height:1.7
+}
+
+.tabs{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:8px;
+ margin-bottom:16px
+}
+
+.tab{
+ border:1px solid #d8e4e9;
+ background:#f8fafb;
+ color:#526575;
+ padding:11px;
+ border-radius:10px;
+ cursor:pointer;
+ font-weight:bold
+}
+
+.tab.active{
+ background:#087f8c;
+ color:#fff;
+ border-color:#087f8c
+}
+
+.login-types{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:10px;
+ margin-bottom:18px
+}
+
+.type-btn{
+ border:1px solid #d8e4e9;
+ background:#f8fafb;
+ color:#526575;
+ padding:12px;
+ border-radius:11px;
+ cursor:pointer;
+ font-weight:bold;
+ font-size:14px
+}
+
+.type-btn.active{
+ background:#087f8c;
+ color:#fff;
+ border-color:#087f8c
+}
+
+.form-group{
+ margin-bottom:16px
+}
+
+label{
+ display:block;
+ margin-bottom:7px;
+ color:#344b5d;
+ font-size:14px;
+ font-weight:bold
+}
+
+input{
+ width:100%;
+ padding:14px;
+ border:1px solid #d5e0e6;
+ border-radius:11px;
+ outline:none;
+ font-size:15px;
+ background:#fbfdff;
+ direction:ltr;
+ text-align:left
+}
+
+input:focus{
+ border-color:#087f8c;
+ box-shadow:0 0 0 3px rgba(8,127,140,.08)
+}
+
+.main-btn{
+ width:100%;
+ border:none;
+ background:linear-gradient(135deg,#087f8c,#0b607a);
+ color:#fff;
+ padding:14px;
+ border-radius:11px;
+ cursor:pointer;
+ font-size:16px;
+ font-weight:bold;
+ margin-top:5px
+}
+
+.main-btn:disabled{
+ opacity:.6;
+ cursor:not-allowed
+}
+
+.message{
+ display:none;
+ padding:13px;
+ border-radius:10px;
+ margin-bottom:17px;
+ font-size:13px;
+ line-height:1.7
+}
+
+.message.error{
+ display:block;
+ background:#fff0f0;
+ color:#a52828;
+ border:1px solid #f2d1d1
+}
+
+.message.success{
+ display:block;
+ background:#eaf8ef;
+ color:#18733c;
+ border:1px solid #ccebd6
+}
+
+.hidden{
+ display:none
+}
+
+.footer{
+ text-align:center;
+ margin-top:22px;
+ color:#8a98a3;
+ font-size:12px;
+ line-height:1.8
+}
+
+@media(max-width:480px){
+ .login-card{padding:25px 20px}
+ h1{font-size:22px}
+}
 </style>
 </head>
+
 <body>
-<div class="login-container"><div class="login-card">
+
+<div class="login-container">
+<div class="login-card">
+
 <div class="logo">م</div>
+
 <h1>منصة إدارة الموظفين</h1>
-<div class="subtitle">المؤسسة العمومية الإستشفائية بأولف<br>تسجيل وتحديث معلومات الموظفين</div>
+
+<div class="subtitle">
+المؤسسة العمومية الإستشفائية بأولف<br>
+تسجيل وتحديث معلومات الموظفين
+</div>
 
 <div class="tabs">
-<button id="loginTab" class="tab active" type="button" onclick="showMode('login')">تسجيل الدخول</button>
-<button id="signupTab" class="tab" type="button" onclick="showMode('signup')">إنشاء حساب موظف</button>
+
+<button
+ id="loginTab"
+ class="tab active"
+ type="button"
+ onclick="showMode('login')">
+تسجيل الدخول
+</button>
+
+<button
+ id="signupTab"
+ class="tab"
+ type="button"
+ onclick="showMode('signup')">
+إنشاء حساب موظف
+</button>
+
 </div>
 
 <div id="message" class="message"></div>
 
+
+<!-- تسجيل الدخول -->
+
 <div id="loginPanel">
+
 <div class="login-types">
-<button type="button" id="employeeType" class="type-btn active" onclick="selectLoginType('employee')">دخول الموظف</button>
-<button type="button" id="adminType" class="type-btn" onclick="selectLoginType('admin')">دخول المسؤول</button>
+
+<button
+ type="button"
+ id="employeeType"
+ class="type-btn active"
+ onclick="selectLoginType('employee')">
+دخول الموظف
+</button>
+
+<button
+ type="button"
+ id="adminType"
+ class="type-btn"
+ onclick="selectLoginType('admin')">
+دخول المسؤول
+</button>
+
 </div>
+
 <form onsubmit="login(event)">
-<div class="form-group"><label>البريد الإلكتروني</label><input type="email" id="loginEmail" placeholder="example@email.com" autocomplete="email" required></div>
-<div class="form-group"><label>كلمة المرور</label><input type="password" id="loginPassword" placeholder="أدخل كلمة المرور" autocomplete="current-password" required></div>
-<button id="loginBtn" class="main-btn" type="submit">تسجيل الدخول</button>
-</form>
+
+<div class="form-group">
+<label>البريد الإلكتروني</label>
+<input
+ type="email"
+ id="loginEmail"
+ placeholder="example@email.com"
+ autocomplete="email"
+ required>
 </div>
+
+<div class="form-group">
+<label>كلمة المرور</label>
+<input
+ type="password"
+ id="loginPassword"
+ placeholder="أدخل كلمة المرور"
+ autocomplete="current-password"
+ required>
+</div>
+
+<button
+ id="loginBtn"
+ class="main-btn"
+ type="submit">
+تسجيل الدخول
+</button>
+
+</form>
+
+</div>
+
+
+<!-- إنشاء الحساب -->
 
 <div id="signupPanel" class="hidden">
+
 <form onsubmit="signUp(event)">
-<div class="form-group"><label>البريد الإلكتروني</label><input type="email" id="signupEmail" placeholder="example@email.com" autocomplete="email" required></div>
-<div class="form-group"><label>كلمة المرور</label><input type="password" id="signupPassword" placeholder="اختر كلمة مرور لا تقل عن 6 أحرف" minlength="6" autocomplete="new-password" required></div>
-<div class="form-group"><label>تأكيد كلمة المرور</label><input type="password" id="confirmPassword" placeholder="أعد كتابة كلمة المرور" minlength="6" autocomplete="new-password" required></div>
-<button id="signupBtn" class="main-btn" type="submit">إنشاء الحساب والانتقال لإدخال المعلومات</button>
-</form>
+
+<div class="form-group">
+<label>البريد الإلكتروني</label>
+<input
+ type="email"
+ id="signupEmail"
+ placeholder="example@email.com"
+ autocomplete="email"
+ required>
 </div>
 
-<div class="footer">بعد إنشاء الحساب، يقوم الموظف بإدخال معلوماته بنفسه، وتبقى المراجعة والمتابعة للمسؤول.</div>
-</div></div>
+<div class="form-group">
+<label>كلمة المرور</label>
+<input
+ type="password"
+ id="signupPassword"
+ placeholder="اختر كلمة مرور لا تقل عن 6 أحرف"
+ minlength="6"
+ autocomplete="new-password"
+ required>
+</div>
+
+<div class="form-group">
+<label>تأكيد كلمة المرور</label>
+<input
+ type="password"
+ id="confirmPassword"
+ placeholder="أعد كتابة كلمة المرور"
+ minlength="6"
+ autocomplete="new-password"
+ required>
+</div>
+
+<button
+ id="signupBtn"
+ class="main-btn"
+ type="submit">
+إنشاء الحساب والانتقال لإدخال المعلومات
+</button>
+
+</form>
+
+</div>
+
+
+<div class="footer">
+بعد إنشاء الحساب، يقوم الموظف بإدخال معلوماته بنفسه،
+وتبقى المراجعة والمتابعة للمسؤول.
+</div>
+
+</div>
+</div>
+
 
 <script>
-const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-let loginType="employee";
+
+/* =========================================================
+   الاتصال بـ Supabase
+========================================================= */
+
+const supabaseClient =
+ window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+ );
+
+let loginType = "employee";
+
+
+/* =========================================================
+   تغيير الوضع
+========================================================= */
 
 function showMode(mode){
+
  clearMessage();
- document.getElementById("loginPanel").classList.toggle("hidden",mode!=="login");
- document.getElementById("signupPanel").classList.toggle("hidden",mode!=="signup");
- document.getElementById("loginTab").classList.toggle("active",mode==="login");
- document.getElementById("signupTab").classList.toggle("active",mode==="signup");
+
+ document
+  .getElementById("loginPanel")
+  .classList.toggle("hidden",mode!=="login");
+
+ document
+  .getElementById("signupPanel")
+  .classList.toggle("hidden",mode!=="signup");
+
+ document
+  .getElementById("loginTab")
+  .classList.toggle("active",mode==="login");
+
+ document
+  .getElementById("signupTab")
+  .classList.toggle("active",mode==="signup");
 }
+
+
+/* =========================================================
+   اختيار نوع الدخول
+========================================================= */
+
 function selectLoginType(type){
- loginType=type;
- document.getElementById("employeeType").classList.toggle("active",type==="employee");
- document.getElementById("adminType").classList.toggle("active",type==="admin");
+
+ loginType = type;
+
+ document
+  .getElementById("employeeType")
+  .classList.toggle("active",type==="employee");
+
+ document
+  .getElementById("adminType")
+  .classList.toggle("active",type==="admin");
+
  clearMessage();
 }
-function showError(t){const m=document.getElementById("message");m.className="message error";m.textContent=t}
-function showSuccess(t){const m=document.getElementById("message");m.className="message success";m.textContent=t}
-function clearMessage(){const m=document.getElementById("message");m.className="message";m.textContent=""}
+
+
+/* =========================================================
+   الرسائل
+========================================================= */
+
+function showError(text){
+
+ const m = document.getElementById("message");
+
+ m.className = "message error";
+ m.textContent = text;
+}
+
+
+function showSuccess(text){
+
+ const m = document.getElementById("message");
+
+ m.className = "message success";
+ m.textContent = text;
+}
+
+
+function clearMessage(){
+
+ const m = document.getElementById("message");
+
+ m.className = "message";
+ m.textContent = "";
+}
+
+
+/* =========================================================
+   إنشاء سجل الموظف وربطه بحساب Auth
+========================================================= */
+
+async function ensureEmployeeProfile(user){
+
+ if(!user || !user.id){
+
+  throw new Error("تعذر تحديد حساب المستخدم.");
+ }
+
+ /*
+   نبحث أولاً عن سجل الموظف المرتبط بالحساب
+ */
+ const {
+  data:existingEmployee,
+  error:findError
+ } =
+ await supabaseClient
+  .from("employees")
+  .select("*")
+  .eq("user_id",user.id)
+  .maybeSingle();
+
+ if(findError){
+
+  console.error("Employee lookup error:",findError);
+
+  throw findError;
+ }
+
+
+ /*
+   إذا كان السجل موجودًا بالفعل
+   لا ننشئ سجلًا جديدًا
+ */
+ if(existingEmployee){
+
+  return existingEmployee;
+ }
+
+
+ /*
+   لا يوجد سجل موظف.
+   ننشئ سجلًا جديدًا مرتبطًا مباشرة
+   بحساب Auth الحالي.
+ */
+ const {
+  data:newEmployee,
+  error:insertError
+ } =
+ await supabaseClient
+  .from("employees")
+  .insert({
+   user_id:user.id,
+   role:"employee",
+   profile_status:"pending",
+   admin_note:null
+  })
+  .select()
+  .single();
+
+
+ if(insertError){
+
+  console.error(
+   "Employee profile creation error:",
+   insertError
+  );
+
+  throw insertError;
+ }
+
+
+ return newEmployee;
+}
+
+
+/* =========================================================
+   تسجيل الدخول
+========================================================= */
 
 async function login(event){
- event.preventDefault();clearMessage();
- const email=document.getElementById("loginEmail").value.trim();
- const password=document.getElementById("loginPassword").value;
- const btn=document.getElementById("loginBtn");btn.disabled=true;btn.textContent="جاري تسجيل الدخول...";
+
+ event.preventDefault();
+
+ clearMessage();
+
+ const email =
+  document
+   .getElementById("loginEmail")
+   .value
+   .trim();
+
+ const password =
+  document
+   .getElementById("loginPassword")
+   .value;
+
+ const btn =
+  document.getElementById("loginBtn");
+
+ btn.disabled = true;
+ btn.textContent = "جاري تسجيل الدخول...";
+
+
  try{
-  const {data,error}=await supabaseClient.auth.signInWithPassword({email,password});
-  if(error)throw error;
-  const {data:profile,error:profileError}=await supabaseClient.from("employees").select("*").eq("user_id",data.user.id).maybeSingle();
-  if(profileError)throw profileError;
-  if(loginType==="admin"){
-   if(!profile||profile.role!=="admin"){await supabaseClient.auth.signOut();showError("هذا الحساب ليس لديه صلاحيات المسؤول.");return}
-   location.href="admin.html";return;
+
+  /*
+    1 ـ تسجيل الدخول إلى Supabase Auth
+  */
+
+  const {
+   data,
+   error
+  } =
+  await supabaseClient.auth.signInWithPassword({
+   email,
+   password
+  });
+
+
+  if(error){
+   throw error;
   }
-  if(profile?.role==="admin"){await supabaseClient.auth.signOut();showError("هذا حساب مسؤول. اختر دخول المسؤول.");return}
-  location.href="employee.html";
- }catch(e){
-  console.error(e);
-  showError(e.message?.includes("Invalid login credentials")?"البريد الإلكتروني أو كلمة المرور غير صحيحة.":(e.message||"حدث خطأ أثناء تسجيل الدخول."));
- }finally{btn.disabled=false;btn.textContent="تسجيل الدخول"}
+
+
+  if(!data || !data.user){
+
+   throw new Error(
+    "تم تسجيل الدخول لكن لم يتم العثور على المستخدم."
+   );
+  }
+
+
+  const user = data.user;
+
+
+  /*
+    2 ـ البحث عن سجل الموظف
+  */
+
+  let {
+   data:profile,
+   error:profileError
+  } =
+  await supabaseClient
+   .from("employees")
+   .select("*")
+   .eq("user_id",user.id)
+   .maybeSingle();
+
+
+  if(profileError){
+
+   console.error(
+    "Profile lookup error:",
+    profileError
+   );
+
+   throw profileError;
+  }
+
+
+  /*
+    3 ـ إذا لم يوجد سجل الموظف
+       نحاول إنشاء سجل مرتبط بالحساب الحالي.
+  */
+
+  if(!profile){
+
+   try{
+
+    profile =
+     await ensureEmployeeProfile(user);
+
+   }catch(profileCreateError){
+
+    console.error(
+     "Unable to create employee profile:",
+     profileCreateError
+    );
+
+    /*
+      مهم:
+      لا نقوم بتسجيل خروج الموظف هنا مباشرة.
+      نوضح له أن حساب Auth موجود لكن
+      ربط ملف الموظف يحتاج معالجة.
+    */
+
+    showError(
+     "تم التحقق من البريد وكلمة المرور، لكن ملف الموظف غير مرتبط بالحساب. يرجى التواصل مع المسؤول لربط الحساب."
+    );
+
+    return;
+   }
+  }
+
+
+  /*
+    4 ـ دخول المسؤول
+  */
+
+  if(loginType === "admin"){
+
+   if(!profile || profile.role !== "admin"){
+
+    /*
+      هنا فقط نسجل الخروج لأن الحساب
+      ليس حساب مسؤول.
+    */
+
+    await supabaseClient.auth.signOut();
+
+    showError(
+     "هذا الحساب ليس لديه صلاحيات المسؤول."
+    );
+
+    return;
+   }
+
+
+   location.href = "admin.html";
+
+   return;
+  }
+
+
+  /*
+    5 ـ منع المسؤول من الدخول كموظف
+  */
+
+  if(profile.role === "admin"){
+
+   await supabaseClient.auth.signOut();
+
+   showError(
+    "هذا حساب مسؤول. اختر دخول المسؤول."
+   );
+
+   return;
+  }
+
+
+  /*
+    6 ـ الموظف العادي
+       أصبح الآن لديه:
+       Auth User
+       +
+       employees.user_id
+  */
+
+  location.href = "employee.html";
+
+ }catch(error){
+
+  console.error(
+   "Login error:",
+   error
+  );
+
+
+  const message =
+   error?.message || "";
+
+
+  if(
+   message.includes(
+    "Invalid login credentials"
+   )
+  ){
+
+   showError(
+    "البريد الإلكتروني أو كلمة المرور غير صحيحة."
+   );
+
+  }else if(
+   message.includes(
+    "Email not confirmed"
+   )
+  ){
+
+   showError(
+    "يجب تأكيد البريد الإلكتروني أولاً ثم إعادة تسجيل الدخول."
+   );
+
+  }else{
+
+   showError(
+    message ||
+    "حدث خطأ أثناء تسجيل الدخول."
+   );
+  }
+
+ }finally{
+
+  btn.disabled = false;
+  btn.textContent = "تسجيل الدخول";
+ }
 }
+
+
+/* =========================================================
+   إنشاء حساب جديد
+========================================================= */
 
 async function signUp(event){
- event.preventDefault();clearMessage();
- const email=document.getElementById("signupEmail").value.trim();
- const password=document.getElementById("signupPassword").value;
- const confirmPassword=document.getElementById("confirmPassword").value;
- if(password!==confirmPassword){showError("كلمتا المرور غير متطابقتين.");return}
- const btn=document.getElementById("signupBtn");btn.disabled=true;btn.textContent="جاري إنشاء الحساب...";
+
+ event.preventDefault();
+
+ clearMessage();
+
+ const email =
+  document
+   .getElementById("signupEmail")
+   .value
+   .trim();
+
+ const password =
+  document
+   .getElementById("signupPassword")
+   .value;
+
+ const confirmPassword =
+  document
+   .getElementById("confirmPassword")
+   .value;
+
+
+ if(password !== confirmPassword){
+
+  showError(
+   "كلمتا المرور غير متطابقتين."
+  );
+
+  return;
+ }
+
+
+ const btn =
+  document.getElementById("signupBtn");
+
+ btn.disabled = true;
+ btn.textContent = "جاري إنشاء الحساب...";
+
+
  try{
-  const {data,error}=await supabaseClient.auth.signUp({email,password});
-  if(error)throw error;
-  if(data.session){location.href="employee.html";return}
-  showSuccess("تم إنشاء الحساب. إذا طُلب منك تأكيد البريد الإلكتروني، افتح رسالة التأكيد ثم سجّل الدخول.");
+
+  /*
+    1 ـ إنشاء حساب Auth
+  */
+
+  const {
+   data,
+   error
+  } =
+  await supabaseClient.auth.signUp({
+   email,
+   password
+  });
+
+
+  if(error){
+
+   throw error;
+  }
+
+
+  if(!data || !data.user){
+
+   throw new Error(
+    "تعذر إنشاء حساب المستخدم."
+   );
+  }
+
+
+  /*
+    2 ـ إذا كانت الجلسة متاحة مباشرة،
+       ننشئ سجل الموظف ونربطه بالحساب.
+  */
+
+  if(data.session){
+
+   try{
+
+    await ensureEmployeeProfile(
+     data.user
+    );
+
+   }catch(profileError){
+
+    console.error(
+     "Employee profile creation failed:",
+     profileError
+    );
+
+    /*
+      الحساب Auth تم إنشاؤه بالفعل.
+      لا نحذفه.
+    */
+
+    showSuccess(
+     "تم إنشاء حساب الدخول بنجاح، لكن لم يتم إنشاء ملف الموظف تلقائيًا. يرجى تسجيل الدخول مرة أخرى أو التواصل مع المسؤول لربط الحساب."
+    );
+
+    showMode("login");
+
+    document
+     .getElementById("loginEmail")
+     .value = email;
+
+    return;
+   }
+
+
+   /*
+     تم إنشاء Auth + employees
+     بنجاح.
+   */
+
+   location.href = "employee.html";
+
+   return;
+  }
+
+
+  /*
+    3 ـ إذا كان تأكيد البريد الإلكتروني مفعلًا،
+       لا توجد جلسة مباشرة.
+  */
+
+  showSuccess(
+   "تم إنشاء الحساب بنجاح. افتح رسالة تأكيد البريد الإلكتروني، ثم عد إلى صفحة الدخول وسجل الدخول."
+  );
+
   showMode("login");
-  document.getElementById("loginEmail").value=email;
- }catch(e){
-  console.error(e);
-  showError(e.message||"تعذر إنشاء الحساب.");
- }finally{btn.disabled=false;btn.textContent="إنشاء الحساب والانتقال لإدخال المعلومات"}
+
+  document
+   .getElementById("loginEmail")
+   .value = email;
+
+
+ }catch(error){
+
+  console.error(
+   "Signup error:",
+   error
+  );
+
+
+  const message =
+   error?.message || "";
+
+
+  if(
+   message.toLowerCase().includes(
+    "already registered"
+   )
+  ){
+
+   showError(
+    "هذا البريد الإلكتروني مسجل مسبقًا. استخدم تسجيل الدخول بدل إنشاء حساب جديد."
+   );
+
+  }else{
+
+   showError(
+    message ||
+    "تعذر إنشاء الحساب."
+   );
+  }
+
+ }finally{
+
+  btn.disabled = false;
+
+  btn.textContent =
+   "إنشاء الحساب والانتقال لإدخال المعلومات";
+ }
 }
 
+
+/* =========================================================
+   فحص الجلسة الموجودة
+========================================================= */
+
 async function checkExistingSession(){
+
  try{
-  const {data}=await supabaseClient.auth.getSession();
-  const session=data?.session;if(!session?.user)return;
-  const {data:profile,error}=await supabaseClient.from("employees").select("role").eq("user_id",session.user.id).maybeSingle();
-  if(error){console.error(error);return}
-  location.href=profile?.role==="admin"?"admin.html":"employee.html";
- }catch(e){console.error(e)}
+
+  const {
+   data,
+   error
+  } =
+  await supabaseClient.auth.getSession();
+
+
+  if(error){
+
+   console.error(
+    "Session error:",
+    error
+   );
+
+   return;
+  }
+
+
+  const session =
+   data?.session;
+
+
+  /*
+    لا توجد جلسة.
+    نبقى في صفحة الدخول.
+  */
+
+  if(!session?.user){
+
+   return;
+  }
+
+
+  /*
+    توجد جلسة.
+    نبحث عن ملف الموظف.
+  */
+
+  const {
+   data:profile,
+   error:profileError
+  } =
+  await supabaseClient
+   .from("employees")
+   .select("role")
+   .eq("user_id",session.user.id)
+   .maybeSingle();
+
+
+  if(profileError){
+
+   console.error(
+    "Existing profile error:",
+    profileError
+   );
+
+   return;
+  }
+
+
+  /*
+    مسؤول
+  */
+
+  if(profile?.role === "admin"){
+
+   location.href = "admin.html";
+
+   return;
+  }
+
+
+  /*
+    موظف
+  */
+
+  if(profile){
+
+   location.href = "employee.html";
+
+   return;
+  }
+
+
+  /*
+    توجد جلسة Auth ولكن لا يوجد
+    سجل employees.
+    لا نرسل المستخدم مباشرة إلى employee.html.
+  */
+
+  console.warn(
+   "جلسة Auth موجودة ولكن لا يوجد سجل employees مرتبط."
+  );
+
+
+ }catch(error){
+
+  console.error(
+   "Session check error:",
+   error
+  );
+ }
 }
+
+
+/* =========================================================
+   تشغيل فحص الجلسة
+========================================================= */
+
 checkExistingSession();
+
 </script>
+
 </body>
 </html>
+```
